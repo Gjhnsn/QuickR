@@ -3,6 +3,7 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Press
 import { createQr } from '../utils/createQrApi';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
+import { Ionicons } from '@expo/vector-icons';
 
 const DATA = [
     {
@@ -44,7 +45,8 @@ const DATA = [
     }
 
     const Item = ({ title, url }) => (
-      <Pressable onPress={() => setCurrentQr(createQr(url))}>
+      <Pressable 
+      onPress={() => setCurrentQr(createQr(url))}>
         <View
             style={styles.item}
             onClick={() => setCurrentQr(createQr(url))}
@@ -72,8 +74,17 @@ const DATA = [
             }}>
               <Camera
                 type={cameraType}
-                style={{flex: 1}}
+                style={styles.cameraScreen}
               >
+                <View style={styles.cameraContainer}>
+                  <Pressable
+                  onPress={() => setStartCamera(false)}
+                  hitSlop={10}
+                  >
+                    <Ionicons name="md-close" size={40} color="white" />
+                  </Pressable>
+                </View>
+
               </Camera>
             </View>
             ) : (
@@ -116,6 +127,16 @@ const DATA = [
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    cameraScreen: {
+      flex: 1,
+    },
+    cameraContainer: {
+      backgroundColor: 'transparent',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      marginTop: 15,
+      padding: 25,
     },
     item: {
       backgroundColor: '#f9c2ff',
