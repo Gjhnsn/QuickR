@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Pressable } from 'react-native';
-import { creatQr } from '../utils/createQrApi';
+import { createQr } from '../utils/createQrApi';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const DATA = [
@@ -31,10 +31,10 @@ const DATA = [
     const [currentQr, setCurrentQr] = useState(`test`);
 
     const Item = ({ title, url }) => (
-      <Pressable onPress={() => setCurrentQr(creatQr(url))}>
+      <Pressable onPress={() => setCurrentQr(createQr(url))}>
         <View
             style={styles.item}
-            onClick={() => setCurrentQr(creatQr(url))}
+            onClick={() => setCurrentQr(createQr(url))}
         >
           <Text style={styles.title}>{title}</Text>
         </View>
