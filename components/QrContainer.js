@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, Pressable } from 'react-native';
 import { creatQr } from '../utils/createQrApi';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const DATA = [
     {
@@ -18,25 +19,32 @@ const DATA = [
       title: 'Fresno State',
       url: 'fresnostate.edu',
     },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e293423',
+      title: 'TrenItalia',
+      url: 'https://www.trenitalia.com/en.html',
+    },
   ];
 
   
   const QrContainer = () => {
-    const [currentQr, setCurrentQr] = useState(``);
+    const [currentQr, setCurrentQr] = useState(`test`);
 
     const Item = ({ title, url }) => (
-        <View 
+      <Pressable onPress={() => setCurrentQr(creatQr(url))}>
+        <View
             style={styles.item}
             onClick={() => setCurrentQr(creatQr(url))}
         >
           <Text style={styles.title}>{title}</Text>
         </View>
+      </Pressable>
       );
 
     const renderItem = ({ item }) => (
       <Item 
-      title={item.title}
-      url={item.url} 
+        title={item.title}
+        url={item.url} 
       />
     );
   
