@@ -18,33 +18,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { __startCamera } from "../utils/startCamera";
 import { closeCamera, openCamera } from "../redux/startCameraSlice";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "Facebook",
-    url: "facebook.com",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Yelp",
-    url: "yelp.com",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Fresno State",
-    url: "fresnostate.edu",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e293423",
-    title: "TrenItalia",
-    url: "https://www.trenitalia.com/en.html",
-  },
-];
-
 const QrContainer = () => {
   const [currentQr, setCurrentQr] = useState(`test`);
   const [scanned, setScanned] = useState(false);
   const isCameraOpen = useSelector((state) => state.camera.setStartCamera);
+  const folderData = useSelector((state) => state.folder);
   const dispatch = useDispatch();
 
   const handleQRCodeScan = ({ type, data }) => {
@@ -52,15 +30,33 @@ const QrContainer = () => {
     alert(`Code with type ${type} and data ${data} has been scanned`);
   };
 
-  const Item = ({ title, url }) => (
-    <Pressable onPress={() => setCurrentQr(createQr(url))}>
-      <View style={styles.item} onClick={() => setCurrentQr(createQr(url))}>
-        <Text style={styles.title}>{title}</Text>
+  const FolderItem = ({ folderName, items }) => (
+    <Pressable onPress={() => console.log(alert("clicked"))}>
+      <View style={styles.folderItem}>
+        <Text style={styles.title}>{folderName}</Text>
+        {console.log("items in FolderItem: ", items)}
+        <FlatList
+          data={items}
+          renderItem={renderQrItem}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </Pressable>
   );
 
-  const renderItem = ({ item }) => <Item title={item.title} url={item.url} />;
+  const renderFolderItem = ({ item }) => (
+    <FolderItem folderName={item.folderName} items={item.items} />
+  );
+
+  const QrItem = ({ name, url }) => (
+    <Pressable onPress={() => setCurrentQr(createQr(url))}>
+      <View style={styles.qrItem}>
+        <Text style={styles.qrTitle}>{name}</Text>
+      </View>
+    </Pressable>
+  );
+
+  const renderQrItem = ({ item }) => <QrItem name={item.name} url={item.url} />;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -97,8 +93,8 @@ const QrContainer = () => {
             <Text style={styles.buttonText}>Scan</Text>
           </Pressable>
           <FlatList
-            data={DATA}
-            renderItem={renderItem}
+            data={folderData}
+            renderItem={renderFolderItem}
             keyExtractor={(item) => item.id}
           />
         </View>
@@ -132,14 +128,24 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 25,
   },
-  item: {
+  folderItem: {
     backgroundColor: "#f9c2ff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  qrItem: {
+    backgroundColor: "#A3C4BC",
+    padding: 5,
+    marginVertical: 8,
+    marginHorizontal: 25,
+  },
   title: {
     fontSize: 32,
+  },
+  qrTitle: {
+    fontSize: 22,
+    color: "#fff",
   },
   button: {
     width: 130,
