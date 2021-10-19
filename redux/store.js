@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import folderReducer from "./folderReducer";
+import folderSlice from "./folderSlice";
+import startCameraSlice from "./startCameraSlice";
 
 export default configureStore({
-    reducer: {
-        folder: folderReducer,
-    }
+  reducer: {
+    folder: folderSlice,
+    camera: startCameraSlice,
+  },
 });
