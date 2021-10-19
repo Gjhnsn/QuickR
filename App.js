@@ -8,7 +8,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <View style={styles.container}>
-        <Dashboard></Dashboard>
+        <Dashboard />
       </View>
     </Provider>
   );
