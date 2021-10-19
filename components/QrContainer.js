@@ -14,6 +14,9 @@ import {
 import { createQr } from "../utils/createQrApi";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { __startCamera } from "../utils/startCamera";
+import { closeCamera, openCamera } from "../redux/startCameraSlice";
 
 const DATA = [
   {
@@ -40,18 +43,9 @@ const DATA = [
 
 const QrContainer = () => {
   const [currentQr, setCurrentQr] = useState(`test`);
-  const [startCamera, setStartCamera] = useState(false);
   const [scanned, setScanned] = useState(false);
-
-  const __startCamera = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
-    console.log(status);
-    if (status === "granted") {
-      setStartCamera(true);
-    } else {
-      Alert.alert("Access denied");
-    }
-  };
+  const isCameraOpen = useSelector((state) => state.camera.setStartCamera);
+  const dispatch = useDispatch();
 
   const handleQRCodeScan = ({ type, data }) => {
     setScanned(true);
@@ -70,7 +64,8 @@ const QrContainer = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {startCamera ? (
+      {isCameraOpen ? (
+        //camera is open
         <View
           style={{
             flex: 1,
@@ -82,7 +77,7 @@ const QrContainer = () => {
             onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
           >
             <View style={styles.cameraContainer}>
-              <Pressable onPress={() => setStartCamera(false)} hitSlop={10}>
+              <Pressable onPress={() => dispatch(closeCamera())} hitSlop={10}>
                 <Ionicons name="md-close" size={40} color="white" />
               </Pressable>
             </View>
@@ -95,7 +90,10 @@ const QrContainer = () => {
             style={{ width: 300, height: 300 }}
             source={{ uri: currentQr }}
           />
-          <Pressable onPress={__startCamera} style={styles.button}>
+          <Pressable
+            onPress={() => __startCamera(dispatch(openCamera()))}
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>Scan</Text>
           </Pressable>
           <FlatList
