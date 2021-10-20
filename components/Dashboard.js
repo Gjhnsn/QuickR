@@ -1,11 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import QrContainer from "./QrContainer";
+import UrlModal from "./UrlModal";
+import FolderContainer from "./folder/FolderContainer";
 
 const Dashboard = () => {
   return (
-    <View>
+    <View style={styles.container}>
+      
       <QrContainer />
+      {/* URL Modal needs a toggle function */}
+      {/* <UrlModal/> */}
+      <FolderContainer />
     </View>
   );
 };
@@ -19,6 +25,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
+    marginTop: 30,
+    padding: 10,
+    width: "100%",
   },
   contentContainer: {
     flex: 1,
