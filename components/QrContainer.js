@@ -55,7 +55,7 @@ const QrContainer = () => {
   };
 
   const FolderItem = ({ folderName, items }) => (
-    <Pressable onPress={() => console.log(alert("clicked"))}>
+    <Pressable onPress={() => (alert("clicked"))}>
       <View style={styles.folderItem}>
         <Text style={styles.title}>{folderName}</Text>
         <FlatList
