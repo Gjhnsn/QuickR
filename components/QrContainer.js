@@ -20,6 +20,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { __startCamera } from "../utils/startCamera";
 import { closeCamera, openCamera } from "../redux/startCameraSlice";
 import { addUrlToFolder } from "../redux/folderSlice";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from "uuid";
 
 const QrContainer = () => {
   const [currentQr, setCurrentQr] = useState(`test`);
@@ -30,22 +32,22 @@ const QrContainer = () => {
 
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
-  const [inputDescription, setInputDescription] = useState(``)
+  const [inputDescription, setInputDescription] = useState(``);
+  const [whichFolder, setWhichFolder] = useState(``);
 
 
-const finalSubmission = () => {
-  dispatch(addUrlToFolder(
-    {
-      name: inputName, 
-      id:`arandomid`, 
-      url: inputUrl, 
-      description: inputDescription, 
-      isSelected: false
-    }
-  ));
-}
-
-
+  const finalSubmission = () => {
+    dispatch(addUrlToFolder({
+      addedLink: {
+        name: inputName,
+        id: uuidv4(),
+        url: inputUrl,
+        description: inputDescription,
+        isSelected: false
+      },
+      folderId: `${whichFolder}`,
+    }))
+  }
 
   const handleQRCodeScan = ({ type, data }) => {
     setScanned(true);
@@ -79,79 +81,89 @@ const finalSubmission = () => {
 
   const renderQrItem = ({ item }) => <QrItem name={item.name} url={item.url} />;
 
+  const foldersInInput = () => {
+    return folderData.map((folder) => (
+      <Pressable 
+        onPress={() => setWhichFolder(folder.id)}
+        key={folder.id}
+      >
+        <Text style={{ color: "white", margin: 10, backgroundColor: "black", padding: 10 }}>
+          {folder.folderName}
+        </Text>
+      </Pressable>
+    ));
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-
-      <View style={styles.inputModal}>
-        <TextInput 
-          style={styles.textInput}
-          placeholder='Name'
-          onChangeText={setInputName}
-          value={inputName}
-
-        />
-        <TextInput 
-          style={styles.textInput}
-          placeholder='Url'
-          onChangeText={setInputUrl}
-          value={inputUrl}
-        />
-        <TextInput 
-          style={styles.textInput}
-          placeholder='Description'
-          onChange={setInputDescription}
-          value={inputDescription}
-        />
-        <Button 
-          title='Submit'
-          onPress = {() => finalSubmission()}
-        />
-      </View>
-
-      {isCameraOpen ? (
-        //camera is open
-        <View
-          style={{
-            flex: 1,
-            width: Dimensions.get("window").width,
-          }}
-        >
-          <BarCodeScanner
-            style={styles.cameraScreen}
-            onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
-          >
-            <View style={styles.cameraContainer}>
-              <Pressable onPress={() => dispatch(closeCamera())} hitSlop={10}>
-                <Ionicons name="md-close" size={40} color="white" />
-              </Pressable>
-            </View>
-          </BarCodeScanner>
-        </View>
-      ) : (
-        // home screen view
-        <View style={styles.contentContainer}>
-          <Image
-            style={{ width: 300, height: 300 }}
-            source={{ uri: currentQr }}
+        <View style={styles.inputModal}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Name"
+            onChangeText={setInputName}
+            value={inputName}
           />
-          <Pressable
-            onPress={() => __startCamera(dispatch(openCamera()))}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Scan</Text>
-          </Pressable>
-          <FlatList
-            data={folderData}
-            renderItem={renderFolderItem}
-            keyExtractor={(item) => item.id}
+          <TextInput
+            style={styles.textInput}
+            placeholder="Url"
+            onChangeText={setInputUrl}
+            value={inputUrl}
           />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Description"
+            onChangeText={setInputDescription}
+            value={inputDescription}
+          />
+          <View>
+            <Text style={{ color: "white", margin: 20 }}>Choose A Folder</Text>
+            <View>{foldersInInput()}</View>
+          </View>
+          <Button title="Submit" onPress={() => finalSubmission()} />
         </View>
-      )}
 
-      <StatusBar style="auto" />
+        {isCameraOpen ? (
+          //camera is open
+          <View
+            style={{
+              flex: 1,
+              width: Dimensions.get("window").width,
+            }}
+          >
+            <BarCodeScanner
+              style={styles.cameraScreen}
+              onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
+            >
+              <View style={styles.cameraContainer}>
+                <Pressable onPress={() => dispatch(closeCamera())} hitSlop={10}>
+                  <Ionicons name="md-close" size={40} color="white" />
+                </Pressable>
+              </View>
+            </BarCodeScanner>
+          </View>
+        ) : (
+          // home screen view
+          <View style={styles.contentContainer}>
+            <Image
+              style={{ width: 300, height: 300 }}
+              source={{ uri: currentQr }}
+            />
+            <Pressable
+              onPress={() => __startCamera(dispatch(openCamera()))}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Scan</Text>
+            </Pressable>
+            <FlatList
+              data={folderData}
+              renderItem={renderFolderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+        )}
 
+        <StatusBar style="auto" />
       </ScrollView>
     </SafeAreaView>
   );
@@ -159,17 +171,16 @@ const finalSubmission = () => {
 
 const styles = StyleSheet.create({
   inputModal: {
-    width:Dimensions.get(`window`).width,
+    width: Dimensions.get(`window`).width,
     height: Dimensions.get(`window`).height,
     backgroundColor: `#333`,
-    alignItems: 'center'
+    alignItems: "center",
   },
   textInput: {
-    width: '80%',
+    width: "80%",
     height: 35,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     marginTop: 20,
-    
   },
   container: {
     flex: 1,

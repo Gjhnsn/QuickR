@@ -56,7 +56,18 @@ const folderSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addUrlToFolder: (state, action) => {
-      state[1].items = [...state[1].items, action.payload];
+
+      const folderId = action.payload.folderId;
+      const addedLink = action.payload.addedLink;
+
+      state.map((state) => {
+        if(state.id === folderId) {
+          return state.items = [...state.items, addedLink];
+        } else {
+          return;
+        }
+      })
+
     }
   }
 });
