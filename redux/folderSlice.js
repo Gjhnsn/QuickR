@@ -54,6 +54,12 @@ const INITIAL_STATE = [
 const folderSlice = createSlice({
   name: `folder`,
   initialState: INITIAL_STATE,
+  reducers: {
+    addUrlToFolder: (state, action) => {
+      state[1].items = [...state[1].items, action.payload];
+    }
+  }
 });
 
+export const {addUrlToFolder} = folderSlice.actions;
 export default folderSlice.reducer;

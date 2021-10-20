@@ -8,8 +8,10 @@ import {
   StatusBar,
   Image,
   Pressable,
-  Alert,
   Dimensions,
+  TextInput,
+  ScrollView,
+  Button,
 } from "react-native";
 import { createQr } from "../utils/createQrApi";
 import { BarCodeScanner } from "expo-barcode-scanner";
@@ -17,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { __startCamera } from "../utils/startCamera";
 import { closeCamera, openCamera } from "../redux/startCameraSlice";
+import { addUrlToFolder } from "../redux/folderSlice";
 
 const QrContainer = () => {
   const [currentQr, setCurrentQr] = useState(`test`);
@@ -24,6 +27,25 @@ const QrContainer = () => {
   const isCameraOpen = useSelector((state) => state.camera.setStartCamera);
   const folderData = useSelector((state) => state.folder);
   const dispatch = useDispatch();
+
+  const [inputName, setInputName] = useState(``);
+  const [inputUrl, setInputUrl] = useState(``);
+  const [inputDescription, setInputDescription] = useState(``)
+
+
+const finalSubmission = () => {
+  dispatch(addUrlToFolder(
+    {
+      name: inputName, 
+      id:`arandomid`, 
+      url: inputUrl, 
+      description: inputDescription, 
+      isSelected: false
+    }
+  ));
+}
+
+
 
   const handleQRCodeScan = ({ type, data }) => {
     setScanned(true);
@@ -34,7 +56,6 @@ const QrContainer = () => {
     <Pressable onPress={() => console.log(alert("clicked"))}>
       <View style={styles.folderItem}>
         <Text style={styles.title}>{folderName}</Text>
-        {console.log("items in FolderItem: ", items)}
         <FlatList
           data={items}
           renderItem={renderQrItem}
@@ -58,8 +79,37 @@ const QrContainer = () => {
 
   const renderQrItem = ({ item }) => <QrItem name={item.name} url={item.url} />;
 
+
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
+
+      <View style={styles.inputModal}>
+        <TextInput 
+          style={styles.textInput}
+          placeholder='Name'
+          onChangeText={setInputName}
+          value={inputName}
+
+        />
+        <TextInput 
+          style={styles.textInput}
+          placeholder='Url'
+          onChangeText={setInputUrl}
+          value={inputUrl}
+        />
+        <TextInput 
+          style={styles.textInput}
+          placeholder='Description'
+          onChange={setInputDescription}
+          value={inputDescription}
+        />
+        <Button 
+          title='Submit'
+          onPress = {() => finalSubmission()}
+        />
+      </View>
+
       {isCameraOpen ? (
         //camera is open
         <View
@@ -101,11 +151,26 @@ const QrContainer = () => {
       )}
 
       <StatusBar style="auto" />
+
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  inputModal: {
+    width:Dimensions.get(`window`).width,
+    height: Dimensions.get(`window`).height,
+    backgroundColor: `#333`,
+    alignItems: 'center'
+  },
+  textInput: {
+    width: '80%',
+    height: 35,
+    backgroundColor: 'white',
+    marginTop: 20,
+    
+  },
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
