@@ -58,14 +58,6 @@ const folderSlice = createSlice({
 
       const {folderName, addedLink} = action.payload;
 
-      // state.map((state) => {
-      //   if(state.id === folderId) {
-      //     return state.items = [...state.items, addedLink];
-      //   } else {
-      //     return;
-      //   }
-      // })
-
       state[folderName].items.push(addedLink)
 
     }
