@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
+import { Text, View, Dimensions, Pressable } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import {  closeCamera } from "../redux/startCameraSlice";
+import {  closeCamera } from "../../redux/startCameraSlice";
+import { Screen, CameraScreen, CameraContainer, CloseIcon } from "./styles";
 
 const BarcodeScanner = () => {
   const [scanned, setScanned] = useState(false);
@@ -15,39 +16,22 @@ const BarcodeScanner = () => {
   };
 
   return (
-    <View style={styles.screen}>
+    <Screen>
       <BarCodeScanner
-        style={styles.cameraScreen}
+        style={CameraScreen}
         onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
       >
-        <View style={styles.cameraContainer}>
+        <CameraContainer>
           <Pressable onPress={() => dispatch(closeCamera())} hitSlop={10}>
             <Ionicons name="md-close" size={40} color="white" />
           </Pressable>
-        </View>
+        </CameraContainer>
       </BarCodeScanner>
-    </View>
+    </Screen>
   );
 };
 
 export default BarcodeScanner;
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    width: Dimensions.get("window").width,
-  },
-  cameraScreen: {
-    flex: 1,
-  },
-  cameraContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 15,
-    padding: 25,
-    width: Dimensions.get(`window`).width,
-    height: Dimensions.get(`window`).height,
-  },
-});
+
 

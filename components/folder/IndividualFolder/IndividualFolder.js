@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
-import LinksContainer from "./LinksContainer";
+import LinksContainer from "../LinksContainer/LinksContainer";
 
-function IndividualFolder({folder}) {
+function IndividualFolder({folder, folderName}) {
 
   return (
     <View>
-        <Text>{folder.folderName}</Text>
+        <Text>{folderName}</Text>
         <LinksContainer folderItems={folder.items}></LinksContainer>
     </View>
   );

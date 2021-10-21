@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const INITIAL_STATE = [
-  {
-    folderName: "Personal",
+const INITIAL_STATE = {
+  'Personal': {
     orderNumber: 0,
     id: "1",
     folderColor: "blue",
@@ -32,8 +31,7 @@ const INITIAL_STATE = [
       },
     ],
   }, // Personal Ends Here
-  {
-    folderName: "Menu",
+  'Menu': {
     orderNumber: 1,
     id: "2",
     folderColor: "blue",
@@ -48,8 +46,9 @@ const INITIAL_STATE = [
         isSelected: false,
       },
     ],
-  }, // Menu Ends Here
-];
+  } // Menu Ends Here
+}
+;
 
 const folderSlice = createSlice({
   name: `folder`,
@@ -57,16 +56,9 @@ const folderSlice = createSlice({
   reducers: {
     addUrlToFolder: (state, action) => {
 
-      const folderId = action.payload.folderId;
-      const addedLink = action.payload.addedLink;
+      const {folderName, addedLink} = action.payload;
 
-      state.map((state) => {
-        if(state.id === folderId) {
-          return state.items = [...state.items, addedLink];
-        } else {
-          return;
-        }
-      })
+      state[folderName].items.push(addedLink)
 
     }
   }
