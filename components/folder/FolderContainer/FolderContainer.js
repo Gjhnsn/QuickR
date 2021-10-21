@@ -8,7 +8,6 @@ function FolderContainer() {
 
     const renderFolder = () => {
         const folderKeys = Object.keys(folderData);
-        console.log(`folder data: `, folderData)
         return (
             folderKeys.map((folderName) => {
                 return <IndividualFolder folder={folderData[folderName]} key={folderName} folderName={folderName}/>
