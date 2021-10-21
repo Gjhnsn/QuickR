@@ -1,22 +1,28 @@
 import styled from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
+import {windowWidth} from '../../utils/windowDimensions';
 
-export const Container = styled.SafeAreaView`
-  flex: 1;
-  margin-top: ${StatusBar.currentHeight || 30};
+export const Container = styled.View`
+  width: ${windowWidth};
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  margin-top: 25px;
+  
 `;
 
 export const QrWrapper = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
+
 `;
 
 export const QrImage = styled.Image`
   width: 300px;
   height: 300px;
+  border: 1px solid #363636;
+`;
+
+
+export const QrInfo = styled.View`
+  width: 300px;
+  height: 45px;
+  background-color: #363636;
 `;
