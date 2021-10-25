@@ -3,13 +3,15 @@ import styled from "styled-components/native";
 export const LinkContainer = styled.Pressable`
     width: 100%;
     height: 55px;
-    background-color: green;
+    background-color: #363636;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-left: 50px;
     padding-right: 27px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
 `;
 
 export const LinkText = styled.Text`

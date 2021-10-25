@@ -6,6 +6,9 @@ export const FolderContainer = styled.TouchableOpacity`
     background-color: #363636;
     display: flex;
     flex-direction: column;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    
 `;
 
 export const FolderTitle = styled.Text`

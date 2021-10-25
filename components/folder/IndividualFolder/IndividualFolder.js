@@ -8,7 +8,7 @@ import {
   EditButton,
   FolderToggleButton,
   FolderInitialElements,
-  FolderOpenedElements
+  FolderOpenedElements,
 } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
@@ -20,29 +20,28 @@ function IndividualFolder({ folder, folderName }) {
   const accordion = useSelector((state) => state.folder);
 
   const showLinks = () => {
-    if(accordion[folderName].isAccordionOpen) {
+    if (accordion[folderName].isAccordionOpen) {
       return (
         <FolderOpenedElements>
-          <LinksContainer folderColor={folder.folderColor} folderItems={folder.items} folderName={folderName}/>
-      </FolderOpenedElements>
-      )
+          <LinksContainer
+            folderColor={folder.folderColor}
+            folderItems={folder.items}
+            folderName={folderName}
+          />
+        </FolderOpenedElements>
+      );
     }
-  }
-
-  console.log(folder)
+  };
 
   return (
     <FolderContainer onPress={() => dispatch(openAccordion(folderName))}>
-
       <FolderInitialElements>
         <TitleContainer>
           <FolderColorBubble folderColor={folder.folderColor} />
           <FolderTitle>{folderName}</FolderTitle>
           <EditButton source={editIcon} />
-          
         </TitleContainer>
-        <FolderToggleButton source={upIcon}/>
-       
+        <FolderToggleButton source={upIcon} />
       </FolderInitialElements>
 
       {showLinks()}
