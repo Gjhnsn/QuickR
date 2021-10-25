@@ -9,5 +9,4 @@ export const Blob = styled.View`
     position: absolute;
     margin-top: -150px;
     border-radius: 250px;
-    z-index: 15;
 `;

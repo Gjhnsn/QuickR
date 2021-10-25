@@ -10,3 +10,7 @@ export const QrTitle = styled.Text`
   font-size: 22px;
   color: #fff;
 `;
+
+export const Container = styled.View`
+  width: 100%;
+`

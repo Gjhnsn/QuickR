@@ -34,7 +34,7 @@ const INITIAL_STATE = {
   'Menu': {
     orderNumber: 1,
     id: "2",
-    folderColor: "blue",
+    folderColor: "yellow",
     isLastActive: false,
     isAccordionOpen: false,
     items: [
@@ -46,7 +46,23 @@ const INITIAL_STATE = {
         isSelected: false,
       },
     ],
-  } // Menu Ends Here
+  }, // Menu Ends Here
+  'Social': {
+    orderNumber: 3,
+    id: "23",
+    folderColor: "darkgreen",
+    isLastActive: false,
+    isAccordionOpen: false,
+    items: [
+      {
+        name: "Google",
+        id: "as65d1f65a1sdf",
+        url: "www.google.com",
+        description: "pizza menu ",
+        isSelected: false,
+      },
+    ],
+  }
 }
 ;
 
@@ -60,9 +76,49 @@ const folderSlice = createSlice({
 
       state[folderName].items.push(addedLink)
 
+    },
+    openAccordion: (state, action) => {
+
+      const selectedFolder = action.payload;
+      const stateKeys = Object.keys(state);
+
+      stateKeys.map((key) => {
+        if(selectedFolder === key) {
+          state[key].isAccordionOpen = !state[key].isAccordionOpen;
+        } else {
+          state[key].isAccordionOpen = false;
+        }
+      })
+
+    },
+    activeLink: (state, action) => {
+
+      const currentFolder = action.payload.currentFolder;
+      const currentLink = action.payload.currentLink;
+
+      const stateKeys = Object.keys(state);
+
+      stateKeys.map((folder) => {
+        if(currentFolder === folder) {
+          const currentFoldersLinks = state[folder].items;
+          currentFoldersLinks.map((link) => {
+            if(currentLink.name === link.name) {
+              link.isSelected = true;
+            } else link.isSelected = false;
+          })
+        }
+
+        else {
+          const currentFoldersLinks = state[folder].items;
+          currentFoldersLinks.map((link) => {
+            link.isSelected = false;
+          })
+        }
+      })
+
     }
-  }
+  },
 });
 
-export const {addUrlToFolder} = folderSlice.actions;
+export const {addUrlToFolder, openAccordion, activeLink} = folderSlice.actions;
 export default folderSlice.reducer;

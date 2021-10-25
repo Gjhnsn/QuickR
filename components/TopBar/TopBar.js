@@ -1,12 +1,14 @@
 import { View, Image} from 'react-native';
 import React from 'react';
-import { NavigationContainer } from './styles';
-import QuickRLogo from '../../assets/logo.svg';
+import { NavigationContainer, LogoPlaceholder } from './styles';
+import addIcon from '../../assets/addIcon.png';
 
 function TopBar() {
+
     return (
         <NavigationContainer>
-            {/* <Image source={require(QuickRLogo)}/> */}
+            <LogoPlaceholder/>
+            <Image source={addIcon}/>
         </NavigationContainer>
     )
 }

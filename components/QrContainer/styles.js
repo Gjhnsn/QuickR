@@ -20,9 +20,33 @@ export const QrImage = styled.Image`
   border: 1px solid #363636;
 `;
 
-
 export const QrInfo = styled.View`
   width: 300px;
   height: 45px;
   background-color: #363636;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
+
+export const QrNameContainer = styled.View`
+  width: 100%;
+  height: 45px;
+  display flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex-direction: row;
+`;
+
+export const QrName = styled.Text`
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 1px;
+`;
+
+export const MoreIcon = styled.Image`
+  height: 32px;
+  width: 32px;
+`;
+

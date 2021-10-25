@@ -9,6 +9,5 @@ margin-top: ${StatusBar.currentHeight || 0};
 padding: 10px;
 align-items: center;
 width: ${windowWidth};
-background-color: #363636;
-z-index: 15;
+z-index: 20;
 `;
