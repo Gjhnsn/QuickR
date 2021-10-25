@@ -16,7 +16,7 @@ const QrContainer = () => {
     return (
       folderKeys.map((folder) => {
         return (
-            <Text>{folderData[folder].items.description}</Text>
+            <Text key={folderData[folder].id}>{folderData[folder].items.description}</Text>
         )
       })
     )

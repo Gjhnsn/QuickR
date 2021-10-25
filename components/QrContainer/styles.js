@@ -17,7 +17,8 @@ export const QrWrapper = styled.View`
 export const QrImage = styled.Image`
   width: 300px;
   height: 300px;
-  border: 1px solid #363636;
+  border-width: 1px;
+  border-color: #363636;
 `;
 
 export const QrInfo = styled.View`
