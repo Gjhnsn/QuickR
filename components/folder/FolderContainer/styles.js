@@ -1,9 +1,7 @@
 import styled from "styled-components/native";
+import { windowWidth } from "../../../utils/windowDimensions";
 
 export const Container = styled.View`
-  flex: 1;
-  margin-top: 220px;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
+  width: ${windowWidth};
+  margin-top: 85px;
 `;

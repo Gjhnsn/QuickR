@@ -1,22 +1,52 @@
 import styled from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
+import {windowWidth} from '../../utils/windowDimensions';
 
-export const Container = styled.SafeAreaView`
-  flex: 1;
-  margin-top: ${StatusBar.currentHeight || 30};
+export const Container = styled.View`
+  width: ${windowWidth};
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  margin-top: 25px;
+  
 `;
 
 export const QrWrapper = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
+
 `;
 
 export const QrImage = styled.Image`
   width: 300px;
   height: 300px;
+  border: 1px solid #363636;
 `;
+
+export const QrInfo = styled.View`
+  width: 300px;
+  height: 45px;
+  background-color: #363636;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+`;
+
+export const QrNameContainer = styled.View`
+  width: 100%;
+  height: 45px;
+  display flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex-direction: row;
+`;
+
+export const QrName = styled.Text`
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 1px;
+`;
+
+export const MoreIcon = styled.Image`
+  height: 32px;
+  width: 32px;
+`;
+

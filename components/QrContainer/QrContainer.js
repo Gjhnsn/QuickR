@@ -1,61 +1,46 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Image,
-  Pressable,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
 import { __startCamera } from "../../utils/startCamera";
-import { openCamera } from "../../redux/startCameraSlice";
-import BarcodeScanner from "../BarcodeScanner/BarcodeScanner";
-import { Container, QrWrapper, QrImage } from "./styles";
+import { Container, QrWrapper, QrImage, QrInfo, QrName, QrNameContainer } from "./styles";
+import MoreIcon from '../../assets/moreIcon.svg';
+import { Ionicons } from "@expo/vector-icons";
 
 const QrContainer = () => {
-  const isCameraOpen = useSelector((state) => state.camera.setStartCamera);
   const currentQr = useSelector((state) => state.qr.url);
-  const dispatch = useDispatch();
+  const currentQrName = useSelector((state) => state.qr.urlName);
+  const folderData = useSelector((state) => state.folder)
 
-  return (
+  const qrInfo = () => {
+    const folderKeys = Object.keys(folderData);
+    return (
+      folderKeys.map((folder) => {
+        return (
+            <Text>{folderData[folder].items.description}</Text>
+        )
+      })
+    )
+  }
+
+  return ( 
     <Container>
-      {isCameraOpen ? (
-        <BarcodeScanner />
-      ) : (
-        // home screen view
+    
         <QrWrapper>
           <QrImage source={{ uri: currentQr }} />
-          {/* Open Camera Button */}
-          <Pressable
-            onPress={() => __startCamera(dispatch(openCamera()))}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Scan</Text>
-          </Pressable>
+          <QrInfo>
+            <QrNameContainer>
+              <QrName>{currentQrName}</QrName>
+              <Ionicons name="ellipsis-horizontal" size={30} color="white" />
+            </QrNameContainer>
+            <View>
+                {qrInfo()}
+              </View>
+          </QrInfo>
         </QrWrapper>
-      )}
 
-      <StatusBar style="auto" />
     </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    width: 130,
-    borderRadius: 4,
-    backgroundColor: "#14274e",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: 40,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-});
 
 export default QrContainer;

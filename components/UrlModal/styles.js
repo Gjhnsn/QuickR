@@ -3,7 +3,7 @@ import { windowWidth } from "../../utils/windowDimensions";
 
 export const Input = styled.TextInput`
   width: 80%;
-  height: 35;
+  height: 35px;
   background-color: white;
   margin-top: 20px;
 `;

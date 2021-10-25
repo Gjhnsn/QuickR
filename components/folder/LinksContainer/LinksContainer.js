@@ -1,31 +1,24 @@
-import { View, FlatList, Pressable, StyleSheet, Text } from "react-native";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { setQr } from "../../../redux/qrSlice"
-import {QrLink, QrTitle} from './styles'
+import { Container } from "./styles";
+import IndividualLinks from "../IndividualLinks/IndividualLinks";
 
-function LinksContainer({ folderItems }) {
-  const dispatch = useDispatch();
+function LinksContainer({ folderItems, folderColor, folderName }) {
 
-  const QrItem = ({ name, url }) => (
-    <Pressable onPress={() => dispatch(setQr(url))}>
-      <QrLink>
-        <QrTitle>{name}</QrTitle>
-      </QrLink>
-    </Pressable>
-  );
+  const renderLinks = () => {
+    return folderItems.map((link) => {
+      return (
+        <IndividualLinks
+          key={link.id}
+          link={link}
+          folderColor={folderColor}
+          isSelected={link.isSelected}
+          folderName={folderName}
+        />
+      );
+    });
+  };
 
-  const renderQrItem = ({ item }) => <QrItem name={item.name} url={item.url} />;
-
-  return (
-    <View>
-      <FlatList
-        data={folderItems}
-        renderItem={renderQrItem}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
-  );
+  return <Container>{renderLinks()}</Container>;
 }
 
 export default LinksContainer;

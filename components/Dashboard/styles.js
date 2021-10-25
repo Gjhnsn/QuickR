@@ -1,13 +1,13 @@
 import styled from "styled-components/native";
+import { SafeAreaView} from 'react-native';
 import { StatusBar } from "expo-status-bar";
+import { windowWidth } from "../../utils/windowDimensions";
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
 flex: 1;
 margin-top: ${StatusBar.currentHeight || 0};
-justify-content: center;
-align-items: center;
-background-color: #fff;
-margin-top: 30px;
 padding: 10px;
-width: 100%;
-`
+align-items: center;
+width: ${windowWidth};
+z-index: 20;
+`;
