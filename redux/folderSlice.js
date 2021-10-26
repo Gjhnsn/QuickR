@@ -62,7 +62,7 @@ const INITIAL_STATE = {
         isSelected: false,
       },
     ],
-  }
+  },
 }
 ;
 
@@ -76,7 +76,8 @@ const folderSlice = createSlice({
 
       state[folderName].items.push(addedLink)
 
-    },
+    }, //
+    
     openAccordion: (state, action) => {
 
       const selectedFolder = action.payload;
@@ -90,7 +91,8 @@ const folderSlice = createSlice({
         }
       })
 
-    },
+    }, //
+
     activeLink: (state, action) => {
 
       const currentFolder = action.payload.currentFolder;
@@ -116,7 +118,9 @@ const folderSlice = createSlice({
         }
       })
 
-    }
+    }, //
+
+
   },
 });
 

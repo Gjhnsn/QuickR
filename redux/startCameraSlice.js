@@ -4,6 +4,7 @@ export const startCameraSlice = createSlice({
   name: "startCamera",
   initialState: {
     setStartCamera: false,
+
   },
   reducers: {
     openCamera: (state) => {
