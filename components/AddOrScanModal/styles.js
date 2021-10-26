@@ -1,34 +1,41 @@
 import styled from "styled-components/native";
 import { windowHeight, windowWidth } from "../../utils/windowDimensions";
+import { Dimensions } from 'react-native';
 
 
-export const ModalOverlay = styled.View`
+
+export const ModalOverlay = styled.Pressable`
     display: flex;
     z-index: 100;
-    
-    opacity: 0.5;
+    background-color: #111;
+    opacity: .8;
     height: ${windowHeight};
     width: ${windowWidth};
     position: absolute;
+    justify-content: center;
 `;
 
+export const CloserOverlay = styled.Pressable`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+`
+
 export const ModalButtonContainer = styled.View`
-    margin-top: 50px;
+    margin-top: ${Dimensions.get("window").height / 2.75}px;
     z-index: 105;
     background-color: rgb(54,54,54);
     width: 280px;
     height: 160px;
-    align-self: flex-end;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-radius: 10px;
+    align-self: center;
 `;
 
 export const GradientBackground = styled.View`
     position: absolute;
     top: 0;
     left: 0;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
     z-index: 100;
@@ -47,12 +54,6 @@ export const CloseContainer = styled.View`
     margin-top: 15px;
 `
 
-export const CloserOverlay = styled.Pressable`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-`
-
 export const AddFolderContainer = styled.View`
     width: 100%;
     height: 35px;
@@ -63,7 +64,7 @@ export const AddFolderContainer = styled.View`
     margin-bottom: 10px;
 `;
 
-export const AddQrContainer = styled.Pressable`
+export const AddQrContainer = styled.View`
     width: 100%;
     height: 35px;
     display: flex;

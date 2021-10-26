@@ -9,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 const QrContainer = () => {
   const currentQr = useSelector((state) => state.qr.url);
   const currentQrName = useSelector((state) => state.qr.urlName);
-  const folderData = useSelector((state) => state.folder)
+  const folderData = useSelector((state) => state.folder.allFolder);
 
   const qrInfo = () => {
     const folderKeys = Object.keys(folderData);

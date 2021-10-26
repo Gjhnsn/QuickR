@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {Container} from './styles'
 
 function FolderContainer() {
-    const folderData = useSelector((state) => state.folder);
+    const folderData = useSelector((state) => state.folder.allFolder);
 
     const renderFolder = () => {
         const folderKeys = Object.keys(folderData);

@@ -68,26 +68,30 @@ const INITIAL_STATE = {
 
 const folderSlice = createSlice({
   name: `folder`,
-  initialState: INITIAL_STATE,
+  initialState: {
+    allFolder: INITIAL_STATE,
+    isModalOpen: false,
+  },
+
   reducers: {
     addUrlToFolder: (state, action) => {
 
       const {folderName, addedLink} = action.payload;
 
-      state[folderName].items.push(addedLink)
+      state.allFolder[folderName].items.push(addedLink)
 
     }, //
     
     openAccordion: (state, action) => {
 
       const selectedFolder = action.payload;
-      const stateKeys = Object.keys(state);
+      const stateKeys = Object.keys(state.allFolder);
 
       stateKeys.map((key) => {
         if(selectedFolder === key) {
-          state[key].isAccordionOpen = !state[key].isAccordionOpen;
+          state.allFolder[key].isAccordionOpen = !state.allFolder[key].isAccordionOpen;
         } else {
-          state[key].isAccordionOpen = false;
+          state.allFolder[key].isAccordionOpen = false;
         }
       })
 
@@ -98,11 +102,11 @@ const folderSlice = createSlice({
       const currentFolder = action.payload.currentFolder;
       const currentLink = action.payload.currentLink;
 
-      const stateKeys = Object.keys(state);
+      const stateKeys = Object.keys(state.allFolder);
 
       stateKeys.map((folder) => {
         if(currentFolder === folder) {
-          const currentFoldersLinks = state[folder].items;
+          const currentFoldersLinks = state.allFolder[folder].items;
           currentFoldersLinks.map((link) => {
             if(currentLink.name === link.name) {
               link.isSelected = true;
@@ -111,7 +115,7 @@ const folderSlice = createSlice({
         }
 
         else {
-          const currentFoldersLinks = state[folder].items;
+          const currentFoldersLinks = state.allFolder[folder].items;
           currentFoldersLinks.map((link) => {
             link.isSelected = false;
           })
@@ -119,10 +123,8 @@ const folderSlice = createSlice({
       })
 
     }, //
-
-
   },
 });
 
-export const {addUrlToFolder, openAccordion, activeLink} = folderSlice.actions;
+export const {addUrlToFolder, openAccordion, activeLink } = folderSlice.actions;
 export default folderSlice.reducer;

@@ -17,7 +17,7 @@ import upIcon from "../../../assets/upIcon.png";
 
 function IndividualFolder({ folder, folderName }) {
   const dispatch = useDispatch();
-  const accordion = useSelector((state) => state.folder);
+  const accordion = useSelector((state) => state.folder.allFolder);
 
   const showLinks = () => {
     if (accordion[folderName].isAccordionOpen) {
