@@ -3,7 +3,7 @@ import { Blob } from './styles';
 import {useSelector} from 'react-redux'
 
 function ColorBlob() {
-    const folderData = useSelector((state) => state.folder) 
+    const folderData = useSelector((state) => state.folder.allFolder) 
 
     return (
         <Blob>

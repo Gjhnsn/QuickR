@@ -16,7 +16,7 @@ import { Input, InputModal } from "./styles";
 
 function UrlModal() {
   const dispatch = useDispatch();
-  const folderData = useSelector((state) => state.folder);
+  const folderData = useSelector((state) => state.folder.allFolder);
 
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
