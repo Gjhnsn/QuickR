@@ -56,7 +56,6 @@ function AddNewItemMenu() {
                   <AddFolderContainer>
                     <FolderImage source={folderIcon} />
                     <AddFolderText
-                      Text
                       style={{ color: "white", fontSize: 18 }}
                     >
                       Add Folder
