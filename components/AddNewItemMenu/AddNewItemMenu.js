@@ -1,5 +1,5 @@
 import { View, Modal, Pressable, Image } from "react-native";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   ModalOverlay,
   ModalButtonContainer,
@@ -9,7 +9,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import folderIcon from "../../assets/folderIcon.png";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import CloseIcon from "../../assets/closeIcon.png";
-import { toggleNewItemModal, toggleAddOrScanModal } from "../../redux/modalSlice";
+import {
+  toggleNewItemModal,
+  toggleAddOrScanModal,
+  toggleNewFolderModal,
+} from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   AddFolderContainer,
@@ -19,25 +23,39 @@ import {
   CloseContainer,
   FolderImage,
   QrImage,
-  CloserOverlay
+  CloserOverlay,
 } from "../AddNewItemMenu/styles";
 
 function AddNewItemMenu() {
-  const isNewItemModalOpen = useSelector((state) => state.modal.isNewItemModalOpen);
+  const isNewItemModalOpen = useSelector(
+    (state) => state.modal.isNewItemModalOpen
+  );
   const dispatch = useDispatch();
 
   const renderModal = () => {
-
     const openAddOrScan = () => {
       dispatch(toggleNewItemModal());
-      setTimeout(() => {dispatch(toggleAddOrScanModal())},200)
-    }
+      setTimeout(() => {
+        dispatch(toggleAddOrScanModal());
+      }, 200);
+    };
+
+    const openNewFolder = () => {
+      dispatch(toggleNewItemModal());
+      setTimeout(() => {
+        dispatch(toggleNewFolderModal());
+      }, 200);
+    };
 
     if (isNewItemModalOpen) {
       return (
         <ModalOverlay onPress={() => dispatch(toggleNewItemModal())}>
-          <Modal transparent={true} visible={isNewItemModalOpen} animationType="fade">
-            <CloserOverlay onPress={() => dispatch(toggleNewItemModal())}/>
+          <Modal
+            transparent={true}
+            visible={isNewItemModalOpen}
+            animationType="fade"
+          >
+            <CloserOverlay onPress={() => dispatch(toggleNewItemModal())} />
             <ModalButtonContainer>
               <GradientBackground>
                 <LinearGradient
@@ -53,11 +71,13 @@ function AddNewItemMenu() {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
-                  <AddFolderContainer>
+                  <AddFolderContainer
+                    onPress={() => {
+                      openNewFolder();
+                    }}
+                  >
                     <FolderImage source={folderIcon} />
-                    <AddFolderText
-                      style={{ color: "white", fontSize: 18 }}
-                    >
+                    <AddFolderText style={{ color: "white", fontSize: 18 }}>
                       Add Folder
                     </AddFolderText>
                   </AddFolderContainer>
