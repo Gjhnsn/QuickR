@@ -1,11 +1,22 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-  background-color: #333;
+  background-color: #1c1d21;
   width: 100%;
   height: 120%;
   padding-top: 100px;
   padding-bottom: 50px;
+`;
+
+export const BackArrowContainer = styled.Pressable`
+  position: absolute;
+  padding-left: 30px;
+  margin-top: 60px;
+`;
+
+export const BackArrowIcon = styled.Image`
+  height: 20px;
+  width: 15px;
 `;
 
 export const FolderTitleContainer = styled.View`
@@ -34,9 +45,10 @@ export const FolderNameLabel = styled.Text`
 
 export const FolderInput = styled.TextInput`
   height: 50px;
-  background-color: #555;
+  background-color: #3b3b3d;
   padding: 10px;
   border-radius: 10px;
+  color: #fff;
 `;
 
 export const DescriptionSection = styled.View`
@@ -51,10 +63,11 @@ export const DescriptionLabel = styled.Text`
   margin-bottom: 20px;
 `;
 export const DescriptionInput = styled.TextInput`
-background-color: #555;
+background-color: #3B3B3D;
 padding: 10px
 height: 100px;
 border-radius: 10px;
+color: #fff;
 `;
 
 export const ColorGridSection = styled.View`
@@ -71,7 +84,7 @@ export const ColorGridLabel = styled.Text`
 
 export const ColorGrid = styled.View`
   width: 100%;
-  background-color: #555;
+  background-color: #3b3b3d;
   height: 100px;
   border-radius: 10px;
 `;
@@ -81,39 +94,39 @@ export const LinkWrapper = styled.View`
 `;
 
 export const NewLinks = styled.View`
-    width: 100%;
-    height: 200px;
-    background-color: #555;
-    border-radius: 10px;
-    margin-bottom: 30px;
-`
+  width: 100%;
+  height: 200px;
+  background-color: #3b3b3d;
+  border-radius: 10px;
+  margin-bottom: 30px;
+`;
 
 export const AddedLinksLabel = styled.Text`
-    color: #fff;
-    margin-bottom: 20px;
+  color: #fff;
+  margin-bottom: 20px;
 `;
 
 export const AddedLinkWrapper = styled.View`
-    height: 35px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
+  height: 35px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
 `;
 
 export const AddedLinks = styled.Text`
-color: #fff;
+  color: #fff;
 `;
 
 export const EditIcon = styled.Image`
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 `;
 
 export const AddLinkBtn = styled.Pressable`
-  background-color: #555;
+  background-color: #3b3b3d;
   border-radius: 10px;
 `;
 
@@ -134,7 +147,7 @@ export const CreateCancelContainer = styled.View`
 `;
 
 export const CreateFolderBtn = styled.Pressable`
-  background-color: #555;
+  background-color: #3b3b3d;
   width: 50%;
   height: 45px;
   display: flex;

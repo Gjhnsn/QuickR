@@ -53,7 +53,7 @@ export const CloserOverlay = styled.Pressable`
     position: absolute;
 `
 
-export const AddFolderContainer = styled.View`
+export const AddFolderContainer = styled.Pressable`
     width: 100%;
     height: 35px;
     display: flex;
