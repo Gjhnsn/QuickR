@@ -144,7 +144,7 @@ export const CreateCancelContainer = styled.View`
   padding-left: 30px;
   padding-right: 30px;
   margin-top: 40px;
-`;
+  `;
 
 export const CreateFolderBtn = styled.Pressable`
   background-color: #3b3b3d;

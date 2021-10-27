@@ -108,7 +108,6 @@ function NewFolderPage() {
                 >
                   <AddLinkText>Add Link</AddLinkText>
                 </AddLinkBtn>
-                {openAddOrScan ? <AddOrScanModal /> : null}
               </LinkWrapper>
 
               <CreateCancelContainer>
@@ -123,6 +122,7 @@ function NewFolderPage() {
                   <CancelText>Cancel</CancelText>
                 </CancelBtn>
               </CreateCancelContainer>
+              {openAddOrScan ? <AddOrScanModal /> : null}
             </Container>
           </ScrollView>
         </Modal>
