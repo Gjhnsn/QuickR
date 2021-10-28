@@ -3,7 +3,6 @@ import { Container } from "./styles";
 import IndividualLinks from "../IndividualLinks/IndividualLinks";
 
 function LinksContainer({ folderItems, folderColor, folderName }) {
-
   const renderLinks = () => {
     return folderItems.map((link) => {
       return (
