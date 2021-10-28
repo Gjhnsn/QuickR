@@ -5,7 +5,6 @@ import { windowHeight, windowWidth } from "../../utils/windowDimensions";
 export const ModalOverlay = styled.View`
     display: flex;
     z-index: 100;
-    
     opacity: 0.5;
     height: ${windowHeight};
     width: ${windowWidth};

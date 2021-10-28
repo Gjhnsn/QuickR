@@ -19,6 +19,7 @@ const Dashboard = () => {
         <AddOrScanModal />
         <AddNewItemMenu />
         <NewFolderPage />
+        <UrlModal />
         {/* Homescreen View */}
         <Container>
           <TopBar />
