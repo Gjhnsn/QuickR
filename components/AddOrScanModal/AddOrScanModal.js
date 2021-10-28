@@ -9,7 +9,7 @@ import { Modal, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import CloseIcon from "../../assets/closeIcon.png";
-import { toggleAddOrScanModal } from "../../redux/modalSlice";
+import { toggleAddOrScanModal, toggleAddUrlModal } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   AddFolderContainer,
@@ -28,6 +28,11 @@ const AddOrScanModal = () => {
   );
 
   const dispatch = useDispatch();
+
+  const openAddUrlModal = () => {
+    dispatch(toggleAddOrScanModal());
+    setTimeout(() => {dispatch(toggleAddUrlModal())}, 500)
+  }
 
   const renderModal = () => {
     if (isAddOrScanModalOpen) {
@@ -50,12 +55,14 @@ const AddOrScanModal = () => {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
-                  <AddFolderContainer>
-                    <FolderImage source={link} />
-                    <AddFolderText style={{ color: "white", fontSize: 18 }}>
-                      Add URL
-                    </AddFolderText>
-                  </AddFolderContainer>
+                  <Pressable onPress={() => {openAddUrlModal()}}>
+                    <AddFolderContainer>
+                      <FolderImage source={link} />
+                      <AddFolderText style={{ color: "white", fontSize: 18 }}>
+                        Add URL
+                      </AddFolderText>
+                    </AddFolderContainer>
+                  </Pressable>
                   <AddQrContainer>
                     <QrImage source={qrCodeIcon} />
                     <AddQrText style={{ color: "white" }}>

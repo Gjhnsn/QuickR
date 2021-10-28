@@ -34,9 +34,11 @@ import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddOrScanModal,
   toggleNewFolderModal,
+  toggleAddUrlModal,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
+import UrlModal from "../../UrlModal/UrlModal";
 
 function NewFolderPage() {
   const isNewFolderModalOpen = useSelector(
@@ -46,6 +48,10 @@ function NewFolderPage() {
 
   const openAddOrScan = () => {
     dispatch(toggleAddOrScanModal());
+  };
+
+  const openAddUrlModal = () => {
+    dispatch(toggleAddUrlModal());
   };
 
   const renderModal = () => {
@@ -123,6 +129,7 @@ function NewFolderPage() {
                 </CancelBtn>
               </CreateCancelContainer>
               {openAddOrScan ? <AddOrScanModal /> : null}
+              {openAddUrlModal ? <UrlModal /> : null}
             </Container>
           </ScrollView>
         </Modal>
