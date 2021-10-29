@@ -32,10 +32,10 @@ export const FolderTitle = styled.Text`
 `;
 
 export const FolderInputSection = styled.View`
-    width: 100%
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: 25px;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 25px;
 `;
 
 export const FolderNameLabel = styled.Text`
@@ -63,11 +63,11 @@ export const DescriptionLabel = styled.Text`
   margin-bottom: 20px;
 `;
 export const DescriptionInput = styled.TextInput`
-background-color: #3B3B3D;
-padding: 10px
-height: 100px;
-border-radius: 10px;
-color: #fff;
+  background-color: #3b3b3d;
+  padding: 10px;
+  height: 100px;
+  border-radius: 10px;
+  color: #fff;
 `;
 
 export const ColorGridSection = styled.View`
@@ -87,6 +87,8 @@ export const ColorGrid = styled.View`
   background-color: #3b3b3d;
   height: 100px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const LinkWrapper = styled.View`
@@ -144,7 +146,7 @@ export const CreateCancelContainer = styled.View`
   padding-left: 30px;
   padding-right: 30px;
   margin-top: 40px;
-  `;
+`;
 
 export const CreateFolderBtn = styled.Pressable`
   background-color: #3b3b3d;
@@ -173,4 +175,18 @@ export const CancelBtn = styled.Pressable`
 export const CancelText = styled.Text`
   color: red;
   text-align: center;
+`;
+
+// ............................................ DUMMY COLOR SELECTOR
+
+export const Color1 = styled.Pressable`
+  background-color: red;
+  width: 50%;
+  height: 100%;
+`;
+
+export const Color2 = styled.Pressable`
+  background-color: blue;
+  width: 50%;
+  height: 100%;
 `;
