@@ -8,13 +8,7 @@ function IndividualLinks({ link, folderColor, isSelected, folderName }) {
   const dispatch = useDispatch();
   const setSelectedLinkInfo = () => {
     dispatch(activeLink({ currentFolder: folderName, currentLink: link }));
-    dispatch(
-      setQr({
-        urlName: link.name,
-        url: link.url,
-        description: link.description,
-      })
-    );
+    dispatch(setQr({urlName: link.name, url: link.url, description: link.description}));
   };
 
   return (

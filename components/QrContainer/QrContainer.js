@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Pressable, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { __startCamera } from "../../utils/startCamera";
 import {
@@ -9,10 +9,14 @@ import {
   QrInfo,
   QrName,
   QrNameContainer,
+  DescriptionContainer,
+  DescriptionText,
+  Link,
+  LinkButton,
 } from "./styles";
 import MoreIcon from "../../assets/moreIcon.svg";
 import { Ionicons } from "@expo/vector-icons";
-import { WhiteBalance } from "expo-camera/build/Camera.types";
+import LinkIcon from "../../assets/link.png";
 
 const QrContainer = () => {
   const currentQr = useSelector((state) => state.qr.url);
@@ -21,17 +25,31 @@ const QrContainer = () => {
   const qrDescription = useSelector((state) => state.qr.description);
   const current = useSelector((state) => state.folder.allFolder);
 
-  const qrInfo = () => {
-    const folderKeys = Object.keys(folderData); // ["Personal", "Menu", "Social"] names of each folder
-    console.log("description: ", qrDescription);
+  const [openQrDescription, setOpenQrDescription] = useState(false);
 
-    return <Text style={styles.text}>{qrDescription}</Text>;
+  const toggleDescription = () => {
+    setOpenQrDescription(!openQrDescription);
+  };
+
+  const renderQrDescription = () => {
+    if (openQrDescription) {
+      return (
+        <DescriptionContainer>
+          <DescriptionText>{qrDescription}</DescriptionText>
+          <LinkButton onPress={() => {}}>
+            <Link resizeMode="contain" source={LinkIcon} />
+          </LinkButton>
+        </DescriptionContainer>
+      );
+    } else {
+      <></>;
+    }
   };
 
   return (
     <Container>
+      <QrImage source={{ uri: currentQr }} />
       <QrWrapper>
-        <QrImage source={{ uri: currentQr }} />
         <QrInfo>
           <QrNameContainer>
             <QrName>{currentQrName}</QrName>
@@ -40,11 +58,11 @@ const QrContainer = () => {
                 name="ellipsis-horizontal"
                 size={30}
                 color="white"
-                onPress={() => qrInfo()}
+                onPress={() => toggleDescription()}
               />
             </Pressable>
-            <View style={styles.container}>{qrInfo()}</View>
           </QrNameContainer>
+          {renderQrDescription()}
         </QrInfo>
       </QrWrapper>
     </Container>
