@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
-  'Personal': {
+  Personal: {
     orderNumber: 0,
     id: "1",
     folderColor: "blue",
@@ -12,7 +12,8 @@ const INITIAL_STATE = {
         name: "Teriyaki Don Menu",
         id: "023jru0fj2098j32rf",
         url: "www.teriyakidon.com",
-        description: "restaurant menu ",
+        description:
+          "Menu for local japanese restraunt in fresno Dine in, Take Out, or Delivery. Open 7 days.", //88 characters
         isSelected: false,
       },
       {
@@ -31,7 +32,7 @@ const INITIAL_STATE = {
       },
     ],
   }, // Personal Ends Here
-  'Menu': {
+  Menu: {
     orderNumber: 1,
     id: "2",
     folderColor: "yellow",
@@ -47,7 +48,7 @@ const INITIAL_STATE = {
       },
     ],
   }, // Menu Ends Here
-  'Social': {
+  Social: {
     orderNumber: 3,
     id: "23",
     folderColor: "darkgreen",
@@ -117,5 +118,6 @@ const folderSlice = createSlice({
   },
 });
 
-export const { addUrlToFolder, openAccordion, activeLink } = folderSlice.actions;
+export const { addUrlToFolder, openAccordion, activeLink } =
+  folderSlice.actions;
 export default folderSlice.reducer;

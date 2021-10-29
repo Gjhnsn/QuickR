@@ -1,17 +1,20 @@
 import styled from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
-import {windowWidth} from '../../utils/windowDimensions';
+import { windowWidth } from "../../utils/windowDimensions";
 
 export const Container = styled.View`
   width: ${windowWidth};
   justify-content: center;
   align-items: center;
   margin-top: 25px;
-  
 `;
 
 export const QrWrapper = styled.View`
-
+  width: 300px;
+  height: 45px;
+  background-color: #363636;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
 
 export const QrImage = styled.Image`
@@ -22,8 +25,6 @@ export const QrImage = styled.Image`
 `;
 
 export const QrInfo = styled.View`
-  width: 300px;
-  height: 45px;
   background-color: #363636;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -51,3 +52,29 @@ export const MoreIcon = styled.Image`
   width: 32px;
 `;
 
+export const DescriptionContainer = styled.View`
+  background-color: #363636;
+  padding-left: 15px;
+  padding-right: 70px;
+  padding-bottom: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+`;
+
+export const DescriptionText = styled.Text`
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.5;
+`;
+
+export const LinkButton = styled.Pressable`
+position: absolute;
+bottom: 0;
+right: 0;
+margin-right: 15px;
+margin-bottom: 15px;
+`;
+
+export const Link = styled.Image`
+  height: 19px;
+`
