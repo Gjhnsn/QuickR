@@ -21,10 +21,7 @@ import LinkIcon from "../../assets/link.png";
 const QrContainer = () => {
   const currentQr = useSelector((state) => state.qr.url);
   const currentQrName = useSelector((state) => state.qr.urlName);
-  const folderData = useSelector((state) => state.folder.allFolder);
   const qrDescription = useSelector((state) => state.qr.description);
-  const current = useSelector((state) => state.folder.allFolder);
-
   const [openQrDescription, setOpenQrDescription] = useState(false);
 
   const toggleDescription = () => {
@@ -41,8 +38,6 @@ const QrContainer = () => {
           </LinkButton>
         </DescriptionContainer>
       );
-    } else {
-      <></>;
     }
   };
 
