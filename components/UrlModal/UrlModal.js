@@ -63,7 +63,7 @@ function UrlModal() {
   };
 
   //---------------Commented out for later use
-  //-----(folder names to be added to choose folder section)
+  //-----(url names to be added to choose folder section)
 
   // const foldersInInput = () => {
   //   const folderKeys = Object.keys(folderData);

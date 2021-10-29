@@ -1,5 +1,6 @@
 import { Modal, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
   Container,
   FolderTitle,
@@ -28,6 +29,8 @@ import {
   AddedLinksLabel,
   BackArrowContainer,
   BackArrowIcon,
+  Color1,
+  Color2,
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
@@ -39,8 +42,18 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
+import { addNewFolder } from "../../../redux/folderSlice";
 
 function NewFolderPage() {
+  const [folderName, setFolderName] = useState(``);
+  const [description, setDescription] = useState(``);
+  const [folderColor, setFolderColor] = useState(``);
+  const [newFolder, setNewFolder] = useState({
+    folderName: ``,
+    description: ``,
+    folderColor: ``,
+  });
+
   const isNewFolderModalOpen = useSelector(
     (state) => state.modal.isNewFolderModalOpen
   );
@@ -53,6 +66,26 @@ function NewFolderPage() {
   const openAddUrlModal = () => {
     dispatch(toggleAddUrlModal());
   };
+
+  //used for final submission of new folder data
+  const finalSubmission = () => {
+    dispatch(
+      addNewFolder({
+        folderName: folderName,
+        orderNumber: 5,
+        id: uuidv4(),
+        folderColor: "green",
+        description: description,
+        isLastActive: false,
+        isAccordionOpen: false,
+        items: [],
+      })
+    ),
+      dispatch(toggleNewFolderModal());
+  };
+
+  const test = useSelector((state) => state.folder.allFolder);
+  console.log(test);
 
   const renderModal = () => {
     if (isNewFolderModalOpen) {
@@ -80,6 +113,8 @@ function NewFolderPage() {
                 <FolderInput
                   placeholder="Name Your Folder..."
                   placeholderTextColor="#c1c1c1"
+                  onChangeText={setFolderName}
+                  value={folderName}
                 />
               </FolderInputSection>
 
@@ -88,14 +123,19 @@ function NewFolderPage() {
                 <DescriptionInput
                   placeholder="Add Description..."
                   placeholderTextColor="#c1c1c1"
-                  maxLength={100}
+                  maxLength={85}
                   multiline={true}
+                  onChangeText={setDescription}
+                  value={description}
                 />
               </DescriptionSection>
 
               <ColorGridSection>
                 <ColorGridLabel>Color Grid</ColorGridLabel>
-                <ColorGrid></ColorGrid>
+                <ColorGrid>
+                  <Color1 onPress={() => setFolderColor(`red`)} />
+                  <Color2 onPress={() => setFolderColor(`blue`)} />
+                </ColorGrid>
               </ColorGridSection>
 
               <LinkWrapper>
@@ -117,7 +157,7 @@ function NewFolderPage() {
               </LinkWrapper>
 
               <CreateCancelContainer>
-                <CreateFolderBtn>
+                <CreateFolderBtn onPress={() => finalSubmission()}>
                   <CreateText>Create</CreateText>
                 </CreateFolderBtn>
                 <CancelBtn

@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     orderNumber: 0,
     id: "1",
     folderColor: "blue",
+    description: "this is a personal folder",
     isLastActive: false,
     isAccordionOpen: false,
     items: [
@@ -36,6 +37,7 @@ const INITIAL_STATE = {
     orderNumber: 1,
     id: "2",
     folderColor: "yellow",
+    description: "this is a Menu folder with menu codes",
     isLastActive: false,
     isAccordionOpen: false,
     items: [
@@ -52,6 +54,7 @@ const INITIAL_STATE = {
     orderNumber: 3,
     id: "23",
     folderColor: "darkgreen",
+    description: "this is a social folder with chicks IG accounts",
     isLastActive: false,
     isAccordionOpen: false,
     items: [
@@ -77,7 +80,34 @@ const folderSlice = createSlice({
       const { folderName, addedLink } = action.payload;
 
       state.allFolder[folderName].items.push(addedLink);
-    }, //
+    },
+
+    addNewFolder: (state, action) => {
+      const {
+        folderName,
+        orderNumber,
+        id,
+        folderColor,
+        description,
+        isLastActive,
+        isAccordionOpen,
+        items,
+      } = action.payload;
+
+      const newFolder = {
+        orderNumber: 4,
+        id,
+        folderColor,
+        description,
+        isLastActive,
+        isAccordionOpen,
+        items,
+      };
+
+      state.allFolder[folderName] = newFolder;
+
+      console.log(action.payload);
+    },
 
     openAccordion: (state, action) => {
       const selectedFolder = action.payload;
@@ -118,6 +148,6 @@ const folderSlice = createSlice({
   },
 });
 
-export const { addUrlToFolder, openAccordion, activeLink } =
+export const { addUrlToFolder, openAccordion, activeLink, addNewFolder } =
   folderSlice.actions;
 export default folderSlice.reducer;
