@@ -54,7 +54,7 @@ const INITIAL_STATE = {
     orderNumber: 3,
     id: "23",
     folderColor: "darkgreen",
-    description: "this is a social folder with chicks IG accounts",
+    description: "this is a social folder with IG accounts",
     isLastActive: false,
     isAccordionOpen: false,
     items: [
