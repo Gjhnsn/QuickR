@@ -105,8 +105,6 @@ const folderSlice = createSlice({
       };
 
       state.allFolder[folderName] = newFolder;
-
-      console.log(action.payload);
     },
 
     openAccordion: (state, action) => {
@@ -121,7 +119,7 @@ const folderSlice = createSlice({
           state.allFolder[key].isAccordionOpen = false;
         }
       });
-    }, //
+    },
 
     activeLink: (state, action) => {
       const currentFolder = action.payload.currentFolder;

@@ -48,11 +48,6 @@ function NewFolderPage() {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
-  const [newFolder, setNewFolder] = useState({
-    folderName: ``,
-    description: ``,
-    folderColor: ``,
-  });
 
   const isNewFolderModalOpen = useSelector(
     (state) => state.modal.isNewFolderModalOpen
@@ -67,14 +62,13 @@ function NewFolderPage() {
     dispatch(toggleAddUrlModal());
   };
 
-  //used for final submission of new folder data
-  const finalSubmission = () => {
+  const createNewFolder = () => {
     dispatch(
       addNewFolder({
         folderName: folderName,
         orderNumber: 5,
         id: uuidv4(),
-        folderColor: "green",
+        folderColor: folderColor,
         description: description,
         isLastActive: false,
         isAccordionOpen: false,
@@ -83,9 +77,6 @@ function NewFolderPage() {
     ),
       dispatch(toggleNewFolderModal());
   };
-
-  const test = useSelector((state) => state.folder.allFolder);
-  console.log(test);
 
   const renderModal = () => {
     if (isNewFolderModalOpen) {
@@ -157,7 +148,7 @@ function NewFolderPage() {
               </LinkWrapper>
 
               <CreateCancelContainer>
-                <CreateFolderBtn onPress={() => finalSubmission()}>
+                <CreateFolderBtn onPress={() => createNewFolder()}>
                   <CreateText>Create</CreateText>
                 </CreateFolderBtn>
                 <CancelBtn
