@@ -1,4 +1,4 @@
-import { Modal, ScrollView } from "react-native";
+import { Modal, ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -62,20 +62,40 @@ function NewFolderPage() {
     dispatch(toggleAddUrlModal());
   };
 
+  const configureAlert = (missingFieldValue) => {
+    Alert.alert("Error", `Please enter values for ${missingFieldValue}`);
+  };
+
+  const clearInput = () => {
+    setFolderName("");
+    setDescription("");
+  };
+
   const createNewFolder = () => {
-    dispatch(
-      addNewFolder({
-        folderName: folderName,
-        orderNumber: 5,
-        id: uuidv4(),
-        folderColor: folderColor,
-        description: description,
-        isLastActive: false,
-        isAccordionOpen: false,
-        items: [],
-      })
-    ),
-      dispatch(toggleNewFolderModal());
+    const checkFolderValue = folderName.trim() === "";
+    const checkDescriptionValue = description.trim() === "";
+
+    if (checkFolderValue && checkDescriptionValue)
+      return configureAlert("Folder Name and Description ");
+    if (checkFolderValue) return configureAlert("Folder Name");
+    if (checkDescriptionValue) return configureAlert("Description");
+    else {
+      dispatch(
+        addNewFolder({
+          folderName: folderName,
+          orderNumber: 5,
+          id: uuidv4(),
+          folderColor: folderColor,
+          description: description,
+          isLastActive: false,
+          isAccordionOpen: false,
+          items: [],
+        })
+      ),
+        dispatch(toggleNewFolderModal());
+      // clear input fields once user clicks "create" button
+      clearInput();
+    }
   };
 
   const renderModal = () => {
