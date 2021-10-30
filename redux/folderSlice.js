@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const INITIAL_STATE = {
   Personal: {
+    name: "Personal",
     orderNumber: 0,
     id: "1",
     folderColor: "blue",
@@ -34,6 +35,7 @@ const INITIAL_STATE = {
     ],
   }, // Personal Ends Here
   Menu: {
+    name: "Menu",
     orderNumber: 1,
     id: "2",
     folderColor: "yellow",
@@ -51,6 +53,7 @@ const INITIAL_STATE = {
     ],
   }, // Menu Ends Here
   Social: {
+    name: "Social",
     orderNumber: 3,
     id: "23",
     folderColor: "darkgreen",
@@ -84,7 +87,7 @@ const folderSlice = createSlice({
 
     addNewFolder: (state, action) => {
       const {
-        folderName,
+        name,
         orderNumber,
         id,
         folderColor,
@@ -104,7 +107,13 @@ const folderSlice = createSlice({
         items,
       };
 
-      state.allFolder[folderName] = newFolder;
+      state.allFolder[name] = newFolder;
+    },
+
+    editFolder: (state, action) => {
+      const { newName, folder } = action.payload;
+      delete state.allFolder[folder.name];
+      state.allFolder[newName] = folder;
     },
 
     openAccordion: (state, action) => {
@@ -146,6 +155,11 @@ const folderSlice = createSlice({
   },
 });
 
-export const { addUrlToFolder, openAccordion, activeLink, addNewFolder } =
-  folderSlice.actions;
+export const {
+  addUrlToFolder,
+  openAccordion,
+  activeLink,
+  addNewFolder,
+  editFolder,
+} = folderSlice.actions;
 export default folderSlice.reducer;
