@@ -114,6 +114,10 @@ const folderSlice = createSlice({
       const { newName, folder } = action.payload;
       delete state.allFolder[folder.name];
       state.allFolder[newName] = folder;
+      state.allFolder[newName] = folder.name;
+      //need to get place holder name
+      // state[folder.name] = newName;
+      console.log(`inside folder: `, folder);
     },
 
     openAccordion: (state, action) => {

@@ -20,7 +20,7 @@ export const modalSlice = createSlice({
     toggleNewFolderModal: (state) => {
       state.isNewFolderModalOpen = !state.isNewFolderModalOpen;
       state.editMode = false;
-      state.folderToEdit = null;
+      // state.folderToEdit = null;
     },
     toggleAddUrlModal: (state) => {
       state.isAddUrlModalOpen = !state.isAddUrlModalOpen;

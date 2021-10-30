@@ -38,12 +38,11 @@ import {
   toggleAddOrScanModal,
   toggleNewFolderModal,
   toggleAddUrlModal,
-  editFolder,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
-import { addNewFolder } from "../../../redux/folderSlice";
+import { addNewFolder, editFolder } from "../../../redux/folderSlice";
 
 function NewFolderPage() {
   const [folderName, setFolderName] = useState(``);
@@ -60,8 +59,6 @@ function NewFolderPage() {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
-
-  console.log(editMode);
 
   const dispatch = useDispatch();
 
@@ -131,6 +128,7 @@ function NewFolderPage() {
       dispatch(editFolder({ newName: folderName, folder: folderToEdit }));
       dispatch(toggleNewFolderModal());
     }
+    clearInput();
   };
 
   const renderEditFolderButtons = () => {

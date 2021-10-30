@@ -5,7 +5,7 @@ import {Container} from './styles'
 
 function FolderContainer() {
     const folderData = useSelector((state) => state.folder.allFolder);
-    console.log('folderData ', folderData);
+    
 
     const renderFolder = () => {
         const folderKeys = Object.keys(folderData);
