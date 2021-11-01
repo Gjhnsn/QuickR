@@ -105,6 +105,7 @@ const folderSlice = createSlice({
         isLastActive,
         isAccordionOpen,
         items,
+        name,
       };
 
       state.allFolder[name] = newFolder;
