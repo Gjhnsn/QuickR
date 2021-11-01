@@ -123,9 +123,15 @@ function NewFolderPage() {
     }
   };
 
+
   const editSubmit = () => {
     if (validateFolderDetails()) {
-      dispatch(editFolder({ newName: folderName, folder: folderToEdit }));
+      const updatedValues = {
+        name: folderName,
+        description,
+        folderColor,
+      }
+      dispatch(editFolder({ updatedValues, folder: folderToEdit }));
       dispatch(toggleNewFolderModal());
     }
     clearInput();
