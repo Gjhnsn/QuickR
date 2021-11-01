@@ -163,6 +163,11 @@ export const CreateText = styled.Text`
   text-align: center;
 `;
 
+export const SaveText = styled.Text`
+  color: white;
+  text-align: center;
+`;
+
 export const CancelBtn = styled.Pressable`
   width: 50%;
   height: 45px;

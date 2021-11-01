@@ -1,4 +1,4 @@
-import { Modal, ScrollView, Alert } from "react-native";
+import { Modal, ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -42,16 +42,24 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
-import { addNewFolder } from "../../../redux/folderSlice";
+import { addNewFolder, editFolder } from "../../../redux/folderSlice";
 
 function NewFolderPage() {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
+  const [error, setError] = useState(``);
 
   const isNewFolderModalOpen = useSelector(
     (state) => state.modal.isNewFolderModalOpen
   );
+
+  const editMode = useSelector((state) => state.modal.editMode);
+  const folderToEdit = useSelector((state) => state.modal.folderToEdit);
+  const folderKeys = useSelector((state) =>
+    Object.keys(state.folder.allFolder)
+  );
+
   const dispatch = useDispatch();
 
   const openAddOrScan = () => {
@@ -60,6 +68,30 @@ function NewFolderPage() {
 
   const openAddUrlModal = () => {
     dispatch(toggleAddUrlModal());
+  };
+
+  const validateFolderDetails = () => {
+    const checkFolderValue = folderName.trim() === "";
+    const checkDescriptionValue = description.trim() === "";
+
+    if (checkFolderValue && checkDescriptionValue) {
+      configureAlert("Folder Name and Description ");
+      return false;
+    }
+    if (checkFolderValue) {
+      configureAlert("Folder Name");
+      return false;
+    }
+    if (checkDescriptionValue) {
+      configureAlert("Description");
+      return false;
+    }
+    if (folderKeys.includes(folderName)) {
+      // TODO: need to show error on screen
+      Alert.alert("Folder Name Already Exists");
+      return false;
+    }
+    return true;
   };
 
   const configureAlert = (missingFieldValue) => {
@@ -72,17 +104,10 @@ function NewFolderPage() {
   };
 
   const createNewFolder = () => {
-    const checkFolderValue = folderName.trim() === "";
-    const checkDescriptionValue = description.trim() === "";
-
-    if (checkFolderValue && checkDescriptionValue)
-      return configureAlert("Folder Name and Description ");
-    if (checkFolderValue) return configureAlert("Folder Name");
-    if (checkDescriptionValue) return configureAlert("Description");
-    else {
+    if (validateFolderDetails()) {
       dispatch(
         addNewFolder({
-          folderName: folderName,
+          name: folderName,
           orderNumber: 5,
           id: uuidv4(),
           folderColor: folderColor,
@@ -96,6 +121,54 @@ function NewFolderPage() {
       // clear input fields once user clicks "create" button
       clearInput();
     }
+  };
+
+
+  const editSubmit = () => {
+    if (validateFolderDetails()) {
+      const updatedValues = {
+        name: folderName,
+        description,
+        folderColor,
+      }
+      dispatch(editFolder({ updatedValues, folder: folderToEdit }));
+      dispatch(toggleNewFolderModal());
+    }
+    clearInput();
+  };
+
+  const renderEditFolderButtons = () => {
+    return (
+      <CreateCancelContainer>
+        <CreateFolderBtn onPress={() => createNewFolder()}>
+          <CreateText>Create</CreateText>
+        </CreateFolderBtn>
+        <CancelBtn
+          onPress={() => {
+            dispatch(toggleNewFolderModal());
+          }}
+        >
+          <CancelText>Cancel</CancelText>
+        </CancelBtn>
+      </CreateCancelContainer>
+    );
+  };
+
+  const renderAddFolderButtons = () => {
+    return (
+      <CreateCancelContainer>
+        <CreateFolderBtn onPress={() => editSubmit()}>
+          <CreateText>Save</CreateText>
+        </CreateFolderBtn>
+        <CancelBtn
+          onPress={() => {
+            dispatch(toggleNewFolderModal());
+          }}
+        >
+          <CancelText>Delete</CancelText>
+        </CancelBtn>
+      </CreateCancelContainer>
+    );
   };
 
   const renderModal = () => {
@@ -116,13 +189,15 @@ function NewFolderPage() {
                 <BackArrowIcon source={backArrowIcon} />
               </BackArrowContainer>
               <FolderTitleContainer>
-                <FolderTitle>New Folder</FolderTitle>
+                <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
               </FolderTitleContainer>
 
               <FolderInputSection>
                 <FolderNameLabel>Folder Name</FolderNameLabel>
                 <FolderInput
-                  placeholder="Name Your Folder..."
+                  placeholder={
+                    editMode ? folderToEdit.name : "Name Your Folder..."
+                  }
                   placeholderTextColor="#c1c1c1"
                   onChangeText={setFolderName}
                   value={folderName}
@@ -167,18 +242,9 @@ function NewFolderPage() {
                 </AddLinkBtn>
               </LinkWrapper>
 
-              <CreateCancelContainer>
-                <CreateFolderBtn onPress={() => createNewFolder()}>
-                  <CreateText>Create</CreateText>
-                </CreateFolderBtn>
-                <CancelBtn
-                  onPress={() => {
-                    dispatch(toggleNewFolderModal());
-                  }}
-                >
-                  <CancelText>Cancel</CancelText>
-                </CancelBtn>
-              </CreateCancelContainer>
+              {/* render buttons based on which folder user is in */}
+              {editMode ? renderAddFolderButtons() : renderEditFolderButtons()}
+
               {openAddOrScan ? <AddOrScanModal /> : null}
               {openAddUrlModal ? <UrlModal /> : null}
             </Container>
