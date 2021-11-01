@@ -12,7 +12,7 @@ import CloseIcon from "../../assets/closeIcon.png";
 import {
   toggleNewItemModal,
   toggleAddOrScanModal,
-  toggleNewFolderModal,
+  toggleFolderActionModal,
 } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -43,7 +43,7 @@ function AddNewItemMenu() {
     const openNewFolder = () => {
       dispatch(toggleNewItemModal());
       setTimeout(() => {
-        dispatch(toggleNewFolderModal());
+        dispatch(toggleFolderActionModal());
       }, 200);
     };
 

@@ -113,13 +113,14 @@ const folderSlice = createSlice({
     editFolder: (state, action) => {
       const { updatedValues, folder } = action.payload;
       const folderToUpdate = Object.assign({}, folder);
-
       delete state.allFolder[folder.name];
-
       const updatedFolder = Object.assign(folderToUpdate, updatedValues);
-
       state.allFolder[updatedFolder.name] = updatedFolder;
+    },
 
+    deleteFolder: (state, action) => {
+      const { folderToDelete } = action.payload;
+      delete state.allFolder[folderToDelete.name];
     },
 
     openAccordion: (state, action) => {
@@ -167,5 +168,6 @@ export const {
   activeLink,
   addNewFolder,
   editFolder,
+  deleteFolder,
 } = folderSlice.actions;
 export default folderSlice.reducer;
