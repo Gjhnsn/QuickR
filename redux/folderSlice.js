@@ -117,8 +117,6 @@ const folderSlice = createSlice({
       delete state.allFolder[folder.name];
       const updatedFolder = Object.assign(folderToUpdate, updatedValues);
       state.allFolder[updatedFolder.name] = updatedFolder;
-
-      console.log("updatedFolder: ", updatedFolder);
     },
 
     deleteFolder: (state, action) => {
