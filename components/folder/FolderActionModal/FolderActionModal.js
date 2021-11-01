@@ -36,22 +36,22 @@ import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddOrScanModal,
-  toggleNewFolderModal,
+  toggleFolderActionModal,
   toggleAddUrlModal,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
-import { addNewFolder, editFolder } from "../../../redux/folderSlice";
+import { addNewFolder, editFolder, deleteFolder } from "../../../redux/folderSlice";
 
-function NewFolderPage() {
+function FolderActionModal() {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
   const [error, setError] = useState(``);
 
-  const isNewFolderModalOpen = useSelector(
-    (state) => state.modal.isNewFolderModalOpen
+  const isFolderActionModalOpen = useSelector(
+    (state) => state.modal.isFolderActionModalOpen
   );
 
   const editMode = useSelector((state) => state.modal.editMode);
@@ -59,6 +59,7 @@ function NewFolderPage() {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+
 
   const dispatch = useDispatch();
 
@@ -117,11 +118,15 @@ function NewFolderPage() {
           items: [],
         })
       ),
-        dispatch(toggleNewFolderModal());
-      // clear input fields once user clicks "create" button
+        dispatch(toggleFolderActionModal());
       clearInput();
     }
   };
+
+  const deleteFolderHandler = () => {
+    dispatch(deleteFolder({folderToDelete: folderToEdit}));
+    dispatch(toggleFolderActionModal());
+  }
 
 
   const editSubmit = () => {
@@ -132,12 +137,12 @@ function NewFolderPage() {
         folderColor,
       }
       dispatch(editFolder({ updatedValues, folder: folderToEdit }));
-      dispatch(toggleNewFolderModal());
+      dispatch(toggleFolderActionModal());
     }
     clearInput();
   };
 
-  const renderEditFolderButtons = () => {
+  const renderAddFolderButtons = () => {
     return (
       <CreateCancelContainer>
         <CreateFolderBtn onPress={() => createNewFolder()}>
@@ -145,7 +150,7 @@ function NewFolderPage() {
         </CreateFolderBtn>
         <CancelBtn
           onPress={() => {
-            dispatch(toggleNewFolderModal());
+            dispatch(toggleFolderActionModal());
           }}
         >
           <CancelText>Cancel</CancelText>
@@ -154,7 +159,7 @@ function NewFolderPage() {
     );
   };
 
-  const renderAddFolderButtons = () => {
+  const renderEditFolderButtons = () => {
     return (
       <CreateCancelContainer>
         <CreateFolderBtn onPress={() => editSubmit()}>
@@ -162,28 +167,28 @@ function NewFolderPage() {
         </CreateFolderBtn>
         <CancelBtn
           onPress={() => {
-            dispatch(toggleNewFolderModal());
+            dispatch(toggleFolderActionModal());
           }}
         >
-          <CancelText>Delete</CancelText>
+          <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
         </CancelBtn>
       </CreateCancelContainer>
     );
   };
 
   const renderModal = () => {
-    if (isNewFolderModalOpen) {
+    if (isFolderActionModalOpen) {
       return (
         <Modal
           transparent={false}
-          visible={isNewFolderModalOpen}
+          visible={isFolderActionModalOpen}
           animationType="slide"
         >
           <ScrollView>
             <Container>
               <BackArrowContainer
                 onPress={() => {
-                  dispatch(toggleNewFolderModal());
+                  dispatch(toggleFolderActionModal());
                 }}
               >
                 <BackArrowIcon source={backArrowIcon} />
@@ -243,7 +248,7 @@ function NewFolderPage() {
               </LinkWrapper>
 
               {/* render buttons based on which folder user is in */}
-              {editMode ? renderAddFolderButtons() : renderEditFolderButtons()}
+              {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
 
               {openAddOrScan ? <AddOrScanModal /> : null}
               {openAddUrlModal ? <UrlModal /> : null}
@@ -259,4 +264,4 @@ function NewFolderPage() {
   return <>{renderModal()}</>;
 }
 
-export default NewFolderPage;
+export default FolderActionModal;

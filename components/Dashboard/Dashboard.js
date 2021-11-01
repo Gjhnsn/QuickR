@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import QrContainer from "../QrContainer/QrContainer";
 import UrlModal from "../UrlModal/UrlModal";
 import FolderContainer from "../folder/FolderContainer/FolderContainer";
@@ -8,7 +8,7 @@ import { ScrollView } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import AddOrScanModal from "../AddOrScanModal/AddOrScanModal";
-import NewFolderPage from "../folder/NewFolderModal/NewFolderModal";
+import FolderActionModal from "../folder/FolderActionModal/FolderActionModal";
 
 const Dashboard = () => {
   return (
@@ -18,7 +18,7 @@ const Dashboard = () => {
 
         <AddOrScanModal />
         <AddNewItemMenu />
-        <NewFolderPage />
+        <FolderActionModal />
         <UrlModal />
         {/* Homescreen View */}
         <Container>
@@ -26,7 +26,7 @@ const Dashboard = () => {
           <QrContainer />
           <FolderContainer />
         </Container>
-        {/* Homescreen View */}
+        {/* Homescreen View */} 
 
       </ScrollView>
     </>
