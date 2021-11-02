@@ -1,5 +1,4 @@
 import { Modal, ScrollView, Alert, Pressable, Button } from "react-native";
-// import { View, StyleSheet, Button, Alert } from 'react-native';
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -44,13 +43,14 @@ import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
 import { addNewFolder, editFolder, deleteFolder } from "../../../redux/folderSlice";
-// import Toast from "react-native-root-toast";
+import { runToaster } from "../../../utils/toastNote";
 
 function FolderActionModal() {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
   const [error, setError] = useState(``);
+  const [showToast, setShowToast] = useState(false)
 
   const isFolderActionModalOpen = useSelector(
     (state) => state.modal.isFolderActionModalOpen
@@ -64,6 +64,7 @@ function FolderActionModal() {
 
   const dispatch = useDispatch();
 
+
   const openAddOrScan = () => {
     dispatch(toggleAddOrScanModal());
   };
@@ -71,6 +72,7 @@ function FolderActionModal() {
   const openAddUrlModal = () => {
     dispatch(toggleAddUrlModal());
   };
+  
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
@@ -100,16 +102,6 @@ function FolderActionModal() {
     Alert.alert("Error", `Please enter values for ${missingFieldValue}`);
   };
 
-  const deleteFolderAlert = () =>
-    Alert.alert('Delete', 'All of this folders contents will be lost', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
-    ]);
-
   const clearInput = () => {
     setFolderName("");
     setDescription("");
@@ -135,10 +127,20 @@ function FolderActionModal() {
   };
 
   const deleteFolderHandler = () => {
-    dispatch(deleteFolder({folderToDelete: folderToEdit}));
-    dispatch(toggleFolderActionModal());
+    Alert.alert('Delete', 'All of this folders contents will be lost', [
+      {
+        text: 'Cancel', onPress: () => { return },
+        style: 'cancel',
+      },
+      // If 'OK' then proceed with deleting folder
+      { text: 'OK', onPress: () => {
+        dispatch(deleteFolder({folderToDelete: folderToEdit}));
+        dispatch(toggleFolderActionModal());    
+        runToaster(folderToEdit.name);    
+      } 
+      },
+    ]);
   }
-
 
   const editSubmit = () => {
     if (validateFolderDetails()) {
@@ -199,6 +201,7 @@ function FolderActionModal() {
         >
           <ScrollView>
             <Container>
+                         
               <BackArrowContainer
                 onPress={() => {
                   dispatch(toggleFolderActionModal());

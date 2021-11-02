@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function App() {
+
   return (
     <Provider store={store}>
       <View style={styles.container}>

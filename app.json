@@ -16,8 +16,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "userInterfaceStyle": "dark",
+    "android.userInterfaceStyle": "dark",
+    "ios.userInterfaceStyle": "dark",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
