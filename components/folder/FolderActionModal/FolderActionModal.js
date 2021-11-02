@@ -38,22 +38,40 @@ import {
   toggleAddOrScanModal,
   toggleFolderActionModal,
   toggleAddUrlModal,
+  toggleConfirmDeleteModal,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
-import { addNewFolder, editFolder, deleteFolder } from "../../../redux/folderSlice";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
+import {
+  addNewFolder,
+  editFolder,
+  deleteFolder,
+} from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
 
-function FolderActionModal() {
+function FolderActionModal({navigation}) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
   const [error, setError] = useState(``);
-  const [showToast, setShowToast] = useState(false)
+  const [showToast, setShowToast] = useState(false);
 
   const isFolderActionModalOpen = useSelector(
     (state) => state.modal.isFolderActionModalOpen
+  );
+
+  const isConfirmDeleteModalOpen = useSelector(
+    (state) => state.modal.isConfirmDeleteModalOpen
+  );
+  console.log(isConfirmDeleteModalOpen);
+
+  const isAddOrScanModelOpen = useSelector(
+    (state) => state.modal.isAddOrScanModelOpen
+  );
+  const isAddUrlModalOpen = useSelector(
+    (state) => state.modal.isAddUrlModalOpen
   );
 
   const editMode = useSelector((state) => state.modal.editMode);
@@ -64,15 +82,23 @@ function FolderActionModal() {
 
   const dispatch = useDispatch();
 
-
   const openAddOrScan = () => {
     dispatch(toggleAddOrScanModal());
   };
 
+  // if (openAddOrScan) {
+  //   console.log('true : ', openAddOrScan)
+  // } else {
+  //   console.log("false")
+  // }
+
   const openAddUrlModal = () => {
     dispatch(toggleAddUrlModal());
   };
-  
+
+  const openConfirmDeleteModal = () => {
+    dispatch(toggleConfirmDeleteModal);
+  };
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
@@ -126,21 +152,29 @@ function FolderActionModal() {
     }
   };
 
+  // const showDeleteConfirmation = () => {
+  //   if(isConfirmDeleteModalOpen) {
+  //     return <ConfirmDeleteModal/>
+  //   } else {
+  //     return <></>
+  //   }
+  // };
+
   const deleteFolderHandler = () => {
-    Alert.alert('Delete', 'All of this folders contents will be lost', [
-      {
-        text: 'Cancel', onPress: () => { return },
-        style: 'cancel',
-      },
-      // If 'OK' then proceed with deleting folder
-      { text: 'OK', onPress: () => {
-        dispatch(deleteFolder({folderToDelete: folderToEdit}));
-        dispatch(toggleFolderActionModal());    
-        runToaster(folderToEdit.name);    
-      } 
-      },
-    ]);
-  }
+    // Alert.alert('Delete', 'All of this folders contents will be lost', [
+    //   {
+    //     text: 'Cancel', onPress: () => { return },
+    //     style: 'cancel',
+    //   },
+    //   // If 'OK' then proceed with deleting folder
+    //   { text: 'OK', onPress: () => {
+    //     dispatch(deleteFolder({folderToDelete: folderToEdit}));
+    //     dispatch(toggleFolderActionModal());
+    //     runToaster(folderToEdit.name);
+    //   }
+    //   },
+    // ]);
+  };
 
   const editSubmit = () => {
     if (validateFolderDetails()) {
@@ -148,7 +182,7 @@ function FolderActionModal() {
         name: folderName,
         description,
         folderColor,
-      }
+      };
       dispatch(editFolder({ updatedValues, folder: folderToEdit }));
       dispatch(toggleFolderActionModal());
     }
@@ -183,101 +217,173 @@ function FolderActionModal() {
             dispatch(toggleFolderActionModal());
           }}
         >
-          <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
+          <CancelText onPress={() => dispatch(toggleConfirmDeleteModal())}>
+            Delete
+          </CancelText>
         </CancelBtn>
       </CreateCancelContainer>
     );
   };
 
-  
+  // const renderModal = () => {
+  // if (isFolderActionModalOpen) {
+  // return (
+  // <Modal
+  //   transparent={false}
+  //   visible={isFolderActionModalOpen}
+  //   animationType="slide"
+  // >
+  // <ScrollView>
+  //   <Container>
 
-  const renderModal = () => {
-    if (isFolderActionModalOpen) {
-      return (
-        <Modal
-          transparent={false}
-          visible={isFolderActionModalOpen}
-          animationType="slide"
+  //     <BackArrowContainer
+  //       onPress={() => {
+  //         dispatch(toggleFolderActionModal());
+  //       }}
+  //     >
+  //       <BackArrowIcon source={backArrowIcon} />
+  //     </BackArrowContainer>
+  //     <FolderTitleContainer>
+  //       <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
+  //     </FolderTitleContainer>
+
+  //     <FolderInputSection>
+  //       <FolderNameLabel>Folder Name</FolderNameLabel>
+  //       <FolderInput
+  //         placeholder={
+  //           editMode ? folderToEdit.name : "Name Your Folder..."
+  //         }
+  //         placeholderTextColor="#c1c1c1"
+  //         onChangeText={setFolderName}
+  //         value={folderName}
+  //       />
+  //     </FolderInputSection>
+
+  //     <DescriptionSection>
+  //       <DescriptionLabel>Description</DescriptionLabel>
+  //       <DescriptionInput
+  //         placeholder="Add Description..."
+  //         placeholderTextColor="#c1c1c1"
+  //         maxLength={85}
+  //         multiline={true}
+  //         onChangeText={setDescription}
+  //         value={description}
+  //       />
+  //     </DescriptionSection>
+
+  //     <ColorGridSection>
+  //       <ColorGridLabel>Color Grid</ColorGridLabel>
+  //       <ColorGrid>
+  //         <Color1 onPress={() => setFolderColor(`red`)} />
+  //         <Color2 onPress={() => setFolderColor(`blue`)} />
+  //       </ColorGrid>
+  //     </ColorGridSection>
+
+  //     <LinkWrapper>
+  //       <AddedLinksLabel>Links</AddedLinksLabel>
+  //       <NewLinks>
+  //         <AddedLinkWrapper>
+  //           <AddedLinks>Teryaki Don</AddedLinks>
+  //           <EditIcon source={editIcon} />
+  //         </AddedLinkWrapper>
+  //       </NewLinks>
+
+  //       <AddLinkBtn
+  //         onPress={() => {
+  //           dispatch(toggleAddOrScanModal());
+  //         }}
+  //       >
+  //         <AddLinkText>Add Link</AddLinkText>
+  //       </AddLinkBtn>
+  //     </LinkWrapper>
+
+  //     {/* render buttons based on which folder user is in */}
+  //     {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
+
+  //     {/* {openAddOrScan ? <AddOrScanModal /> : null}
+  //     {openAddUrlModal ? <UrlModal /> : null} */}
+  //     {isAddOrScanModelOpen ? <AddOrScanModal /> : null}
+  //     {isAddUrlModalOpen ? <UrlModal /> : null}
+  //     {isConfirmDeleteModalOpen ? <ConfirmDeleteModal folderToEdit={folderToEdit}/> : null}
+  //   </Container>
+  // </ScrollView>
+
+  //     );
+
+  //   }
+  // };
+
+  return (
+    <ScrollView>
+      <Container>
+        <BackArrowContainer
+          onPress={() => navigation.goBack()}
         >
-          <ScrollView>
-            <Container>
-                         
-              <BackArrowContainer
-                onPress={() => {
-                  dispatch(toggleFolderActionModal());
-                }}
-              >
-                <BackArrowIcon source={backArrowIcon} />
-              </BackArrowContainer>
-              <FolderTitleContainer>
-                <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
-              </FolderTitleContainer>
+          <BackArrowIcon source={backArrowIcon} />
+        </BackArrowContainer>
+        <FolderTitleContainer>
+          <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
+        </FolderTitleContainer>
 
-              <FolderInputSection>
-                <FolderNameLabel>Folder Name</FolderNameLabel>
-                <FolderInput
-                  placeholder={
-                    editMode ? folderToEdit.name : "Name Your Folder..."
-                  }
-                  placeholderTextColor="#c1c1c1"
-                  onChangeText={setFolderName}
-                  value={folderName}
-                />
-              </FolderInputSection>
+        <FolderInputSection>
+          <FolderNameLabel>Folder Name</FolderNameLabel>
+          <FolderInput
+            placeholder={editMode ? folderToEdit.name : "Name Your Folder..."}
+            placeholderTextColor="#c1c1c1"
+            onChangeText={setFolderName}
+            value={folderName}
+          />
+        </FolderInputSection>
 
-              <DescriptionSection>
-                <DescriptionLabel>Description</DescriptionLabel>
-                <DescriptionInput
-                  placeholder="Add Description..."
-                  placeholderTextColor="#c1c1c1"
-                  maxLength={85}
-                  multiline={true}
-                  onChangeText={setDescription}
-                  value={description}
-                />
-              </DescriptionSection>
+        <DescriptionSection>
+          <DescriptionLabel>Description</DescriptionLabel>
+          <DescriptionInput
+            placeholder="Add Description..."
+            placeholderTextColor="#c1c1c1"
+            maxLength={85}
+            multiline={true}
+            onChangeText={setDescription}
+            value={description}
+          />
+        </DescriptionSection>
 
-              <ColorGridSection>
-                <ColorGridLabel>Color Grid</ColorGridLabel>
-                <ColorGrid>
-                  <Color1 onPress={() => setFolderColor(`red`)} />
-                  <Color2 onPress={() => setFolderColor(`blue`)} />
-                </ColorGrid>
-              </ColorGridSection>
+        <ColorGridSection>
+          <ColorGridLabel>Color Grid</ColorGridLabel>
+          <ColorGrid>
+            <Color1 onPress={() => setFolderColor(`red`)} />
+            <Color2 onPress={() => setFolderColor(`blue`)} />
+          </ColorGrid>
+        </ColorGridSection>
 
-              <LinkWrapper>
-                <AddedLinksLabel>Links</AddedLinksLabel>
-                <NewLinks>
-                  <AddedLinkWrapper>
-                    <AddedLinks>Teryaki Don</AddedLinks>
-                    <EditIcon source={editIcon} />
-                  </AddedLinkWrapper>
-                </NewLinks>
+        <LinkWrapper>
+          <AddedLinksLabel>Links</AddedLinksLabel>
+          <NewLinks>
+            <AddedLinkWrapper>
+              <AddedLinks>Teryaki Don</AddedLinks>
+              <EditIcon source={editIcon} />
+            </AddedLinkWrapper>
+          </NewLinks>
 
-                <AddLinkBtn
-                  onPress={() => {
-                    openAddOrScan();
-                  }}
-                >
-                  <AddLinkText>Add Link</AddLinkText>
-                </AddLinkBtn>
-              </LinkWrapper>
+          <AddLinkBtn
+            onPress={() => {
+              dispatch(toggleAddOrScanModal());
+            }}
+          >
+            <AddLinkText>Add Link</AddLinkText>
+          </AddLinkBtn>
+        </LinkWrapper>
 
-              {/* render buttons based on which folder user is in */}
-              {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
+        {/* render buttons based on which folder user is in */}
+        {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
 
-              {openAddOrScan ? <AddOrScanModal /> : null}
-              {openAddUrlModal ? <UrlModal /> : null}
-            </Container>
-          </ScrollView>
-        </Modal>
-      );
-    } else {
-      return <></>;
-    }
-  };
-
-  return <>{renderModal()}</>;
+        {isAddOrScanModelOpen ? <AddOrScanModal /> : null}
+        {isAddUrlModalOpen ? <UrlModal /> : null}
+        {isConfirmDeleteModalOpen ? (
+          <ConfirmDeleteModal folderToEdit={folderToEdit} />
+        ) : null}
+      </Container>
+    </ScrollView>
+  );
 }
 
 export default FolderActionModal;

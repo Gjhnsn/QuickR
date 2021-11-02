@@ -25,8 +25,9 @@ import {
   QrImage,
   CloserOverlay,
 } from "../AddNewItemMenu/styles";
+import FolderActionModal from "../folder/FolderActionModal/FolderActionModal";
 
-function AddNewItemMenu() {
+function AddNewItemMenu({navigation}) {
   const isNewItemModalOpen = useSelector(
     (state) => state.modal.isNewItemModalOpen
   );
@@ -72,9 +73,7 @@ function AddNewItemMenu() {
                     </Pressable>
                   </CloseContainer>
                   <AddFolderContainer
-                    onPress={() => {
-                      openNewFolder();
-                    }}
+                    onPress={() => navigation.navigate('FolderActionModal')}
                   >
                     <FolderImage source={folderIcon} />
                     <AddFolderText style={{ color: "white", fontSize: 18 }}>
