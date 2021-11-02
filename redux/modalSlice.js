@@ -5,9 +5,7 @@ export const modalSlice = createSlice({
   initialState: {
     isNewItemModalOpen: false,
     isAddOrScanModalOpen: false,
-    isFolderActionModalOpen: false,
     isAddUrlModalOpen: false,
-    isConfirmDeleteModalOpen: false,
     folderToEdit: null,
     editMode: false,
   },
@@ -18,21 +16,8 @@ export const modalSlice = createSlice({
     toggleAddOrScanModal: (state) => {
       state.isAddOrScanModalOpen = !state.isAddOrScanModalOpen;
     },
-    toggleFolderActionModal: (state) => {
-      state.isFolderActionModalOpen = !state.isFolderActionModalOpen;
-      state.editMode = false;
-      state.folderToEdit = null;
-    },
     toggleAddUrlModal: (state) => {
       state.isAddUrlModalOpen = !state.isAddUrlModalOpen;
-    },
-    toggleEditFolderModal: (state, action) => {
-      state.editMode = true;
-      state.isFolderActionModalOpen = !state.isFolderActionModalOpen;
-      state.folderToEdit = action.payload;
-    },
-    toggleConfirmDeleteModal: (state) => {
-      state.isConfirmDeleteModalOpen = !state.isConfirmDeleteModalOpen;
     },
   },
 });
@@ -40,9 +25,6 @@ export const modalSlice = createSlice({
 export const {
   toggleNewItemModal,
   toggleAddOrScanModal,
-  toggleFolderActionModal,
   toggleAddUrlModal,
-  toggleEditFolderModal,
-  toggleConfirmDeleteModal,
 } = modalSlice.actions;
 export default modalSlice.reducer;

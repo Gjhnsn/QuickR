@@ -1,4 +1,4 @@
-import { Modal, ScrollView, Alert, Pressable, Button } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -34,16 +34,10 @@ import {
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
-import {
-  toggleAddOrScanModal,
-  toggleFolderActionModal,
-  toggleAddUrlModal,
-  toggleConfirmDeleteModal,
-} from "../../../redux/modalSlice";
+import { toggleAddOrScanModal } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
-import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 import {
   addNewFolder,
   editFolder,
@@ -51,26 +45,18 @@ import {
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
 
-function FolderActionModal({ navigation, route }) {
+function FolderActionPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
-  
+
   const editMode = route.params.editMode;
-  const folderToEdit = route.params.folder
+  const folderToEdit = route.params.folder;
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
 
   const dispatch = useDispatch();
-
-  const openAddUrlModal = () => {
-    dispatch(toggleAddUrlModal());
-  };
-
-  const openConfirmDeleteModal = () => {
-    dispatch(toggleConfirmDeleteModal);
-  };
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
@@ -89,7 +75,6 @@ function FolderActionModal({ navigation, route }) {
       return false;
     }
     if (folderKeys.includes(folderName)) {
-
       Alert.alert("Folder Name Already Exists");
       return false;
     }
@@ -138,13 +123,13 @@ function FolderActionModal({ navigation, route }) {
         },
         // If 'OK' then proceed with deleting folder
         {
-          text: "Delete",
+          text: "OK",
           onPress: () => {
             dispatch(deleteFolder({ folderToDelete: folderToEdit }));
             navigation.goBack();
             runToaster(folderToEdit.name);
           },
-          style: "destructive",
+          style: "default",
         },
       ]
     );
@@ -166,12 +151,12 @@ function FolderActionModal({ navigation, route }) {
   const renderAddFolderButtons = () => {
     return (
       <CreateCancelContainer>
-        <CreateFolderBtn onPress={() => createNewFolder()}>
-          <CreateText>Create</CreateText>
-        </CreateFolderBtn>
         <CancelBtn onPress={() => navigation.goBack()}>
           <CancelText>Cancel</CancelText>
         </CancelBtn>
+        <CreateFolderBtn onPress={() => createNewFolder()}>
+          <CreateText>Create</CreateText>
+        </CreateFolderBtn>
       </CreateCancelContainer>
     );
   };
@@ -179,12 +164,12 @@ function FolderActionModal({ navigation, route }) {
   const renderEditFolderButtons = () => {
     return (
       <CreateCancelContainer>
-        <CreateFolderBtn onPress={() => editSubmit()}>
-          <CreateText>Save</CreateText>
-        </CreateFolderBtn>
         <CancelBtn onPress={() => navigation.goBack()}>
           <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
         </CancelBtn>
+        <CreateFolderBtn onPress={() => editSubmit()}>
+          <CreateText>Save</CreateText>
+        </CreateFolderBtn>
       </CreateCancelContainer>
     );
   };
@@ -252,12 +237,11 @@ function FolderActionModal({ navigation, route }) {
         {/* render buttons based on which folder user is in */}
         {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
 
-
-        <AddOrScanModal /> 
-        <UrlModal /> 
+        <AddOrScanModal />
+        <UrlModal />
       </Container>
     </ScrollView>
   );
 }
 
-export default FolderActionModal;
+export default FolderActionPage;

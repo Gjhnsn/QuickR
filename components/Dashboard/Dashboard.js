@@ -8,48 +8,25 @@ import { ScrollView } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import AddOrScanModal from "../AddOrScanModal/AddOrScanModal";
-import FolderActionModal from "../folder/FolderActionPage/FolderActionPage";
-import ConfirmDeleteModal from "../folder/ConfirmDeleteModal/ConfirmDeleteModal";
-// import Toast from "react-native-root-toast";
-// import ToastNote from "../../utils/ToastNote";
-// import { runToaster } from "../../utils/ToastNote";
+import { GlobalContainer } from "./styles";
 
-const Dashboard = ({navigation}) => {
-  // let toast = Toast.show("Folder Has Been Deleted", {
-  //   duration: 1000,
-  //   position: 100,
-  //   shadow: true,
-  //   backgroundColor: "black",
-  //   textColor: "white",
-  //   animation: true,
-  //   hideOnPress: true,
-  //   delay: 0,
-  // });
-
-  // // setTimeout(function hideToast() {
-  // //   Toast.hide(toast);
-  // // }, 500)
-
-
+const Dashboard = ({ navigation }) => {
   return (
-    <>
+    <GlobalContainer>
       <ColorBlob />
       <ScrollView>
-        <AddOrScanModal />
         <AddNewItemMenu navigation={navigation} />
-        {/* <FolderActionModal /> */}
-        {/* <ConfirmDeleteModal /> */}
-        {/* <UrlModal /> */}
+        <AddOrScanModal />
+        <UrlModal />
         {/* Homescreen View */}
         <Container>
-          {/* <ToastNote /> */}
           <TopBar />
           <QrContainer />
           <FolderContainer navigation={navigation} />
         </Container>
         {/* Homescreen View */}
       </ScrollView>
-    </>
+    </GlobalContainer>
   );
 };
 

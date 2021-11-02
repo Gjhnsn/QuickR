@@ -5,11 +5,12 @@ import Toast from "react-native-root-toast";
       duration: 2000,
       position: 100,
       shadow: false,
-      backgroundColor: `rgb(0, 0, 0)`,
+      backgroundColor: '#363636',
       textColor: "white",
       animation: true,
       hideOnPress: true,
       delay: 500,
+      opacity: 1,
     });
 
     return toast;

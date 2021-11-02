@@ -12,7 +12,7 @@ import CloseIcon from "../../assets/closeIcon.png";
 import {
   toggleNewItemModal,
   toggleAddOrScanModal,
-  toggleFolderActionModal,
+  toggleFolderActionPage,
 } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -25,9 +25,8 @@ import {
   QrImage,
   CloserOverlay,
 } from "../AddNewItemMenu/styles";
-import FolderActionModal from "../folder/FolderActionPage/FolderActionPage";
 
-function AddNewItemMenu({navigation}) {
+function AddNewItemMenu({ navigation }) {
   const isNewItemModalOpen = useSelector(
     (state) => state.modal.isNewItemModalOpen
   );
@@ -41,17 +40,10 @@ function AddNewItemMenu({navigation}) {
       }, 200);
     };
 
-    const openNewFolder = () => {
-      dispatch(toggleNewItemModal());
-      setTimeout(() => {
-        dispatch(toggleFolderActionModal());
-      }, 200);
-    };
-
     const createNewFolder = () => {
       dispatch(toggleNewItemModal());
-      navigation.navigate('FolderActionModal', {editMode: false});
-    }
+      navigation.navigate("FolderActionPage", { editMode: false });
+    };
 
     if (isNewItemModalOpen) {
       return (
@@ -77,9 +69,7 @@ function AddNewItemMenu({navigation}) {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
-                  <AddFolderContainer
-                    onPress={() => createNewFolder()}
-                  >
+                  <AddFolderContainer onPress={() => createNewFolder()}>
                     <FolderImage source={folderIcon} />
                     <AddFolderText style={{ color: "white", fontSize: 18 }}>
                       Add Folder

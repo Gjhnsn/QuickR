@@ -142,15 +142,15 @@ export const CreateCancelContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   padding-left: 30px;
   padding-right: 30px;
   margin-top: 40px;
+  justify-content: space-between;
 `;
 
 export const CreateFolderBtn = styled.Pressable`
-  background-color: #3b3b3d;
-  width: 50%;
+  background-color: #3E8637;
+  width: 48%;
   height: 45px;
   display: flex;
   flex-direction: column;
@@ -161,6 +161,7 @@ export const CreateFolderBtn = styled.Pressable`
 export const CreateText = styled.Text`
   color: white;
   text-align: center;
+  font-weight: 600;
 `;
 
 export const SaveText = styled.Text`
@@ -169,17 +170,19 @@ export const SaveText = styled.Text`
 `;
 
 export const CancelBtn = styled.Pressable`
-  width: 50%;
+  width: 48%;
   height: 45px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
+  background-color: #DF4C46;
 `;
 
 export const CancelText = styled.Text`
-  color: red;
+  color: white;
   text-align: center;
+  font-weight: 600;
 `;
 
 // ............................................ DUMMY COLOR SELECTOR
