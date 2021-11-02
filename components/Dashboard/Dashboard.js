@@ -8,7 +8,7 @@ import { ScrollView } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import AddOrScanModal from "../AddOrScanModal/AddOrScanModal";
-import FolderActionModal from "../folder/FolderActionModal/FolderActionModal";
+import FolderActionModal from "../folder/FolderActionPage/FolderActionPage";
 import ConfirmDeleteModal from "../folder/ConfirmDeleteModal/ConfirmDeleteModal";
 // import Toast from "react-native-root-toast";
 // import ToastNote from "../../utils/ToastNote";
@@ -39,13 +39,13 @@ const Dashboard = ({navigation}) => {
         <AddNewItemMenu navigation={navigation} />
         {/* <FolderActionModal /> */}
         {/* <ConfirmDeleteModal /> */}
-        <UrlModal />
+        {/* <UrlModal /> */}
         {/* Homescreen View */}
         <Container>
           {/* <ToastNote /> */}
           <TopBar />
           <QrContainer />
-          <FolderContainer />
+          <FolderContainer navigation={navigation} />
         </Container>
         {/* Homescreen View */}
       </ScrollView>

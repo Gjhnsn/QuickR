@@ -3,7 +3,7 @@ import IndividualFolder from "../IndividualFolder/IndividualFolder";
 import { useSelector } from "react-redux";
 import { Container } from "./styles";
 
-function FolderContainer() {
+function FolderContainer({navigation}) {
   const folderData = useSelector((state) => state.folder.allFolder);
 
   const renderFolder = () => {
@@ -14,6 +14,7 @@ function FolderContainer() {
           folder={folderData[folderName]}
           key={folderName}
           folderName={folderName}
+          navigation={navigation}
         />
       );
     });

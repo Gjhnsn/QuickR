@@ -17,7 +17,7 @@ import editIcon from "../../../assets/editIcon.png";
 import upIcon from "../../../assets/upIcon.png";
 import { toggleEditFolderModal } from '../../../redux/modalSlice';
 
-function IndividualFolder({ folder, folderName }) {
+function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
   const accordion = useSelector((state) => state.folder.allFolder);
 
@@ -42,7 +42,7 @@ function IndividualFolder({ folder, folderName }) {
         <TitleContainer>
           <FolderColorBubble folderColor={folder.folderColor} />
           <FolderTitle>{folderName}</FolderTitle>
-          <Pressable onPress={() => dispatch(toggleEditFolderModal(folder))}>
+          <Pressable onPress={() => navigation.navigate('FolderActionModal', {editMode: true, folder})}>
           <EditButton source={editIcon} />
           </Pressable>
         </TitleContainer>

@@ -51,46 +51,18 @@ import {
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
 
-function FolderActionModal({navigation}) {
+function FolderActionModal({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
-  const [error, setError] = useState(``);
-  const [showToast, setShowToast] = useState(false);
-
-  const isFolderActionModalOpen = useSelector(
-    (state) => state.modal.isFolderActionModalOpen
-  );
-
-  const isConfirmDeleteModalOpen = useSelector(
-    (state) => state.modal.isConfirmDeleteModalOpen
-  );
-  console.log(isConfirmDeleteModalOpen);
-
-  const isAddOrScanModelOpen = useSelector(
-    (state) => state.modal.isAddOrScanModelOpen
-  );
-  const isAddUrlModalOpen = useSelector(
-    (state) => state.modal.isAddUrlModalOpen
-  );
-
-  const editMode = useSelector((state) => state.modal.editMode);
-  const folderToEdit = useSelector((state) => state.modal.folderToEdit);
+  
+  const editMode = route.params.editMode;
+  const folderToEdit = route.params.folder
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
 
   const dispatch = useDispatch();
-
-  const openAddOrScan = () => {
-    dispatch(toggleAddOrScanModal());
-  };
-
-  // if (openAddOrScan) {
-  //   console.log('true : ', openAddOrScan)
-  // } else {
-  //   console.log("false")
-  // }
 
   const openAddUrlModal = () => {
     dispatch(toggleAddUrlModal());
@@ -117,7 +89,7 @@ function FolderActionModal({navigation}) {
       return false;
     }
     if (folderKeys.includes(folderName)) {
-      // TODO: need to show error on screen
+
       Alert.alert("Folder Name Already Exists");
       return false;
     }
@@ -147,33 +119,35 @@ function FolderActionModal({navigation}) {
           items: [],
         })
       ),
-        dispatch(toggleFolderActionModal());
+        navigation.goBack();
       clearInput();
     }
   };
 
-  // const showDeleteConfirmation = () => {
-  //   if(isConfirmDeleteModalOpen) {
-  //     return <ConfirmDeleteModal/>
-  //   } else {
-  //     return <></>
-  //   }
-  // };
-
   const deleteFolderHandler = () => {
-    // Alert.alert('Delete', 'All of this folders contents will be lost', [
-    //   {
-    //     text: 'Cancel', onPress: () => { return },
-    //     style: 'cancel',
-    //   },
-    //   // If 'OK' then proceed with deleting folder
-    //   { text: 'OK', onPress: () => {
-    //     dispatch(deleteFolder({folderToDelete: folderToEdit}));
-    //     dispatch(toggleFolderActionModal());
-    //     runToaster(folderToEdit.name);
-    //   }
-    //   },
-    // ]);
+    Alert.alert(
+      `Delete ${route.params.folder.name}?`,
+      "All of this folders contents will be lost",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            return;
+          },
+          style: "default",
+        },
+        // If 'OK' then proceed with deleting folder
+        {
+          text: "Delete",
+          onPress: () => {
+            dispatch(deleteFolder({ folderToDelete: folderToEdit }));
+            navigation.goBack();
+            runToaster(folderToEdit.name);
+          },
+          style: "destructive",
+        },
+      ]
+    );
   };
 
   const editSubmit = () => {
@@ -184,9 +158,9 @@ function FolderActionModal({navigation}) {
         folderColor,
       };
       dispatch(editFolder({ updatedValues, folder: folderToEdit }));
-      dispatch(toggleFolderActionModal());
     }
     clearInput();
+    navigation.goBack();
   };
 
   const renderAddFolderButtons = () => {
@@ -195,11 +169,7 @@ function FolderActionModal({navigation}) {
         <CreateFolderBtn onPress={() => createNewFolder()}>
           <CreateText>Create</CreateText>
         </CreateFolderBtn>
-        <CancelBtn
-          onPress={() => {
-            dispatch(toggleFolderActionModal());
-          }}
-        >
+        <CancelBtn onPress={() => navigation.goBack()}>
           <CancelText>Cancel</CancelText>
         </CancelBtn>
       </CreateCancelContainer>
@@ -212,113 +182,17 @@ function FolderActionModal({navigation}) {
         <CreateFolderBtn onPress={() => editSubmit()}>
           <CreateText>Save</CreateText>
         </CreateFolderBtn>
-        <CancelBtn
-          onPress={() => {
-            dispatch(toggleFolderActionModal());
-          }}
-        >
-          <CancelText onPress={() => dispatch(toggleConfirmDeleteModal())}>
-            Delete
-          </CancelText>
+        <CancelBtn onPress={() => navigation.goBack()}>
+          <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
         </CancelBtn>
       </CreateCancelContainer>
     );
   };
 
-  // const renderModal = () => {
-  // if (isFolderActionModalOpen) {
-  // return (
-  // <Modal
-  //   transparent={false}
-  //   visible={isFolderActionModalOpen}
-  //   animationType="slide"
-  // >
-  // <ScrollView>
-  //   <Container>
-
-  //     <BackArrowContainer
-  //       onPress={() => {
-  //         dispatch(toggleFolderActionModal());
-  //       }}
-  //     >
-  //       <BackArrowIcon source={backArrowIcon} />
-  //     </BackArrowContainer>
-  //     <FolderTitleContainer>
-  //       <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
-  //     </FolderTitleContainer>
-
-  //     <FolderInputSection>
-  //       <FolderNameLabel>Folder Name</FolderNameLabel>
-  //       <FolderInput
-  //         placeholder={
-  //           editMode ? folderToEdit.name : "Name Your Folder..."
-  //         }
-  //         placeholderTextColor="#c1c1c1"
-  //         onChangeText={setFolderName}
-  //         value={folderName}
-  //       />
-  //     </FolderInputSection>
-
-  //     <DescriptionSection>
-  //       <DescriptionLabel>Description</DescriptionLabel>
-  //       <DescriptionInput
-  //         placeholder="Add Description..."
-  //         placeholderTextColor="#c1c1c1"
-  //         maxLength={85}
-  //         multiline={true}
-  //         onChangeText={setDescription}
-  //         value={description}
-  //       />
-  //     </DescriptionSection>
-
-  //     <ColorGridSection>
-  //       <ColorGridLabel>Color Grid</ColorGridLabel>
-  //       <ColorGrid>
-  //         <Color1 onPress={() => setFolderColor(`red`)} />
-  //         <Color2 onPress={() => setFolderColor(`blue`)} />
-  //       </ColorGrid>
-  //     </ColorGridSection>
-
-  //     <LinkWrapper>
-  //       <AddedLinksLabel>Links</AddedLinksLabel>
-  //       <NewLinks>
-  //         <AddedLinkWrapper>
-  //           <AddedLinks>Teryaki Don</AddedLinks>
-  //           <EditIcon source={editIcon} />
-  //         </AddedLinkWrapper>
-  //       </NewLinks>
-
-  //       <AddLinkBtn
-  //         onPress={() => {
-  //           dispatch(toggleAddOrScanModal());
-  //         }}
-  //       >
-  //         <AddLinkText>Add Link</AddLinkText>
-  //       </AddLinkBtn>
-  //     </LinkWrapper>
-
-  //     {/* render buttons based on which folder user is in */}
-  //     {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
-
-  //     {/* {openAddOrScan ? <AddOrScanModal /> : null}
-  //     {openAddUrlModal ? <UrlModal /> : null} */}
-  //     {isAddOrScanModelOpen ? <AddOrScanModal /> : null}
-  //     {isAddUrlModalOpen ? <UrlModal /> : null}
-  //     {isConfirmDeleteModalOpen ? <ConfirmDeleteModal folderToEdit={folderToEdit}/> : null}
-  //   </Container>
-  // </ScrollView>
-
-  //     );
-
-  //   }
-  // };
-
   return (
     <ScrollView>
       <Container>
-        <BackArrowContainer
-          onPress={() => navigation.goBack()}
-        >
+        <BackArrowContainer onPress={() => navigation.goBack()}>
           <BackArrowIcon source={backArrowIcon} />
         </BackArrowContainer>
         <FolderTitleContainer>
@@ -328,7 +202,9 @@ function FolderActionModal({navigation}) {
         <FolderInputSection>
           <FolderNameLabel>Folder Name</FolderNameLabel>
           <FolderInput
-            placeholder={editMode ? folderToEdit.name : "Name Your Folder..."}
+            placeholder={
+              editMode ? route.params.folder.name : "Name Your Folder..."
+            }
             placeholderTextColor="#c1c1c1"
             onChangeText={setFolderName}
             value={folderName}
@@ -376,11 +252,9 @@ function FolderActionModal({navigation}) {
         {/* render buttons based on which folder user is in */}
         {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
 
-        {isAddOrScanModelOpen ? <AddOrScanModal /> : null}
-        {isAddUrlModalOpen ? <UrlModal /> : null}
-        {isConfirmDeleteModalOpen ? (
-          <ConfirmDeleteModal folderToEdit={folderToEdit} />
-        ) : null}
+
+        <AddOrScanModal /> 
+        <UrlModal /> 
       </Container>
     </ScrollView>
   );

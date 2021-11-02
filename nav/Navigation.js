@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Dashboard from '../components/Dashboard/Dashboard';
-import FolderActionModal from '../components/folder/FolderActionModal/FolderActionModal';
+import FolderActionModal from '../components/folder/FolderActionPage/FolderActionPage';
 
 const Stack = createStackNavigator();
 
