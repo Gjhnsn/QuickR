@@ -9,13 +9,28 @@ import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import AddOrScanModal from "../AddOrScanModal/AddOrScanModal";
 import FolderActionModal from "../folder/FolderActionModal/FolderActionModal";
+import Toast from "react-native-root-toast";
 
 const Dashboard = () => {
+  let toast = Toast.show("Folder Has Been Deleted", {
+    duration: 1000,
+    position: 100,
+    shadow: true,
+    backgroundColor: "black",
+    textColor: "white",
+    animation: true,
+    hideOnPress: true,
+    delay: 0,
+  });
+
+  // setTimeout(function hideToast() {
+  //   Toast.hide(toast);
+  // }, 500)
+
   return (
     <>
       <ColorBlob />
       <ScrollView>
-
         <AddOrScanModal />
         <AddNewItemMenu />
         <FolderActionModal />
@@ -26,8 +41,7 @@ const Dashboard = () => {
           <QrContainer />
           <FolderContainer />
         </Container>
-        {/* Homescreen View */} 
-
+        {/* Homescreen View */}
       </ScrollView>
     </>
   );

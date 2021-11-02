@@ -1,4 +1,5 @@
-import { Modal, ScrollView, Alert, Pressable } from "react-native";
+import { Modal, ScrollView, Alert, Pressable, Button } from "react-native";
+// import { View, StyleSheet, Button, Alert } from 'react-native';
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -43,6 +44,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import UrlModal from "../../UrlModal/UrlModal";
 import { addNewFolder, editFolder, deleteFolder } from "../../../redux/folderSlice";
+// import Toast from "react-native-root-toast";
 
 function FolderActionModal() {
   const [folderName, setFolderName] = useState(``);
@@ -59,7 +61,6 @@ function FolderActionModal() {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
-
 
   const dispatch = useDispatch();
 
@@ -98,6 +99,16 @@ function FolderActionModal() {
   const configureAlert = (missingFieldValue) => {
     Alert.alert("Error", `Please enter values for ${missingFieldValue}`);
   };
+
+  const deleteFolderAlert = () =>
+    Alert.alert('Delete', 'All of this folders contents will be lost', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
 
   const clearInput = () => {
     setFolderName("");
@@ -175,6 +186,8 @@ function FolderActionModal() {
       </CreateCancelContainer>
     );
   };
+
+  
 
   const renderModal = () => {
     if (isFolderActionModalOpen) {
