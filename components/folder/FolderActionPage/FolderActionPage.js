@@ -1,4 +1,4 @@
-import { ScrollView, Alert } from "react-native";
+import { ScrollView, Alert, Text } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -174,6 +174,17 @@ function FolderActionPage({ navigation, route }) {
     );
   };
 
+  const renderLinks = (linksToRender) => {
+    return linksToRender?.map((link) => {
+      return (
+        <AddedLinkWrapper key={link.name}>
+          <AddedLinks>{link.name}</AddedLinks>
+          <EditIcon source={editIcon} />
+        </AddedLinkWrapper>
+      );
+    });
+  };
+
   return (
     <ScrollView>
       <Container>
@@ -199,7 +210,9 @@ function FolderActionPage({ navigation, route }) {
         <DescriptionSection>
           <DescriptionLabel>Description</DescriptionLabel>
           <DescriptionInput
-            placeholder="Add Description..."
+            placeholder={
+              editMode ? route.params.folder.description : "Add Description..."
+            }
             placeholderTextColor="#c1c1c1"
             maxLength={85}
             multiline={true}
@@ -216,15 +229,11 @@ function FolderActionPage({ navigation, route }) {
           </ColorGrid>
         </ColorGridSection>
 
+        {/* ******************** Link Section *********************** */}
+
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
-          <NewLinks>
-            <AddedLinkWrapper>
-              <AddedLinks>Teryaki Don</AddedLinks>
-              <EditIcon source={editIcon} />
-            </AddedLinkWrapper>
-          </NewLinks>
-
+          {/* <NewLinks></NewLinks> */}
           <AddLinkBtn
             onPress={() => {
               dispatch(toggleAddOrScanModal());
@@ -233,6 +242,8 @@ function FolderActionPage({ navigation, route }) {
             <AddLinkText>Add Link</AddLinkText>
           </AddLinkBtn>
         </LinkWrapper>
+
+        {/* ****************** End Link Section  ******************* */}
 
         {/* render buttons based on which folder user is in */}
         {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
