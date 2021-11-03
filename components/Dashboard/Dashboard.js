@@ -8,28 +8,25 @@ import { ScrollView } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import AddOrScanModal from "../AddOrScanModal/AddOrScanModal";
-import FolderActionModal from "../folder/FolderActionModal/FolderActionModal";
+import { GlobalContainer } from "./styles";
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
   return (
-    <>
+    <GlobalContainer>
       <ColorBlob />
       <ScrollView>
-
+        <AddNewItemMenu navigation={navigation} />
         <AddOrScanModal />
-        <AddNewItemMenu />
-        <FolderActionModal />
         <UrlModal />
         {/* Homescreen View */}
         <Container>
           <TopBar />
           <QrContainer />
-          <FolderContainer />
+          <FolderContainer navigation={navigation} />
         </Container>
-        {/* Homescreen View */} 
-
+        {/* Homescreen View */}
       </ScrollView>
-    </>
+    </GlobalContainer>
   );
 };
 
