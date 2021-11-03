@@ -82,14 +82,14 @@ export const ColorGridLabel = styled.Text`
   margin-bottom: 20px;
 `;
 
-export const ColorGrid = styled.View`
-  width: 100%;
-  background-color: #3b3b3d;
-  height: 100px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-`;
+// export const ColorGrid = styled.View`
+//   width: 100%;
+//   background-color: #3b3b3d;
+//   height: 100px;
+//   border-radius: 10px;
+//   display: flex;
+//   flex-direction: row;
+// `;
 
 export const LinkWrapper = styled.View`
   padding: 0 30px;
@@ -149,7 +149,7 @@ export const CreateCancelContainer = styled.View`
 `;
 
 export const CreateFolderBtn = styled.Pressable`
-  background-color: #3E8637;
+  background-color: #3e8637;
   width: 48%;
   height: 45px;
   display: flex;
@@ -176,7 +176,7 @@ export const CancelBtn = styled.Pressable`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
-  background-color: #DF4C46;
+  background-color: #df4c46;
 `;
 
 export const CancelText = styled.Text`
@@ -187,14 +187,14 @@ export const CancelText = styled.Text`
 
 // ............................................ DUMMY COLOR SELECTOR
 
-export const Color1 = styled.Pressable`
-  background-color: red;
-  width: 50%;
-  height: 100%;
-`;
+// export const Color1 = styled.Pressable`
+//   background-color: red;
+//   width: 50%;
+//   height: 100%;
+// `;
 
-export const Color2 = styled.Pressable`
-  background-color: blue;
-  width: 50%;
-  height: 100%;
-`;
+// export const Color2 = styled.Pressable`
+//   background-color: blue;
+//   width: 50%;
+//   height: 100%;
+// `;

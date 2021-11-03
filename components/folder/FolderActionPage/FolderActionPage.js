@@ -29,14 +29,13 @@ import {
   AddedLinksLabel,
   BackArrowContainer,
   BackArrowIcon,
-  Color1,
-  Color2,
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import { toggleAddOrScanModal } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
+import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import {
   addNewFolder,
@@ -49,7 +48,6 @@ function FolderActionPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
-
   const editMode = route.params.editMode;
   const folderToEdit = route.params.folder;
   const folderKeys = useSelector((state) =>
@@ -207,15 +205,13 @@ function FolderActionPage({ navigation, route }) {
             value={description}
           />
         </DescriptionSection>
-
+        {/* ********** Color Picker ********** */}
         <ColorGridSection>
           <ColorGridLabel>Color Grid</ColorGridLabel>
-          <ColorGrid>
-            <Color1 onPress={() => setFolderColor(`red`)} />
-            <Color2 onPress={() => setFolderColor(`blue`)} />
-          </ColorGrid>
-        </ColorGridSection>
 
+          <ColorPicker setFolderColor={setFolderColor} />
+        </ColorGridSection>
+        {/* ************ Color Picker ************ */}
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
           <NewLinks>
