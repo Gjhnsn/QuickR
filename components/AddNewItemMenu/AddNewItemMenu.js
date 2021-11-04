@@ -12,7 +12,6 @@ import CloseIcon from "../../assets/closeIcon.png";
 import {
   toggleNewItemModal,
   toggleAddOrScanModal,
-  toggleFolderActionPage,
 } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {

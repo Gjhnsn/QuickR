@@ -36,7 +36,7 @@ import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import { toggleAddUrlModal } from "../../redux/modalSlice";
 import { Picker } from "@react-native-picker/picker";
 
-function UrlModal() {
+function UrlModal({ picker }) {
   const dispatch = useDispatch();
   const folderData = useSelector((state) => state.folder.allFolder);
   const isAddUrlModalOpen = useSelector(
@@ -73,6 +73,30 @@ function UrlModal() {
         <Picker.Item key={folderName} label={folderName} value={folderName} />
       );
     });
+  };
+
+  const showFolderPicker = () => {
+    return (
+      <FolderSection>
+        <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
+
+        <PickerContainer>
+          <Picker
+            selectedValue={selectedFolder}
+            onValueChange={(itemValue, itemIndex) => {
+              setSelectedFolder(itemValue);
+            }}
+            itemStyle={{
+              color: "white",
+              fontSize: 14,
+              height: 100,
+            }}
+          >
+            {displayFolders()}
+          </Picker>
+        </PickerContainer>
+      </FolderSection>
+    );
   };
 
   const renderModal = () => {
@@ -136,25 +160,9 @@ function UrlModal() {
                       multiline={true}
                     />
                   </FormWrapper>
-                  <FolderSection>
-                    <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
+        
+                  {picker ? showFolderPicker() : null}
 
-                    <PickerContainer>
-                      <Picker
-                        selectedValue={selectedFolder}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setSelectedFolder(itemValue);
-                        }}
-                        itemStyle={{
-                          color: "white",
-                          fontSize: 14,
-                          height: 100,
-                        }}
-                      >
-                        {displayFolders()}
-                      </Picker>
-                    </PickerContainer>
-                  </FolderSection>
                   <BtnFooter>
                     <SaveBtnWrapper onPress={() => finalSubmission()}>
                       <SaveText>Save</SaveText>

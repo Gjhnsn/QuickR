@@ -284,7 +284,7 @@ function FolderActionPage({ navigation, route }) {
         {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
 
         <AddOrScanModal />
-        <UrlModal />
+        <UrlModal picker={false} />
       </Container>
     </ScrollView>
   );
