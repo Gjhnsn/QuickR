@@ -200,17 +200,3 @@ export const CancelText = styled.Text`
   text-align: center;
   font-weight: 600;
 `;
-
-// ............................................ DUMMY COLOR SELECTOR
-
-// export const Color1 = styled.Pressable`
-//   background-color: red;
-//   width: 50%;
-//   height: 100%;
-// `;
-
-// export const Color2 = styled.Pressable`
-//   background-color: blue;
-//   width: 50%;
-//   height: 100%;
-// `;
