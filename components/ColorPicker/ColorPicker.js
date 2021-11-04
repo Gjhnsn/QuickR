@@ -1,9 +1,9 @@
 import React from "react";
-import { ColorCell } from "./styles";
+import { ColorPickerStyle } from "./styles";
 
 const ColorPicker = ({ setFolderColor, color }) => {
   return (
-    <ColorCell
+    <ColorPickerStyle
       style={({ pressed }) => [
         {
           opacity: pressed ? 0.75 : 1.0,
@@ -13,7 +13,7 @@ const ColorPicker = ({ setFolderColor, color }) => {
         setFolderColor(color);
       }}
       color={color}
-    ></ColorCell>
+    ></ColorPickerStyle>
   );
 };
 
