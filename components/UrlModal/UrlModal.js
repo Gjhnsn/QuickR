@@ -46,10 +46,7 @@ function UrlModal() {
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
-  const [whichFolder, setWhichFolder] = useState(``);
   const [selectedFolder, setSelectedFolder] = useState();
-
-  
 
   //used for final submission of new url data
   const finalSubmission = () => {
@@ -62,42 +59,21 @@ function UrlModal() {
           description: inputDescription,
           isSelected: false,
         },
-        folderName: `${whichFolder}`,
+        folderName: `${selectedFolder}`,
       })
     );
+    dispatch(toggleAddUrlModal());
   };
 
-
-  //---------------Commented out for later use
-  //-----(url names to be added to choose folder section)
-
-  // const foldersInInput = () => {
-  //   const folderKeys = Object.keys(folderData);
-  //   return folderKeys.map((folder) => (
-  //     <Pressable onPress={() => setWhichFolder(folder)} key={folder}>
-  //       <Text
-  //         style={{
-  //           color: "white",
-  //           margin: 10,
-  //           backgroundColor: "black",
-  //           padding: 10,
-  //         }}
-  //       >
-  //         {folder}
-  //       </Text>
-  //     </Pressable>
-  //   ));
-  // };
-  
   const folderNamesArray = Object.keys(folderData);
 
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
       return (
         <Picker.Item key={folderName} label={folderName} value={folderName} />
-      )
-    })
-  }
+      );
+    });
+  };
 
   const renderModal = () => {
     if (isAddUrlModalOpen) {
@@ -162,7 +138,7 @@ function UrlModal() {
                   </FormWrapper>
                   <FolderSection>
                     <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
-                    {/* placeholder content for scroll picker to go */}
+
                     <PickerContainer>
                       <Picker
                         selectedValue={selectedFolder}
@@ -178,13 +154,9 @@ function UrlModal() {
                         {displayFolders()}
                       </Picker>
                     </PickerContainer>
-                    {/* <SelectFolder>
-                      <FolderItemText>Personal</FolderItemText>
-                    </SelectFolder> */}
-                    {/* end placeholder */}
                   </FolderSection>
                   <BtnFooter>
-                    <SaveBtnWrapper onPress={() => {}}>
+                    <SaveBtnWrapper onPress={() => finalSubmission()}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>
