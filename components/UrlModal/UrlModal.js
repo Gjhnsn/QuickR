@@ -9,7 +9,7 @@ import {
   AddUrlText,
   AddUrlTitleContainer,
   Input,
-  FromWrapper,
+  FormWrapper,
   UrlInputContainer,
   UrlInput,
   DescriptionInput,
@@ -21,6 +21,7 @@ import {
   SaveBtnWrapper,
   BtnFooter,
   SaveText,
+  PickerContainer,
 } from "./styles";
 import {
   CloserOverlay,
@@ -33,6 +34,7 @@ import CloseIcon from "../../assets/closeIcon.png";
 import linkIcon from "../../assets/link.png";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import { toggleAddUrlModal } from "../../redux/modalSlice";
+import { Picker } from "@react-native-picker/picker";
 
 function UrlModal() {
   const dispatch = useDispatch();
@@ -44,7 +46,7 @@ function UrlModal() {
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
-  const [whichFolder, setWhichFolder] = useState(``);
+  const [selectedFolder, setSelectedFolder] = useState();
 
   //used for final submission of new url data
   const finalSubmission = () => {
@@ -57,31 +59,21 @@ function UrlModal() {
           description: inputDescription,
           isSelected: false,
         },
-        folderName: `${whichFolder}`,
+        folderName: `${selectedFolder}`,
       })
     );
+    dispatch(toggleAddUrlModal());
   };
 
-  //---------------Commented out for later use
-  //-----(url names to be added to choose folder section)
+  const folderNamesArray = Object.keys(folderData);
 
-  // const foldersInInput = () => {
-  //   const folderKeys = Object.keys(folderData);
-  //   return folderKeys.map((folder) => (
-  //     <Pressable onPress={() => setWhichFolder(folder)} key={folder}>
-  //       <Text
-  //         style={{
-  //           color: "white",
-  //           margin: 10,
-  //           backgroundColor: "black",
-  //           padding: 10,
-  //         }}
-  //       >
-  //         {folder}
-  //       </Text>
-  //     </Pressable>
-  //   ));
-  // };
+  const displayFolders = () => {
+    return folderNamesArray.map((folderName) => {
+      return (
+        <Picker.Item key={folderName} label={folderName} value={folderName} />
+      );
+    });
+  };
 
   const renderModal = () => {
     if (isAddUrlModalOpen) {
@@ -116,7 +108,7 @@ function UrlModal() {
                     <Image source={linkIcon} />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
-                  <FromWrapper>
+                  <FormWrapper>
                     <UrlInputContainer>
                       <UrlInput
                         placeholder="URL"
@@ -143,17 +135,28 @@ function UrlModal() {
                       maxLength={100}
                       multiline={true}
                     />
-                  </FromWrapper>
+                  </FormWrapper>
                   <FolderSection>
                     <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
-                    {/* placeholder content for scroll picker to go */}
-                    <SelectFolder>
-                      <FolderItemText>Personal</FolderItemText>
-                    </SelectFolder>
-                    {/* end placeholder */}
+
+                    <PickerContainer>
+                      <Picker
+                        selectedValue={selectedFolder}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setSelectedFolder(itemValue);
+                        }}
+                        itemStyle={{
+                          color: "white",
+                          fontSize: 14,
+                          height: 100,
+                        }}
+                      >
+                        {displayFolders()}
+                      </Picker>
+                    </PickerContainer>
                   </FolderSection>
                   <BtnFooter>
-                    <SaveBtnWrapper onPress={() => {}}>
+                    <SaveBtnWrapper onPress={() => finalSubmission()}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>
