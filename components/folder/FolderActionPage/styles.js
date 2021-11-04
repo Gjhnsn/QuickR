@@ -97,7 +97,6 @@ export const LinkWrapper = styled.View`
 
 export const NewLinks = styled.View`
   width: 100%;
-  height: 200px;
   background-color: #3b3b3d;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -149,7 +148,7 @@ export const CreateCancelContainer = styled.View`
 `;
 
 export const CreateFolderBtn = styled.Pressable`
-  background-color: #3E8637;
+  background-color: #3e8637;
   width: 48%;
   height: 45px;
   display: flex;
@@ -176,7 +175,7 @@ export const CancelBtn = styled.Pressable`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
-  background-color: #DF4C46;
+  background-color: #df4c46;
 `;
 
 export const CancelText = styled.Text`
