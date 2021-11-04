@@ -1,5 +1,12 @@
 import styled from "styled-components/native";
 
+export const ColorCell = styled.Pressable`
+  width: 50px;
+  height: 50px;
+  background-color: ${(props) => props.color};
+  flex: 1;
+`;
+
 export const Red = styled.Pressable`
   background-color: #ff453a;
   flex: 1;
@@ -14,6 +21,7 @@ export const Orange = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Yellow = styled.Pressable`
@@ -21,6 +29,7 @@ export const Yellow = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Green = styled.Pressable`
@@ -28,6 +37,7 @@ export const Green = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const LightBlue = styled.Pressable`
@@ -35,6 +45,7 @@ export const LightBlue = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Blue = styled.Pressable`
@@ -42,6 +53,7 @@ export const Blue = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Indigo = styled.Pressable`
@@ -49,14 +61,16 @@ export const Indigo = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
   border-top-right-radius: 10px;
 `;
 
 export const Pink = styled.Pressable`
-  background-color: #ff2d55;
+  background-color: #f490b0;
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Purple = styled.Pressable`
@@ -64,6 +78,7 @@ export const Purple = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Lime = styled.Pressable`
@@ -71,6 +86,7 @@ export const Lime = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
 `;
 
 export const Teal = styled.Pressable`
@@ -78,6 +94,15 @@ export const Teal = styled.Pressable`
   width: 50px;
   flex: 1;
   height: 50px;
+  border-width: 2px;
+`;
+
+export const Sea = styled.Pressable`
+  background-color: #4ab6ab;
+  width: 50px;
+  flex: 1;
+  height: 50px;
+  border-width: 2px;
 `;
 
 export const ColorGrid = styled.View`

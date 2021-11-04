@@ -186,6 +186,33 @@ function FolderActionPage({ navigation, route }) {
     });
   };
 
+  // ---------------------------------------------------------COLOR PICKER STUFF
+
+  const approvedColors = [
+    `#FF453A`,
+    `#FF9F0A`,
+    `#FFD60A`,
+    `#32d74b`,
+    `#64D2FF`,
+    `#0A84FF`,
+    `#5E5CE6`,
+    `#F490B0`,
+    `#CEDC3A`,
+    `#009688`,
+    `#4AB6AB`,
+    `#009688`,
+    `#044688`,
+    `#BF5AF2`,
+  ];
+
+  const pickFolderColor = () => {
+    return approvedColors.map((color) => {
+      return <ColorPicker color={color} />;
+    });
+  };
+
+  // ---------------------------------------------------------COLOR PICKER STUFF
+
   return (
     <ScrollView>
       <Container>
@@ -225,7 +252,8 @@ function FolderActionPage({ navigation, route }) {
         <ColorGridSection>
           <ColorGridLabel>Color Grid</ColorGridLabel>
 
-          <ColorPicker setFolderColor={setFolderColor} />
+          {/* <ColorPicker setFolderColor={setFolderColor} /> */}
+          {pickFolderColor()}
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
         {/* ******************** Link Section *********************** */}
