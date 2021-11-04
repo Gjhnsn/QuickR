@@ -4,7 +4,17 @@ import { ColorCell } from "./styles";
 
 const ColorPicker = ({ setFolderColor, color }) => {
   return (
-    <ColorCell onPress={() => setFolderColor(color)} color={color}></ColorCell>
+    <ColorCell
+      style={({ pressed }) => [
+        {
+          opacity: pressed ? 0.75 : 1.0,
+        },
+      ]}
+      onPress={() => {
+        setFolderColor(color);
+      }}
+      color={color}
+    ></ColorCell>
   );
 };
 

@@ -80,6 +80,8 @@ export const ColorGridSection = styled.View`
 export const ColorGridLabelContainer = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const CurrentFolderColor = styled.View`
@@ -87,13 +89,14 @@ export const CurrentFolderColor = styled.View`
   height: 12px;
   border-radius: 6px;
   background-color: ${(props) => props.folderColor};
+  margin-left: 10px;
 `;
 
 export const ColorGridLabel = styled.Text`
   color: #fff;
-  margin-bottom: 20px;
 `;
 
+// Entire color picker container
 export const ColorGrid = styled.View`
   width: 100%;
   background-color: #3b3b3d;
@@ -101,6 +104,8 @@ export const ColorGrid = styled.View`
   border-radius: 10px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
 `;
 
 export const LinkWrapper = styled.View`

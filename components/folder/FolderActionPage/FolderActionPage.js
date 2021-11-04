@@ -62,6 +62,8 @@ function FolderActionPage({ navigation, route }) {
 
   const dispatch = useDispatch();
 
+  // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
+
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
     const checkDescriptionValue = description.trim() === "";
@@ -94,6 +96,8 @@ function FolderActionPage({ navigation, route }) {
     setDescription("");
   };
 
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR ADD BUTTON
+
   const createNewFolder = () => {
     if (validateFolderDetails()) {
       dispatch(
@@ -112,6 +116,8 @@ function FolderActionPage({ navigation, route }) {
       clearInput();
     }
   };
+
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
 
   const deleteFolderHandler = () => {
     Alert.alert(
@@ -139,6 +145,8 @@ function FolderActionPage({ navigation, route }) {
     );
   };
 
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
+
   const editSubmit = () => {
     if (validateFolderDetails()) {
       const updatedValues = {
@@ -151,6 +159,8 @@ function FolderActionPage({ navigation, route }) {
     clearInput();
     navigation.goBack();
   };
+
+  // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
 
   const renderAddFolderButtons = () => {
     return (
@@ -178,6 +188,8 @@ function FolderActionPage({ navigation, route }) {
     );
   };
 
+  // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
+
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
@@ -203,7 +215,7 @@ function FolderActionPage({ navigation, route }) {
     });
   };
 
-  // ---------------------------------------------------------COLOR PICKER STUFF
+  // ---------------------------------------------------------JSX START
 
   return (
     <ScrollView>
@@ -243,14 +255,11 @@ function FolderActionPage({ navigation, route }) {
         {/* ********** Color Picker ********** */}
         <ColorGridSection>
           <ColorGridLabelContainer>
-            <ColorGridLabel>Folder Color</ColorGridLabel>
+            <ColorGridLabel>Folder Color:</ColorGridLabel>
             <CurrentFolderColor folderColor={folderColor} />
           </ColorGridLabelContainer>
 
-          <ColorGrid>
-            {/* <ColorPicker setFolderColor={setFolderColor} /> */}
-            {pickFolderColor()}
-          </ColorGrid>
+          <ColorGrid>{pickFolderColor()}</ColorGrid>
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
         {/* ******************** Link Section *********************** */}
