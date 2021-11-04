@@ -9,7 +9,7 @@ import {
   AddUrlText,
   AddUrlTitleContainer,
   Input,
-  FromWrapper,
+  FormWrapper,
   UrlInputContainer,
   UrlInput,
   DescriptionInput,
@@ -21,6 +21,7 @@ import {
   SaveBtnWrapper,
   BtnFooter,
   SaveText,
+  PickerContainer,
 } from "./styles";
 import {
   CloserOverlay,
@@ -33,6 +34,7 @@ import CloseIcon from "../../assets/closeIcon.png";
 import linkIcon from "../../assets/link.png";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import { toggleAddUrlModal } from "../../redux/modalSlice";
+import { Picker } from "@react-native-picker/picker";
 
 function UrlModal() {
   const dispatch = useDispatch();
@@ -45,6 +47,9 @@ function UrlModal() {
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
   const [whichFolder, setWhichFolder] = useState(``);
+  const [selectedFolder, setSelectedFolder] = useState();
+
+  
 
   //used for final submission of new url data
   const finalSubmission = () => {
@@ -61,6 +66,7 @@ function UrlModal() {
       })
     );
   };
+
 
   //---------------Commented out for later use
   //-----(url names to be added to choose folder section)
@@ -82,6 +88,16 @@ function UrlModal() {
   //     </Pressable>
   //   ));
   // };
+  
+  const folderNamesArray = Object.keys(folderData);
+
+  const displayFolders = () => {
+    return folderNamesArray.map((folderName) => {
+      return (
+        <Picker.Item key={folderName} label={folderName} value={folderName} />
+      )
+    })
+  }
 
   const renderModal = () => {
     if (isAddUrlModalOpen) {
@@ -116,7 +132,7 @@ function UrlModal() {
                     <Image source={linkIcon} />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
-                  <FromWrapper>
+                  <FormWrapper>
                     <UrlInputContainer>
                       <UrlInput
                         placeholder="URL"
@@ -143,13 +159,28 @@ function UrlModal() {
                       maxLength={100}
                       multiline={true}
                     />
-                  </FromWrapper>
+                  </FormWrapper>
                   <FolderSection>
                     <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
                     {/* placeholder content for scroll picker to go */}
-                    <SelectFolder>
+                    <PickerContainer>
+                      <Picker
+                        selectedValue={selectedFolder}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setSelectedFolder(itemValue);
+                        }}
+                        itemStyle={{
+                          color: "white",
+                          fontSize: 14,
+                          height: 100,
+                        }}
+                      >
+                        {displayFolders()}
+                      </Picker>
+                    </PickerContainer>
+                    {/* <SelectFolder>
                       <FolderItemText>Personal</FolderItemText>
-                    </SelectFolder>
+                    </SelectFolder> */}
                     {/* end placeholder */}
                   </FolderSection>
                   <BtnFooter>

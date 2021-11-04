@@ -4,10 +4,10 @@ import { Dimensions } from "react-native";
 
 export const ModalContainer = styled.View`
   width: 280px;
-  height: 500px;
+  height: 570px;
   background-color: rgb(54, 54, 54);
   align-self: center;
-  margin-top: ${Dimensions.get("window").height / 5}px;
+  margin-top: ${Dimensions.get("window").height / 8}px;
   border-radius: 10px;
 `;
 
@@ -27,7 +27,7 @@ export const AddUrlText = styled.Text`
   margin-left: 10px;
 `;
 
-export const FromWrapper = styled.View`
+export const FormWrapper = styled.View`
   padding: 0 15px;
   flex-direction: column;
 `;
@@ -67,8 +67,7 @@ export const Input = styled.TextInput`
   border-radius: 5px;
   flex-direction: row;
   align-items: center;
-  color: #fff
-  
+  color: #fff;
 `;
 
 export const DescriptionInput = styled.TextInput`
@@ -80,16 +79,21 @@ export const DescriptionInput = styled.TextInput`
   border: 1px solid white;
   border-radius: 5px;
   padding-top: 10px;
-  color: #fff
+  color: #fff;
 `;
 
 export const FolderSection = styled.View`
-  padding: 0 15px;
+  padding: 0 15px 15px 15px;
+  border: 1px solid white;
+  margin: 15px;
+  border-radius: 5px;
+  color: white;
+  /* borderWidth: 2, borderColor: "green", margin: 10, padding: 10,} */
 `;
 
 export const ChooseFolderLabel = styled.Text`
-  color: #C1C1C1;
-  margin: 25px 0;
+  color: #c1c1c1;
+  margin: 25px 0 0 0;
 `;
 
 export const SelectFolder = styled.View`
@@ -100,6 +104,10 @@ export const SelectFolder = styled.View`
   justify-content: center;
   background-color: #3b3b3d;
   border-radius: 5px;
+`;
+
+export const PickerContainer = styled.View`
+  
 `;
 
 export const FolderItemText = styled.Text`
@@ -119,5 +127,5 @@ export const SaveBtnWrapper = styled.Pressable`
 `;
 
 export const SaveText = styled.Text`
-  color: #FFF;
+  color: #fff;
 `;
