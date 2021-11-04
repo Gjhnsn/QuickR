@@ -1,4 +1,4 @@
-import { ScrollView, Alert, Text } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -29,14 +29,15 @@ import {
   AddedLinksLabel,
   BackArrowContainer,
   BackArrowIcon,
-  Color1,
-  Color2,
+  ColorGridLabelContainer,
+  CurrentFolderColor,
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import { toggleAddOrScanModal } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
+import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import {
   addNewFolder,
@@ -44,11 +45,12 @@ import {
   deleteFolder,
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
+import { approvedColors } from "../../../utils/approvedColors";
 
 function FolderActionPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
-  const [folderColor, setFolderColor] = useState(``);
+  const [folderColor, setFolderColor] = useState(`red`);
 
   const [newLinks, setNewLinks] = useState([]);
 
@@ -59,6 +61,8 @@ function FolderActionPage({ navigation, route }) {
   );
 
   const dispatch = useDispatch();
+
+  // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
@@ -92,6 +96,8 @@ function FolderActionPage({ navigation, route }) {
     setDescription("");
   };
 
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR ADD BUTTON
+
   const createNewFolder = () => {
     if (validateFolderDetails()) {
       dispatch(
@@ -110,6 +116,8 @@ function FolderActionPage({ navigation, route }) {
       clearInput();
     }
   };
+
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
 
   const deleteFolderHandler = () => {
     Alert.alert(
@@ -137,6 +145,8 @@ function FolderActionPage({ navigation, route }) {
     );
   };
 
+  // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
+
   const editSubmit = () => {
     if (validateFolderDetails()) {
       const updatedValues = {
@@ -149,6 +159,8 @@ function FolderActionPage({ navigation, route }) {
     clearInput();
     navigation.goBack();
   };
+
+  // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
 
   const renderAddFolderButtons = () => {
     return (
@@ -176,6 +188,8 @@ function FolderActionPage({ navigation, route }) {
     );
   };
 
+  // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
+
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
@@ -186,6 +200,22 @@ function FolderActionPage({ navigation, route }) {
       );
     });
   };
+
+  // ---------------------------------------------------------COLOR PICKER STUFF
+
+  const pickFolderColor = () => {
+    return approvedColors.map((color) => {
+      return (
+        <ColorPicker
+          setFolderColor={setFolderColor}
+          key={color}
+          color={color}
+        />
+      );
+    });
+  };
+
+  // ---------------------------------------------------------JSX START
 
   return (
     <ScrollView>
@@ -222,15 +252,16 @@ function FolderActionPage({ navigation, route }) {
             value={description}
           />
         </DescriptionSection>
-
+        {/* ********** Color Picker ********** */}
         <ColorGridSection>
-          <ColorGridLabel>Color Grid</ColorGridLabel>
-          <ColorGrid>
-            <Color1 onPress={() => setFolderColor(`red`)} />
-            <Color2 onPress={() => setFolderColor(`blue`)} />
-          </ColorGrid>
-        </ColorGridSection>
+          <ColorGridLabelContainer>
+            <ColorGridLabel>Folder Color:</ColorGridLabel>
+            <CurrentFolderColor folderColor={folderColor} />
+          </ColorGridLabelContainer>
 
+          <ColorGrid>{pickFolderColor()}</ColorGrid>
+        </ColorGridSection>
+        {/* ************ Color Picker ************ */}
         {/* ******************** Link Section *********************** */}
 
         <LinkWrapper>

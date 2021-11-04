@@ -77,11 +77,26 @@ export const ColorGridSection = styled.View`
   margin-bottom: 25px;
 `;
 
-export const ColorGridLabel = styled.Text`
-  color: #fff;
+export const ColorGridLabelContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-bottom: 20px;
 `;
 
+export const CurrentFolderColor = styled.View`
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: ${(props) => props.folderColor};
+  margin-left: 10px;
+`;
+
+export const ColorGridLabel = styled.Text`
+  color: #fff;
+`;
+
+// Entire color picker container
 export const ColorGrid = styled.View`
   width: 100%;
   background-color: #3b3b3d;
@@ -89,6 +104,8 @@ export const ColorGrid = styled.View`
   border-radius: 10px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
 `;
 
 export const LinkWrapper = styled.View`
@@ -182,18 +199,4 @@ export const CancelText = styled.Text`
   color: white;
   text-align: center;
   font-weight: 600;
-`;
-
-// ............................................ DUMMY COLOR SELECTOR
-
-export const Color1 = styled.Pressable`
-  background-color: red;
-  width: 50%;
-  height: 100%;
-`;
-
-export const Color2 = styled.Pressable`
-  background-color: blue;
-  width: 50%;
-  height: 100%;
 `;
