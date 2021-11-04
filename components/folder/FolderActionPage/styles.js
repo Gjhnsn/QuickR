@@ -77,19 +77,31 @@ export const ColorGridSection = styled.View`
   margin-bottom: 25px;
 `;
 
+export const ColorGridLabelContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const CurrentFolderColor = styled.View`
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: ${(props) => props.folderColor};
+`;
+
 export const ColorGridLabel = styled.Text`
   color: #fff;
   margin-bottom: 20px;
 `;
 
-// export const ColorGrid = styled.View`
-//   width: 100%;
-//   background-color: #3b3b3d;
-//   height: 100px;
-//   border-radius: 10px;
-//   display: flex;
-//   flex-direction: row;
-// `;
+export const ColorGrid = styled.View`
+  width: 100%;
+  background-color: #3b3b3d;
+  height: 100px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+`;
 
 export const LinkWrapper = styled.View`
   padding: 0 30px;

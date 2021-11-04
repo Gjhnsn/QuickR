@@ -1,4 +1,4 @@
-import { ScrollView, Alert, Text } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -29,6 +29,8 @@ import {
   AddedLinksLabel,
   BackArrowContainer,
   BackArrowIcon,
+  ColorGridLabelContainer,
+  CurrentFolderColor,
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
@@ -43,11 +45,12 @@ import {
   deleteFolder,
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
+import { approvedColors } from "../../../utils/approvedColors";
 
 function FolderActionPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
-  const [folderColor, setFolderColor] = useState(``);
+  const [folderColor, setFolderColor] = useState(`red`);
 
   const [newLinks, setNewLinks] = useState([]);
 
@@ -188,26 +191,15 @@ function FolderActionPage({ navigation, route }) {
 
   // ---------------------------------------------------------COLOR PICKER STUFF
 
-  const approvedColors = [
-    `#FF453A`,
-    `#FF9F0A`,
-    `#FFD60A`,
-    `#32d74b`,
-    `#64D2FF`,
-    `#0A84FF`,
-    `#5E5CE6`,
-    `#F490B0`,
-    `#CEDC3A`,
-    `#009688`,
-    `#4AB6AB`,
-    `#009688`,
-    `#044688`,
-    `#BF5AF2`,
-  ];
-
   const pickFolderColor = () => {
     return approvedColors.map((color) => {
-      return <ColorPicker color={color} />;
+      return (
+        <ColorPicker
+          setFolderColor={setFolderColor}
+          key={color}
+          color={color}
+        />
+      );
     });
   };
 
@@ -250,10 +242,15 @@ function FolderActionPage({ navigation, route }) {
         </DescriptionSection>
         {/* ********** Color Picker ********** */}
         <ColorGridSection>
-          <ColorGridLabel>Color Grid</ColorGridLabel>
+          <ColorGridLabelContainer>
+            <ColorGridLabel>Folder Color</ColorGridLabel>
+            <CurrentFolderColor folderColor={folderColor} />
+          </ColorGridLabelContainer>
 
-          {/* <ColorPicker setFolderColor={setFolderColor} /> */}
-          {pickFolderColor()}
+          <ColorGrid>
+            {/* <ColorPicker setFolderColor={setFolderColor} /> */}
+            {pickFolderColor()}
+          </ColorGrid>
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
         {/* ******************** Link Section *********************** */}

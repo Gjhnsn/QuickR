@@ -1,0 +1,16 @@
+export const approvedColors = [
+  `#FF453A`,
+  `#FF9F0A`,
+  `#FFD60A`,
+  `#32d74b`,
+  `#64D2FF`,
+  `#0A84FF`,
+  `#5E5CE6`,
+  `#F490B0`,
+  `#CEDC3A`,
+  `#449688`,
+  `#4AB6AB`,
+  `#009688`,
+  `#044688`,
+  `#BF5AF2`,
+];
