@@ -97,7 +97,6 @@ export const LinkWrapper = styled.View`
 
 export const NewLinks = styled.View`
   width: 100%;
-  height: 200px;
   background-color: #3b3b3d;
   border-radius: 10px;
   margin-bottom: 30px;
