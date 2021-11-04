@@ -88,7 +88,6 @@ export const FolderSection = styled.View`
   margin: 15px;
   border-radius: 5px;
   color: white;
-  /* borderWidth: 2, borderColor: "green", margin: 10, padding: 10,} */
 `;
 
 export const ChooseFolderLabel = styled.Text`
@@ -106,9 +105,7 @@ export const SelectFolder = styled.View`
   border-radius: 5px;
 `;
 
-export const PickerContainer = styled.View`
-  
-`;
+export const PickerContainer = styled.View``;
 
 export const FolderItemText = styled.Text`
   color: #fff;
