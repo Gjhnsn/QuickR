@@ -50,6 +50,8 @@ function FolderActionPage({ navigation, route }) {
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(``);
 
+  const [newLinks, setNewLinks] = useState([]);
+
   const editMode = route.params.editMode;
   const folderToEdit = route.params.folder;
   const folderKeys = useSelector((state) =>
@@ -233,7 +235,9 @@ function FolderActionPage({ navigation, route }) {
 
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
-          {/* <NewLinks></NewLinks> */}
+          <NewLinks>
+            {editMode ? renderLinks(folderToEdit.items) : renderLinks(newLinks)}
+          </NewLinks>
           <AddLinkBtn
             onPress={() => {
               dispatch(toggleAddOrScanModal());
