@@ -36,25 +36,25 @@ import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import { toggleAddUrlModal } from "../../redux/modalSlice";
 import { Picker } from "@react-native-picker/picker";
 
-function UrlModal({ picker }) {
+
+function UrlModal({ picker, setNewLinks, newLinks }) {
   const dispatch = useDispatch();
   const folderData = useSelector((state) => state.folder.allFolder);
   const isAddUrlModalOpen = useSelector(
     (state) => state.modal.isAddUrlModalOpen
   );
 
-  const currentEditFolder = useSelector((state) => {
-    return state.modal.folderToEdit;
-  })
-
-  console.log(currentEditFolder);
-
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
   const [selectedFolder, setSelectedFolder] = useState();
 
+  const currentEditFolder = useSelector((state) => {
+    return state.modal.folderToEdit;
+  })
+
   //used for final submission of new url data
+  // Rename this to final submission edit
   const finalSubmission = () => {
     dispatch(
       addUrlToFolder({
@@ -68,6 +68,11 @@ function UrlModal({ picker }) {
         folderName: `${currentEditFolder}`,
       })
     );
+    dispatch(toggleAddUrlModal());
+  };
+
+  const finalSubmissionLocal = () => {
+    setNewLinks([...newLinks, {name: inputName, id: uuidv4(), url: inputUrl, description: inputDescription, isSelected: false}])
     dispatch(toggleAddUrlModal());
   };
 
@@ -170,7 +175,7 @@ function UrlModal({ picker }) {
                   {picker ? showFolderPicker() : null}
 
                   <BtnFooter>
-                    <SaveBtnWrapper onPress={() => finalSubmission()}>
+                    <SaveBtnWrapper onPress={() => currentEditFolder ?  finalSubmission() : finalSubmissionLocal()}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>

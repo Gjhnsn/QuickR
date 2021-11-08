@@ -31,7 +31,7 @@ import {
   BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
-} from "./styles";
+} from "../FolderActionPage/styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import { toggleAddOrScanModal } from "../../../redux/modalSlice";
@@ -52,11 +52,10 @@ function AddFolderPage({ navigation, route }) {
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
 
-  const editMode = route.params.editMode;
-  const folderToEdit = route.params.folder;
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+
 
   const [newLinks, setNewLinks] = useState([]);
   const dispatch = useDispatch();
@@ -108,85 +107,13 @@ function AddFolderPage({ navigation, route }) {
           description: description,
           isLastActive: false,
           isAccordionOpen: false,
-          items: [],
+          items: newLinks,
         })
       ),
         navigation.goBack();
       clearInput();
     }
   };
-
-//   // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
-
-//   const deleteFolderHandler = () => {
-//     Alert.alert(
-//       `Delete ${route.params.folder.name}?`,
-//       "All of this folders contents will be lost",
-//       [
-//         {
-//           text: "Cancel",
-//           onPress: () => {
-//             return;
-//           },
-//           style: "default",
-//         },
-//         // If 'OK' then proceed with deleting folder
-//         {
-//           text: "OK",
-//           onPress: () => {
-//             dispatch(deleteFolder({ folderToDelete: folderToEdit }));
-//             navigation.goBack();
-//             runToaster(folderToEdit.name);
-//           },
-//           style: "default",
-//         },
-//       ]
-//     );
-//   };
-
-  // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
-
-//   const editSubmit = () => {
-//     if (validateFolderDetails()) {
-//       const updatedValues = {
-//         name: folderName,
-//         description,
-//         folderColor,
-//       };
-//       dispatch(editFolder({ updatedValues, folder: folderToEdit }));
-//     }
-//     clearInput();
-//     navigation.goBack();
-//   };
-
-  // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
-
-  //---------------------------------------------Moved into JSX
-//   const renderAddFolderButtons = () => {
-//     return (
-//       <CreateCancelContainer>
-//         <CancelBtn onPress={() => navigation.goBack()}>
-//           <CancelText>Cancel</CancelText>
-//         </CancelBtn>
-//         <CreateFolderBtn onPress={() => createNewFolder()}>
-//           <CreateText>Create</CreateText>
-//         </CreateFolderBtn>
-//       </CreateCancelContainer>
-//     );
-//   };
-
-//   const renderEditFolderButtons = () => {
-//     return (
-//       <CreateCancelContainer>
-//         <CancelBtn onPress={() => navigation.goBack()}>
-//           <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
-//         </CancelBtn>
-//         <CreateFolderBtn onPress={() => editSubmit()}>
-//           <CreateText>Save</CreateText>
-//         </CreateFolderBtn>
-//       </CreateCancelContainer>
-//     );
-//   };
 
   // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
 
@@ -274,10 +201,11 @@ function AddFolderPage({ navigation, route }) {
           </AddLinkBtn>
         </LinkWrapper>
 
-        {/* ****************** End Link Section  ******************* */}
+        {/* ------------------ End Link Section  --------------------- */}
 
         {/* render buttons based on which folder user is in */}
         {/* {editMode ? renderEditFolderButtons() : renderAddFolderButtons()} */}
+        {/* ------------------Save / Cancel Buttons------------------- */}
         <CreateCancelContainer>
         <CancelBtn onPress={() => navigation.goBack()}>
           <CancelText>Cancel</CancelText>
@@ -288,7 +216,7 @@ function AddFolderPage({ navigation, route }) {
       </CreateCancelContainer>
 
         <AddOrScanModal />
-        <UrlModal setNewLinks={setNewLinks} picker={false} />
+        <UrlModal setNewLinks={setNewLinks} newLinks={newLinks} picker={false} />
       </Container>
     </ScrollView>
   );

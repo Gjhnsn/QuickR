@@ -1,5 +1,5 @@
 import { ScrollView, Alert } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Container,
@@ -52,13 +52,15 @@ function FolderActionPage({ navigation, route }) {
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
 
-  const editMode = route.params.editMode;
-  const folderToEdit = route.params.folder;
+  const folderToEdit = useSelector((state) => {
+    return state.modal.folderToEdit;
+  })
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
 
-  const [newLinks, setNewLinks] = useState([]);
+  const currentLinks = useSelector((state) => state.folder.allFolder);
+
   const dispatch = useDispatch();
 
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
@@ -159,20 +161,9 @@ function FolderActionPage({ navigation, route }) {
     navigation.goBack();
   };
 
-  // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
+  // ---------------------------------------------------------DELETE/SAVE BUTTONS
 
-  const renderAddFolderButtons = () => {
-    return (
-      <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText>Cancel</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => createNewFolder()}>
-          <CreateText>Create</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
-    );
-  };
+
 
   const renderEditFolderButtons = () => {
     return (
@@ -229,9 +220,7 @@ function FolderActionPage({ navigation, route }) {
         <FolderInputSection>
           <FolderNameLabel>Folder Name</FolderNameLabel>
           <FolderInput
-            placeholder={
-              editMode ? route.params.folder.name : "Name Your Folder..."
-            }
+            // placeholder={route.params.folder.name}
             placeholderTextColor="#c1c1c1"
             onChangeText={setFolderName}
             value={folderName}
@@ -241,9 +230,7 @@ function FolderActionPage({ navigation, route }) {
         <DescriptionSection>
           <DescriptionLabel>Description</DescriptionLabel>
           <DescriptionInput
-            placeholder={
-              editMode ? route.params.folder.description : "Add Description..."
-            }
+            // placeholder={route.params.folder.description}
             placeholderTextColor="#c1c1c1"
             maxLength={85}
             multiline={true}
@@ -266,7 +253,7 @@ function FolderActionPage({ navigation, route }) {
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
           <NewLinks>
-            {editMode ? renderLinks(folderToEdit.items) : renderLinks(newLinks)}
+            {renderLinks(currentLinks[folderToEdit].items)}
           </NewLinks>
           <AddLinkBtn
             onPress={() => {
@@ -280,10 +267,10 @@ function FolderActionPage({ navigation, route }) {
         {/* ****************** End Link Section  ******************* */}
 
         {/* render buttons based on which folder user is in */}
-        {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
+        {renderEditFolderButtons()}
 
         <AddOrScanModal />
-        <UrlModal setNewLinks={setNewLinks} picker={false} />
+        <UrlModal picker={false} />
       </Container>
     </ScrollView>
   );
