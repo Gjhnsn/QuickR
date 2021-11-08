@@ -27,6 +27,19 @@ This application will let users save QR Codes, and generate new ones from any ur
 
 ## Deployment Instructions
 
+## App Fuctionality Testing Routine
+1. Add Folder 
+2. Add Folder w/ Links
+3. Add Links inside add folder page
+4. Add links to current folders with picker 
+5. Edit name, description, and color of current folders
+6. Edit name, description, and color of newly made folders
+7. Add links inside edit page of current folders
+8. Add links inside edit page of newly made folders
+9. Delete current folders
+10. Delete newly made folders 
+
+
 
 
 

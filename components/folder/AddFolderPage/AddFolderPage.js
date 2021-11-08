@@ -1,5 +1,5 @@
 import { ScrollView, Alert } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Container,
@@ -31,7 +31,7 @@ import {
   BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
-} from "../FolderActionPage/styles";
+} from "../EditFolderPage/styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import { toggleAddOrScanModal } from "../../../redux/modalSlice";
@@ -41,13 +41,10 @@ import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import {
   addNewFolder,
-  editFolder,
-  deleteFolder,
 } from "../../../redux/folderSlice";
-import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 
-function AddFolderPage({ navigation, route }) {
+function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
@@ -203,8 +200,6 @@ function AddFolderPage({ navigation, route }) {
 
         {/* ------------------ End Link Section  --------------------- */}
 
-        {/* render buttons based on which folder user is in */}
-        {/* {editMode ? renderEditFolderButtons() : renderAddFolderButtons()} */}
         {/* ------------------Save / Cancel Buttons------------------- */}
         <CreateCancelContainer>
         <CancelBtn onPress={() => navigation.goBack()}>

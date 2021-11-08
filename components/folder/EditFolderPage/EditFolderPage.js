@@ -47,7 +47,7 @@ import {
 import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 
-function FolderActionPage({ navigation, route }) {
+function EditFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
@@ -60,6 +60,8 @@ function FolderActionPage({ navigation, route }) {
   );
 
   const currentLinks = useSelector((state) => state.folder.allFolder);
+
+  const currentFolder = useSelector((state) => state.folder.allFolder[folderToEdit]);
 
   const dispatch = useDispatch();
 
@@ -122,7 +124,7 @@ function FolderActionPage({ navigation, route }) {
 
   const deleteFolderHandler = () => {
     Alert.alert(
-      `Delete ${route.params.folder.name}?`,
+      `Delete ${currentFolder.name}?`,
       "All of this folders contents will be lost",
       [
         {
@@ -136,15 +138,16 @@ function FolderActionPage({ navigation, route }) {
         {
           text: "OK",
           onPress: () => {
-            dispatch(deleteFolder({ folderToDelete: folderToEdit }));
+            dispatch(deleteFolder({ folderToDelete: currentFolder }));
             navigation.goBack();
-            runToaster(folderToEdit.name);
+            runToaster(currentFolder.name);
           },
           style: "default",
         },
-      ]
+      ] 
     );
   };
+
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
 
@@ -155,7 +158,7 @@ function FolderActionPage({ navigation, route }) {
         description,
         folderColor,
       };
-      dispatch(editFolder({ updatedValues, folder: folderToEdit }));
+      dispatch(editFolder({ updatedValues, folder: currentFolder }));
     }
     clearInput();
     navigation.goBack();
@@ -253,7 +256,7 @@ function FolderActionPage({ navigation, route }) {
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
           <NewLinks>
-            {renderLinks(currentLinks[folderToEdit].items)}
+            {renderLinks(currentLinks[folderToEdit]?.items)}
           </NewLinks>
           <AddLinkBtn
             onPress={() => {
@@ -276,4 +279,4 @@ function FolderActionPage({ navigation, route }) {
   );
 }
 
-export default FolderActionPage;
+export default EditFolderPage;
