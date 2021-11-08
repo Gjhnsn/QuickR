@@ -83,6 +83,7 @@ const folderSlice = createSlice({
       const { folderName, addedLink } = action.payload;
 
       state.allFolder[folderName].items.push(addedLink);
+
     },
 
     addNewFolder: (state, action) => {

@@ -1,5 +1,5 @@
 import { Pressable, Modal, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
 import "react-native-get-random-values";
@@ -43,6 +43,12 @@ function UrlModal({ picker }) {
     (state) => state.modal.isAddUrlModalOpen
   );
 
+  const currentEditFolder = useSelector((state) => {
+    return state.modal.folderToEdit;
+  })
+
+  console.log(currentEditFolder);
+
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
@@ -59,7 +65,7 @@ function UrlModal({ picker }) {
           description: inputDescription,
           isSelected: false,
         },
-        folderName: `${selectedFolder}`,
+        folderName: `${currentEditFolder}`,
       })
     );
     dispatch(toggleAddUrlModal());

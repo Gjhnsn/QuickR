@@ -47,7 +47,7 @@ import {
 import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 
-function FolderActionPage({ navigation, route }) {
+function AddFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
@@ -116,76 +116,77 @@ function FolderActionPage({ navigation, route }) {
     }
   };
 
-  // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
+//   // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
 
-  const deleteFolderHandler = () => {
-    Alert.alert(
-      `Delete ${route.params.folder.name}?`,
-      "All of this folders contents will be lost",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {
-            return;
-          },
-          style: "default",
-        },
-        // If 'OK' then proceed with deleting folder
-        {
-          text: "OK",
-          onPress: () => {
-            dispatch(deleteFolder({ folderToDelete: folderToEdit }));
-            navigation.goBack();
-            runToaster(folderToEdit.name);
-          },
-          style: "default",
-        },
-      ]
-    );
-  };
+//   const deleteFolderHandler = () => {
+//     Alert.alert(
+//       `Delete ${route.params.folder.name}?`,
+//       "All of this folders contents will be lost",
+//       [
+//         {
+//           text: "Cancel",
+//           onPress: () => {
+//             return;
+//           },
+//           style: "default",
+//         },
+//         // If 'OK' then proceed with deleting folder
+//         {
+//           text: "OK",
+//           onPress: () => {
+//             dispatch(deleteFolder({ folderToDelete: folderToEdit }));
+//             navigation.goBack();
+//             runToaster(folderToEdit.name);
+//           },
+//           style: "default",
+//         },
+//       ]
+//     );
+//   };
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
 
-  const editSubmit = () => {
-    if (validateFolderDetails()) {
-      const updatedValues = {
-        name: folderName,
-        description,
-        folderColor,
-      };
-      dispatch(editFolder({ updatedValues, folder: folderToEdit }));
-    }
-    clearInput();
-    navigation.goBack();
-  };
+//   const editSubmit = () => {
+//     if (validateFolderDetails()) {
+//       const updatedValues = {
+//         name: folderName,
+//         description,
+//         folderColor,
+//       };
+//       dispatch(editFolder({ updatedValues, folder: folderToEdit }));
+//     }
+//     clearInput();
+//     navigation.goBack();
+//   };
 
   // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
 
-  const renderAddFolderButtons = () => {
-    return (
-      <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText>Cancel</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => createNewFolder()}>
-          <CreateText>Create</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
-    );
-  };
+  //---------------------------------------------Moved into JSX
+//   const renderAddFolderButtons = () => {
+//     return (
+//       <CreateCancelContainer>
+//         <CancelBtn onPress={() => navigation.goBack()}>
+//           <CancelText>Cancel</CancelText>
+//         </CancelBtn>
+//         <CreateFolderBtn onPress={() => createNewFolder()}>
+//           <CreateText>Create</CreateText>
+//         </CreateFolderBtn>
+//       </CreateCancelContainer>
+//     );
+//   };
 
-  const renderEditFolderButtons = () => {
-    return (
-      <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => editSubmit()}>
-          <CreateText>Save</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
-    );
-  };
+//   const renderEditFolderButtons = () => {
+//     return (
+//       <CreateCancelContainer>
+//         <CancelBtn onPress={() => navigation.goBack()}>
+//           <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
+//         </CancelBtn>
+//         <CreateFolderBtn onPress={() => editSubmit()}>
+//           <CreateText>Save</CreateText>
+//         </CreateFolderBtn>
+//       </CreateCancelContainer>
+//     );
+//   };
 
   // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
 
@@ -210,7 +211,7 @@ function FolderActionPage({ navigation, route }) {
           key={color}
           color={color}
         />
-      );
+      ); 
     });
   };
 
@@ -223,15 +224,13 @@ function FolderActionPage({ navigation, route }) {
           <BackArrowIcon source={backArrowIcon} />
         </BackArrowContainer>
         <FolderTitleContainer>
-          <FolderTitle>Edit Folder</FolderTitle>
+          <FolderTitle>Add Folder</FolderTitle>
         </FolderTitleContainer>
 
         <FolderInputSection>
           <FolderNameLabel>Folder Name</FolderNameLabel>
           <FolderInput
-            placeholder={
-              editMode ? route.params.folder.name : "Name Your Folder..."
-            }
+            placeholder="Name Your Folder..."
             placeholderTextColor="#c1c1c1"
             onChangeText={setFolderName}
             value={folderName}
@@ -241,9 +240,7 @@ function FolderActionPage({ navigation, route }) {
         <DescriptionSection>
           <DescriptionLabel>Description</DescriptionLabel>
           <DescriptionInput
-            placeholder={
-              editMode ? route.params.folder.description : "Add Description..."
-            }
+            placeholder="Add Description..."
             placeholderTextColor="#c1c1c1"
             maxLength={85}
             multiline={true}
@@ -266,7 +263,7 @@ function FolderActionPage({ navigation, route }) {
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
           <NewLinks>
-            {editMode ? renderLinks(folderToEdit.items) : renderLinks(newLinks)}
+            {renderLinks(newLinks)}
           </NewLinks>
           <AddLinkBtn
             onPress={() => {
@@ -280,7 +277,15 @@ function FolderActionPage({ navigation, route }) {
         {/* ****************** End Link Section  ******************* */}
 
         {/* render buttons based on which folder user is in */}
-        {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
+        {/* {editMode ? renderEditFolderButtons() : renderAddFolderButtons()} */}
+        <CreateCancelContainer>
+        <CancelBtn onPress={() => navigation.goBack()}>
+          <CancelText>Cancel</CancelText>
+        </CancelBtn>
+        <CreateFolderBtn onPress={() => createNewFolder()}>
+          <CreateText>Create</CreateText>
+        </CreateFolderBtn>
+      </CreateCancelContainer>
 
         <AddOrScanModal />
         <UrlModal setNewLinks={setNewLinks} picker={false} />
@@ -289,4 +294,4 @@ function FolderActionPage({ navigation, route }) {
   );
 }
 
-export default FolderActionPage;
+export default AddFolderPage;
