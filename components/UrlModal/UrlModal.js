@@ -53,6 +53,11 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
   const folderNamesArray = Object.keys(folderData);
 
   const finalSubmissionRedux = () => {
+    // fields should clear upon save
+    setInputName("");
+    setInputUrl("");
+    setInputDescription("");
+
     dispatch(
       addUrlToFolder({
         addedLink: {
