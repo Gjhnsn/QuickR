@@ -39,9 +39,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
-import {
-  addNewFolder,
-} from "../../../redux/folderSlice";
+import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
 
 function AddFolderPage({ navigation }) {
@@ -52,7 +50,6 @@ function AddFolderPage({ navigation }) {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
-
 
   const [newLinks, setNewLinks] = useState([]);
   const dispatch = useDispatch();
@@ -117,7 +114,7 @@ function AddFolderPage({ navigation }) {
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
-        <AddedLinkWrapper key={link.name}>
+        <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <EditIcon source={editIcon} />
         </AddedLinkWrapper>
@@ -135,7 +132,7 @@ function AddFolderPage({ navigation }) {
           key={color}
           color={color}
         />
-      ); 
+      );
     });
   };
 
@@ -178,7 +175,7 @@ function AddFolderPage({ navigation }) {
             <ColorGridLabel>Folder Color:</ColorGridLabel>
             <CurrentFolderColor folderColor={folderColor} />
           </ColorGridLabelContainer>
-            
+
           <ColorGrid>{pickFolderColor()}</ColorGrid>
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
@@ -186,9 +183,7 @@ function AddFolderPage({ navigation }) {
 
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
-          <NewLinks>
-            {renderLinks(newLinks)}
-          </NewLinks>
+          <NewLinks>{renderLinks(newLinks)}</NewLinks>
           <AddLinkBtn
             onPress={() => {
               dispatch(toggleAddOrScanModal());
@@ -202,16 +197,20 @@ function AddFolderPage({ navigation }) {
 
         {/* ------------------Save / Cancel Buttons------------------- */}
         <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText>Cancel</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => createNewFolder()}>
-          <CreateText>Create</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
+          <CancelBtn onPress={() => navigation.goBack()}>
+            <CancelText>Cancel</CancelText>
+          </CancelBtn>
+          <CreateFolderBtn onPress={() => createNewFolder()}>
+            <CreateText>Create</CreateText>
+          </CreateFolderBtn>
+        </CreateCancelContainer>
 
         <AddOrScanModal />
-        <UrlModal setNewLinks={setNewLinks} newLinks={newLinks} picker={false} />
+        <UrlModal
+          setNewLinks={setNewLinks}
+          newLinks={newLinks}
+          picker={false}
+        />
       </Container>
     </ScrollView>
   );

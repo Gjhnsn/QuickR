@@ -1,4 +1,4 @@
-import { Pressable, Modal, Image } from "react-native";
+import { Pressable, Modal, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -33,6 +33,7 @@ import {
   GradientBackground,
   CloseContainer,
 } from "../AddOrScanModal/styles";
+import { selectValidFolderToast } from "../../utils/toastNote";
 
 function UrlModal({ picker, setNewLinks, newLinks }) {
   const dispatch = useDispatch();
@@ -89,6 +90,11 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
       },
     ]);
     dispatch(toggleAddUrlModal());
+
+    // fields should clear upon save
+    setInputName("");
+    setInputUrl("");
+    setInputDescription("");
   };
 
   // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
@@ -126,6 +132,14 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
         </PickerContainer>
       </FolderSection>
     );
+  };
+
+  const validateFolderSelection = () => {
+    if (currentEditFolder || !picker) {
+      currentEditFolder ? finalSubmissionRedux() : finalSubmissionLocal();
+    } else {
+      selectValidFolderToast();
+    }
   };
 
   const renderModal = () => {
@@ -193,13 +207,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                   {picker ? showFolderPicker() : null}
 
                   <BtnFooter>
-                    <SaveBtnWrapper
-                      onPress={() =>
-                        currentEditFolder
-                          ? finalSubmissionRedux()
-                          : finalSubmissionLocal()
-                      }
-                    >
+                    <SaveBtnWrapper onPress={() => validateFolderSelection()}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>
