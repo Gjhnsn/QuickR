@@ -6,6 +6,7 @@ export const modalSlice = createSlice({
     isNewItemModalOpen: false,
     isAddOrScanModalOpen: false,
     isAddUrlModalOpen: false,
+    isEditUrlModalOpen: false,
     folderToEdit: null,
     editMode: false,
   },
@@ -19,9 +20,12 @@ export const modalSlice = createSlice({
     toggleAddUrlModal: (state) => {
       state.isAddUrlModalOpen = !state.isAddUrlModalOpen;
     },
+    toggleEditUrlModal: (state) => {
+      state.isEditUrlModalOpen = !state.isEditUrlModalOpen;
+    },
     setFolderToEdit: (state, action) => {
       state.folderToEdit = action.payload;
-    }
+    },
   },
 });
 
@@ -29,6 +33,7 @@ export const {
   toggleNewItemModal,
   toggleAddOrScanModal,
   toggleAddUrlModal,
-  setFolderToEdit
+  toggleEditUrlModal,
+  setFolderToEdit,
 } = modalSlice.actions;
 export default modalSlice.reducer;

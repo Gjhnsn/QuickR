@@ -1,4 +1,4 @@
-import { ScrollView, Alert } from "react-native";
+import { ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -34,7 +34,7 @@ import {
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
-import { toggleAddOrScanModal } from "../../../redux/modalSlice";
+import { toggleAddOrScanModal, toggleEditUrlModal } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
@@ -46,6 +46,7 @@ import {
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
+import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 
 function EditFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
@@ -188,7 +189,9 @@ function EditFolderPage({ navigation, route }) {
       return (
         <AddedLinkWrapper key={link.name}>
           <AddedLinks>{link.name}</AddedLinks>
+          <Pressable onPress={() => dispatch(toggleEditUrlModal())}>
           <EditIcon source={editIcon} />
+          </Pressable>
         </AddedLinkWrapper>
       );
     });
@@ -274,6 +277,7 @@ function EditFolderPage({ navigation, route }) {
 
         <AddOrScanModal />
         <UrlModal picker={false} />
+        <EditUrlModal />
       </Container>
     </ScrollView>
   );
