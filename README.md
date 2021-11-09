@@ -40,6 +40,12 @@ This application will let users save QR Codes, and generate new ones from any ur
 10. Delete newly made folders 
 
 
+## Features to be added in testing routine
+11. Edit URL
+12. Delete URL
+13. Scan URL
+
+
 
 
 
