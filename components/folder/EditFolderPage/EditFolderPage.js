@@ -54,14 +54,16 @@ function EditFolderPage({ navigation, route }) {
 
   const folderToEdit = useSelector((state) => {
     return state.modal.folderToEdit;
-  })
+  });
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
 
   const currentLinks = useSelector((state) => state.folder.allFolder);
 
-  const currentFolder = useSelector((state) => state.folder.allFolder[folderToEdit]);
+  const currentFolder = useSelector(
+    (state) => state.folder.allFolder[folderToEdit]
+  );
 
   const dispatch = useDispatch();
 
@@ -144,10 +146,9 @@ function EditFolderPage({ navigation, route }) {
           },
           style: "default",
         },
-      ] 
+      ]
     );
   };
-
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
 
@@ -165,8 +166,6 @@ function EditFolderPage({ navigation, route }) {
   };
 
   // ---------------------------------------------------------DELETE/SAVE BUTTONS
-
-
 
   const renderEditFolderButtons = () => {
     return (
@@ -186,7 +185,7 @@ function EditFolderPage({ navigation, route }) {
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
-        <AddedLinkWrapper key={link.name}>
+        <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <EditIcon source={editIcon} />
         </AddedLinkWrapper>
@@ -247,7 +246,7 @@ function EditFolderPage({ navigation, route }) {
             <ColorGridLabel>Folder Color:</ColorGridLabel>
             <CurrentFolderColor folderColor={folderColor} />
           </ColorGridLabelContainer>
-            
+
           <ColorGrid>{pickFolderColor()}</ColorGrid>
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
@@ -255,9 +254,7 @@ function EditFolderPage({ navigation, route }) {
 
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
-          <NewLinks>
-            {renderLinks(currentLinks[folderToEdit]?.items)}
-          </NewLinks>
+          <NewLinks>{renderLinks(currentLinks[folderToEdit]?.items)}</NewLinks>
           <AddLinkBtn
             onPress={() => {
               dispatch(toggleAddOrScanModal());
