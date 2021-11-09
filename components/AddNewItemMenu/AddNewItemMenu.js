@@ -12,7 +12,6 @@ import CloseIcon from "../../assets/closeIcon.png";
 import {
   toggleNewItemModal,
   toggleAddOrScanModal,
-  toggleFolderActionPage,
 } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -25,6 +24,7 @@ import {
   QrImage,
   CloserOverlay,
 } from "../AddNewItemMenu/styles";
+import { setFolderToEdit } from "../../redux/modalSlice";
 
 function AddNewItemMenu({ navigation }) {
   const isNewItemModalOpen = useSelector(
@@ -42,7 +42,8 @@ function AddNewItemMenu({ navigation }) {
 
     const createNewFolder = () => {
       dispatch(toggleNewItemModal());
-      navigation.navigate("FolderActionPage", { editMode: false });
+      dispatch(setFolderToEdit(null));
+      navigation.navigate("AddFolderPage");
     };
 
     if (isNewItemModalOpen) {

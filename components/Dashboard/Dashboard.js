@@ -17,7 +17,7 @@ const Dashboard = ({ navigation }) => {
       <ScrollView>
         <AddNewItemMenu navigation={navigation} />
         <AddOrScanModal />
-        <UrlModal />
+        <UrlModal picker={true}/>
         {/* Homescreen View */}
         <Container>
           <TopBar />

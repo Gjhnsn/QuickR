@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { LinearGradient } from "expo-linear-gradient";
+import CloseIcon from "../../assets/closeIcon.png";
+import linkIcon from "../../assets/link.png";
+import qrCodeIcon from "../../assets/qrCodeIcon.png";
+import { toggleAddUrlModal, setFolderToEdit } from "../../redux/modalSlice";
+import { Picker } from "@react-native-picker/picker";
 import {
   ModalContainer,
   AddUrlText,
@@ -15,9 +21,7 @@ import {
   DescriptionInput,
   QrIconButton,
   ChooseFolderLabel,
-  SelectFolder,
   FolderSection,
-  FolderItemText,
   SaveBtnWrapper,
   BtnFooter,
   SaveText,
@@ -29,27 +33,26 @@ import {
   GradientBackground,
   CloseContainer,
 } from "../AddOrScanModal/styles";
-import { LinearGradient } from "expo-linear-gradient";
-import CloseIcon from "../../assets/closeIcon.png";
-import linkIcon from "../../assets/link.png";
-import qrCodeIcon from "../../assets/qrCodeIcon.png";
-import { toggleAddUrlModal } from "../../redux/modalSlice";
-import { Picker } from "@react-native-picker/picker";
 
-function UrlModal() {
+function UrlModal({ picker, setNewLinks, newLinks }) {
   const dispatch = useDispatch();
   const folderData = useSelector((state) => state.folder.allFolder);
   const isAddUrlModalOpen = useSelector(
     (state) => state.modal.isAddUrlModalOpen
   );
+  const currentEditFolder = useSelector((state) => {
+    return state.modal.folderToEdit;
+  });
+
+  // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
-  const [selectedFolder, setSelectedFolder] = useState();
 
-  //used for final submission of new url data
-  const finalSubmission = () => {
+  const folderNamesArray = Object.keys(folderData);
+
+  const finalSubmissionRedux = () => {
     dispatch(
       addUrlToFolder({
         addedLink: {
@@ -59,13 +62,31 @@ function UrlModal() {
           description: inputDescription,
           isSelected: false,
         },
-        folderName: `${selectedFolder}`,
+        folderName: `${
+          currentEditFolder ? currentEditFolder : folderNamesArray[0]
+        }`,
       })
     );
     dispatch(toggleAddUrlModal());
   };
 
-  const folderNamesArray = Object.keys(folderData);
+  // ------------------------------------------------------------------------FINAL SUBMISSION LOCAL
+
+  const finalSubmissionLocal = () => {
+    setNewLinks([
+      ...newLinks,
+      {
+        name: inputName,
+        id: uuidv4(),
+        url: inputUrl,
+        description: inputDescription,
+        isSelected: false,
+      },
+    ]);
+    dispatch(toggleAddUrlModal());
+  };
+
+  // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
 
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
@@ -73,6 +94,33 @@ function UrlModal() {
         <Picker.Item key={folderName} label={folderName} value={folderName} />
       );
     });
+  };
+
+  // ------------------------------------------------------------------------PICKER SUBCOMPONENT, RENDERED ONLY IN HOMESCREEN VIEW
+
+  const showFolderPicker = () => {
+    return (
+      <FolderSection>
+        <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
+
+        <PickerContainer>
+          <Picker
+            selectedValue={currentEditFolder}
+            onValueChange={(itemValue) => {
+              dispatch(setFolderToEdit(itemValue));
+            }}
+            itemStyle={{
+              color: "white",
+              fontSize: 14,
+              height: 100,
+            }}
+          >
+            <Picker.Item key={0} label="Select a folder..." value={null} />
+            {displayFolders()}
+          </Picker>
+        </PickerContainer>
+      </FolderSection>
+    );
   };
 
   const renderModal = () => {
@@ -136,27 +184,17 @@ function UrlModal() {
                       multiline={true}
                     />
                   </FormWrapper>
-                  <FolderSection>
-                    <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
 
-                    <PickerContainer>
-                      <Picker
-                        selectedValue={selectedFolder}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setSelectedFolder(itemValue);
-                        }}
-                        itemStyle={{
-                          color: "white",
-                          fontSize: 14,
-                          height: 100,
-                        }}
-                      >
-                        {displayFolders()}
-                      </Picker>
-                    </PickerContainer>
-                  </FolderSection>
+                  {picker ? showFolderPicker() : null}
+
                   <BtnFooter>
-                    <SaveBtnWrapper onPress={() => finalSubmission()}>
+                    <SaveBtnWrapper
+                      onPress={() =>
+                        currentEditFolder
+                          ? finalSubmissionRedux()
+                          : finalSubmissionLocal()
+                      }
+                    >
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>

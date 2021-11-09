@@ -47,18 +47,21 @@ import {
 import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 
-function FolderActionPage({ navigation, route }) {
+function EditFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
 
-  const [newLinks, setNewLinks] = useState([]);
-
-  const editMode = route.params.editMode;
-  const folderToEdit = route.params.folder;
+  const folderToEdit = useSelector((state) => {
+    return state.modal.folderToEdit;
+  })
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+
+  const currentLinks = useSelector((state) => state.folder.allFolder);
+
+  const currentFolder = useSelector((state) => state.folder.allFolder[folderToEdit]);
 
   const dispatch = useDispatch();
 
@@ -121,7 +124,7 @@ function FolderActionPage({ navigation, route }) {
 
   const deleteFolderHandler = () => {
     Alert.alert(
-      `Delete ${route.params.folder.name}?`,
+      `Delete ${currentFolder.name}?`,
       "All of this folders contents will be lost",
       [
         {
@@ -135,15 +138,16 @@ function FolderActionPage({ navigation, route }) {
         {
           text: "OK",
           onPress: () => {
-            dispatch(deleteFolder({ folderToDelete: folderToEdit }));
+            dispatch(deleteFolder({ folderToDelete: currentFolder }));
             navigation.goBack();
-            runToaster(folderToEdit.name);
+            runToaster(currentFolder.name);
           },
           style: "default",
         },
-      ]
+      ] 
     );
   };
+
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON
 
@@ -154,26 +158,15 @@ function FolderActionPage({ navigation, route }) {
         description,
         folderColor,
       };
-      dispatch(editFolder({ updatedValues, folder: folderToEdit }));
+      dispatch(editFolder({ updatedValues, folder: currentFolder }));
     }
     clearInput();
     navigation.goBack();
   };
 
-  // ---------------------------------------------------------DYNAMICALLY RENDER CANCEL/CREATE OR DELETE/SAVE BUTTONS
+  // ---------------------------------------------------------DELETE/SAVE BUTTONS
 
-  const renderAddFolderButtons = () => {
-    return (
-      <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText>Cancel</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => createNewFolder()}>
-          <CreateText>Create</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
-    );
-  };
+
 
   const renderEditFolderButtons = () => {
     return (
@@ -224,15 +217,13 @@ function FolderActionPage({ navigation, route }) {
           <BackArrowIcon source={backArrowIcon} />
         </BackArrowContainer>
         <FolderTitleContainer>
-          <FolderTitle>{editMode ? `Edit` : `Add`} Folder</FolderTitle>
+          <FolderTitle>Edit Folder</FolderTitle>
         </FolderTitleContainer>
 
         <FolderInputSection>
           <FolderNameLabel>Folder Name</FolderNameLabel>
           <FolderInput
-            placeholder={
-              editMode ? route.params.folder.name : "Name Your Folder..."
-            }
+            // placeholder={route.params.folder.name}
             placeholderTextColor="#c1c1c1"
             onChangeText={setFolderName}
             value={folderName}
@@ -242,9 +233,7 @@ function FolderActionPage({ navigation, route }) {
         <DescriptionSection>
           <DescriptionLabel>Description</DescriptionLabel>
           <DescriptionInput
-            placeholder={
-              editMode ? route.params.folder.description : "Add Description..."
-            }
+            // placeholder={route.params.folder.description}
             placeholderTextColor="#c1c1c1"
             maxLength={85}
             multiline={true}
@@ -258,7 +247,7 @@ function FolderActionPage({ navigation, route }) {
             <ColorGridLabel>Folder Color:</ColorGridLabel>
             <CurrentFolderColor folderColor={folderColor} />
           </ColorGridLabelContainer>
-
+            
           <ColorGrid>{pickFolderColor()}</ColorGrid>
         </ColorGridSection>
         {/* ************ Color Picker ************ */}
@@ -267,7 +256,7 @@ function FolderActionPage({ navigation, route }) {
         <LinkWrapper>
           <AddedLinksLabel>Links</AddedLinksLabel>
           <NewLinks>
-            {editMode ? renderLinks(folderToEdit.items) : renderLinks(newLinks)}
+            {renderLinks(currentLinks[folderToEdit]?.items)}
           </NewLinks>
           <AddLinkBtn
             onPress={() => {
@@ -281,13 +270,13 @@ function FolderActionPage({ navigation, route }) {
         {/* ****************** End Link Section  ******************* */}
 
         {/* render buttons based on which folder user is in */}
-        {editMode ? renderEditFolderButtons() : renderAddFolderButtons()}
+        {renderEditFolderButtons()}
 
         <AddOrScanModal />
-        <UrlModal />
+        <UrlModal picker={false} />
       </Container>
     </ScrollView>
   );
 }
 
-export default FolderActionPage;
+export default EditFolderPage;

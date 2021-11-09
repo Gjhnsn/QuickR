@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
 import editIcon from "../../../assets/editIcon.png";
 import upIcon from "../../../assets/upIcon.png";
+import { setFolderToEdit } from "../../../redux/modalSlice";
 
 function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
@@ -34,6 +35,15 @@ function IndividualFolder({ folder, folderName, navigation }) {
     }
   };
 
+  const editButtonAction = () => {
+    navigation.navigate("EditFolderPage", {
+      editMode: true,
+      folder,
+    })
+
+    dispatch(setFolderToEdit(folderName));
+  };
+
   return (
     <FolderContainer onPress={() => dispatch(openAccordion(folderName))}>
       <FolderInitialElements>
@@ -41,12 +51,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
           <FolderColorBubble folderColor={folder.folderColor} />
           <FolderTitle>{folderName}</FolderTitle>
           <Pressable
-            onPress={() =>
-              navigation.navigate("FolderActionPage", {
-                editMode: true,
-                folder,
-              })
-            }
+            onPress={() => editButtonAction()}
           >
             <EditButton source={editIcon} />
           </Pressable>

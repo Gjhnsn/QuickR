@@ -4,15 +4,20 @@ import { NavigationContainer, LogoPlaceholder } from './styles';
 import addIcon from '../../assets/addIcon.png';
 import { useSelector, useDispatch } from 'react-redux';
 import {toggleNewItemModal} from '../../redux/modalSlice';
+import { setFolderToEdit } from "../../redux/modalSlice";
 
 function TopBar() {
-    const isModalOpen = useSelector((state) => state.modal.isModalOpen);
     const dispatch = useDispatch()
+
+    const addButtonAction = () => {
+        dispatch(toggleNewItemModal());
+        dispatch(setFolderToEdit(null));
+    }
 
     return (
         <NavigationContainer>
             <LogoPlaceholder/>
-            <Pressable onPress={() => {dispatch(toggleNewItemModal())}}>
+            <Pressable onPress={() => addButtonAction()}>
             <Image source={addIcon}/>
             </Pressable>
         </NavigationContainer>
