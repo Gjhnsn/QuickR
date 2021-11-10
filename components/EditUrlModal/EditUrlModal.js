@@ -29,6 +29,7 @@ import {
   CloseContainer,
 } from "../AddOrScanModal/styles";
 import { toggleEditUrlModal } from "../../redux/modalSlice";
+import { editLink } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const EditUrlModal = () => {
@@ -36,11 +37,43 @@ const EditUrlModal = () => {
     (state) => state.modal.isEditUrlModalOpen
   );
 
-  const dispatch = useDispatch();
+
+  const linkToEdit = useSelector((state) => state.modal.linkToEdit);
+  const folderToEdit = useSelector((state) => state.modal.folderToEdit);
+
+  const testLog = () => {
+    console.log(`linkToEdit: ${linkToEdit}`);
+    console.log(`folderToEdit: ${folderToEdit}`);
+  };
+
+  /*
+          name: "Google",
+        id: "as65d1f65a1sdf",
+        url: "www.google.com",
+        description: "pizza menu ",
+        isSelected: false,
+  */
+
 
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
+
+  const editSave = () => {
+    const updatedValues = {
+      name: inputName,
+      id: linkToEdit,
+      url: inputUrl,
+      description: inputDescription,
+      isSelected: false,
+    }
+    dispatch(editLink({linkID: linkToEdit, folderName: folderToEdit, updatedValues}));
+    dispatch(toggleEditUrlModal())
+  };
+
+  //   const currentLink = useSelector((state) => state.allFolder.items[linkToEdit])
+
+  const dispatch = useDispatch();
 
   const renderModal = () => {
     if (isEditUrlModalOpen) {
@@ -104,13 +137,11 @@ const EditUrlModal = () => {
                     />
                   </FormWrapper>
 
-                  {/* {picker ? showFolderPicker() : null} */}
-
                   <BtnFooter>
                     <CancelBtn onPress={() => {}}>
                       <DeleteText>Delete</DeleteText>
                     </CancelBtn>
-                    <CreateFolderBtn onPress={() => {}}>
+                    <CreateFolderBtn onPress={() => editSave()}>
                       <CreateText>Save</CreateText>
                     </CreateFolderBtn>
                   </BtnFooter>
