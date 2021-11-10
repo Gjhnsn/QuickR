@@ -1,4 +1,4 @@
-  import { ScrollView, Alert, Pressable } from "react-native";
+import { ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -47,7 +47,7 @@ import {
   editFolder,
   deleteFolder,
 } from "../../../redux/folderSlice";
-import { runToaster } from "../../../utils/toastNote";
+import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import { setLinkToEdit } from "../../../redux/modalSlice";
@@ -73,8 +73,6 @@ function EditFolderPage({ navigation, route }) {
   );
 
   const dispatch = useDispatch();
-
-
 
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
@@ -151,7 +149,7 @@ function EditFolderPage({ navigation, route }) {
           onPress: () => {
             dispatch(deleteFolder({ folderToDelete: currentFolder }));
             navigation.goBack();
-            runToaster(currentFolder.name);
+            deleteFolderToast(currentFolder.name);
           },
           style: "default",
         },
@@ -201,7 +199,7 @@ function EditFolderPage({ navigation, route }) {
       return (
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
-          <Pressable onPress={() => editButtonAction(link.id)}>
+          <Pressable onPress={() => editButtonAction(link)}>
             <EditIcon source={editIcon} />
           </Pressable>
         </AddedLinkWrapper>
@@ -228,7 +226,7 @@ function EditFolderPage({ navigation, route }) {
   return (
     <ScrollView>
       <Container>
-        <BackArrowContainer onPress={() =>  navigation.goBack()}>
+        <BackArrowContainer onPress={() => navigation.goBack()}>
           <BackArrowIcon source={backArrowIcon} />
         </BackArrowContainer>
         <FolderTitleContainer>
