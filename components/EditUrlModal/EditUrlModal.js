@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Modal, Pressable, Image } from "react-native";
+import { Modal, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import CloseIcon from "../../assets/closeIcon.png";
 import linkIcon from "../../assets/link.png";
@@ -29,14 +29,14 @@ import {
   CloseContainer,
 } from "../AddOrScanModal/styles";
 import { toggleEditUrlModal } from "../../redux/modalSlice";
-import { editLink } from "../../redux/folderSlice";
+import { editLink, deleteLink } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { deleteLinkToast } from "../../utils/toastNote";
 
 const EditUrlModal = () => {
   const isEditUrlModalOpen = useSelector(
     (state) => state.modal.isEditUrlModalOpen
   );
-
 
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
@@ -54,9 +54,21 @@ const EditUrlModal = () => {
       url: inputUrl,
       description: inputDescription,
       isSelected: false,
-    }
-    dispatch(editLink({linkID: linkToEdit, folderName: folderToEdit, updatedValues}));
-    dispatch(toggleEditUrlModal())
+    };
+    dispatch(
+      editLink({
+        linkID: linkToEdit.id,
+        folderName: folderToEdit,
+        updatedValues,
+      })
+    );
+    dispatch(toggleEditUrlModal());
+  };
+
+  const handleLinkDelete = () => {
+    dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
+    dispatch(toggleEditUrlModal());
+    deleteLinkToast(linkToEdit.name);
   };
 
   const renderModal = () => {
@@ -122,7 +134,7 @@ const EditUrlModal = () => {
                   </FormWrapper>
 
                   <BtnFooter>
-                    <CancelBtn onPress={() => {}}>
+                    <CancelBtn onPress={() => handleLinkDelete()}>
                       <DeleteText>Delete</DeleteText>
                     </CancelBtn>
                     <CreateFolderBtn onPress={() => editSave()}>
