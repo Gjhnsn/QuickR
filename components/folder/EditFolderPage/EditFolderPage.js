@@ -227,7 +227,7 @@ function EditFolderPage({ navigation, route }) {
   // ---------------------------------------------------------JSX START
 
   const scannerView = () => {
-    return <BarcodeScanner />;
+    return <BarcodeScanner toggleModal={false} />;
   };
 
   const editFolderView = (navigation) => {

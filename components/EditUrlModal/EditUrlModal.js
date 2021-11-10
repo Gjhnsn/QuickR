@@ -38,6 +38,8 @@ const EditUrlModal = () => {
     (state) => state.modal.isEditUrlModalOpen
   );
 
+  const scannedLink = useSelector((state) => state.modal.scannedLink)
+
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
 

@@ -142,7 +142,7 @@ function AddFolderPage({ navigation }) {
   // ---------------------------------------------------------JSX START
 
   const scannerView = () => {
-    return <BarcodeScanner />
+    return <BarcodeScanner toggleModal={false} />
   }
 
   const addFolderView = (navigation) => {

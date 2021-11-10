@@ -8,9 +8,7 @@ import { Screen, CameraScreen, CameraContainer, CloseIcon } from "./styles";
 import { qrCodeScanned } from "../../utils/toastNote";
 import { toggleAddUrlModal, setScannedLink } from "../../redux/modalSlice";
 
- 
-
-const BarcodeScanner = () => {
+const BarcodeScanner = ({ toggleModal }) => {
   const [scanned, setScanned] = useState(false);
   const dispatch = useDispatch();
 
@@ -19,16 +17,16 @@ const BarcodeScanner = () => {
 
     // alert toast that url has been scanned
     qrCodeScanned();
-    
+
     // dispatch qr code data to redux
-    dispatch(setScannedLink(data))
+    dispatch(setScannedLink(data));
 
     // close camera after toast disappears(@ 1000ms)
     setTimeout(() => {
       dispatch(closeCamera());
 
       // toggle add url modal
-      dispatch(toggleAddUrlModal())
+      toggleModal ? dispatch(toggleAddUrlModal()) : null;
     }, 1200);
 
     // pass data to add link modal

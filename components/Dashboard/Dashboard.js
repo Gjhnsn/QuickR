@@ -20,7 +20,7 @@ const Dashboard = ({ navigation }) => {
   
 
   const scannerView = () => {
-    return (<BarcodeScanner />)
+    return (<BarcodeScanner toggleModal={true} />)
   };
   
   const homeScreenView = (navigation) => {
