@@ -37,6 +37,7 @@ import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddOrScanModal,
   toggleEditUrlModal,
+  setLinkToEdit
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
@@ -50,7 +51,7 @@ import {
 import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
-import { setLinkToEdit } from "../../../redux/modalSlice";
+import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 
 function EditFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
@@ -63,6 +64,8 @@ function EditFolderPage({ navigation, route }) {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+
+  const setStartCamera = useSelector((state) => state.camera.setStartCamera);
 
   const allFolders = useSelector((state) => state.folder.allFolder);
 
@@ -223,72 +226,82 @@ function EditFolderPage({ navigation, route }) {
 
   // ---------------------------------------------------------JSX START
 
-  return (
-    <ScrollView>
-      <Container>
-        <BackArrowContainer onPress={() => navigation.goBack()}>
-          <BackArrowIcon source={backArrowIcon} />
-        </BackArrowContainer>
-        <FolderTitleContainer>
-          <FolderTitle>Edit Folder</FolderTitle>
-        </FolderTitleContainer>
+  const scannerView = () => {
+    return <BarcodeScanner toggleModal={false} />;
+  };
 
-        <FolderInputSection>
-          <FolderNameLabel>Folder Name</FolderNameLabel>
-          <FolderInput
-            // placeholder={route.params.folder.name}
-            placeholderTextColor="#c1c1c1"
-            onChangeText={setFolderName}
-            value={folderName}
-          />
-        </FolderInputSection>
+  const editFolderView = (navigation) => {
+    return (
+      <ScrollView>
+        <Container>
+          <BackArrowContainer onPress={() => navigation.goBack()}>
+            <BackArrowIcon source={backArrowIcon} />
+          </BackArrowContainer>
+          <FolderTitleContainer>
+            <FolderTitle>Edit Folder</FolderTitle>
+          </FolderTitleContainer>
 
-        <DescriptionSection>
-          <DescriptionLabel>Description</DescriptionLabel>
-          <DescriptionInput
-            // placeholder={route.params.folder.description}
-            placeholderTextColor="#c1c1c1"
-            maxLength={85}
-            multiline={true}
-            onChangeText={setDescription}
-            value={description}
-          />
-        </DescriptionSection>
-        {/* ********** Color Picker ********** */}
-        <ColorGridSection>
-          <ColorGridLabelContainer>
-            <ColorGridLabel>Folder Color:</ColorGridLabel>
-            <CurrentFolderColor folderColor={folderColor} />
-          </ColorGridLabelContainer>
+          <FolderInputSection>
+            <FolderNameLabel>Folder Name</FolderNameLabel>
+            <FolderInput
+              // placeholder={route.params.folder.name}
+              placeholderTextColor="#c1c1c1"
+              onChangeText={setFolderName}
+              value={folderName}
+            />
+          </FolderInputSection>
 
-          <ColorGrid>{pickFolderColor()}</ColorGrid>
-        </ColorGridSection>
-        {/* ************ Color Picker ************ */}
-        {/* ******************** Link Section *********************** */}
+          <DescriptionSection>
+            <DescriptionLabel>Description</DescriptionLabel>
+            <DescriptionInput
+              // placeholder={route.params.folder.description}
+              placeholderTextColor="#c1c1c1"
+              maxLength={85}
+              multiline={true}
+              onChangeText={setDescription}
+              value={description}
+            />
+          </DescriptionSection>
+          {/* ********** Color Picker ********** */}
+          <ColorGridSection>
+            <ColorGridLabelContainer>
+              <ColorGridLabel>Folder Color:</ColorGridLabel>
+              <CurrentFolderColor folderColor={folderColor} />
+            </ColorGridLabelContainer>
 
-        <LinkWrapper>
-          <AddedLinksLabel>Links</AddedLinksLabel>
-          <NewLinks>{renderLinks(currentLinks[folderToEdit]?.items)}</NewLinks>
-          <AddLinkBtn
-            onPress={() => {
-              dispatch(toggleAddOrScanModal());
-            }}
-          >
-            <AddLinkText>Add Link</AddLinkText>
-          </AddLinkBtn>
-        </LinkWrapper>
+            <ColorGrid>{pickFolderColor()}</ColorGrid>
+          </ColorGridSection>
+          {/* ************ Color Picker ************ */}
+          {/* ******************** Link Section *********************** */}
 
-        {/* ****************** End Link Section  ******************* */}
+          <LinkWrapper>
+            <AddedLinksLabel>Links</AddedLinksLabel>
+            <NewLinks>
+              {renderLinks(currentLinks[folderToEdit]?.items)}
+            </NewLinks>
+            <AddLinkBtn
+              onPress={() => {
+                dispatch(toggleAddOrScanModal());
+              }}
+            >
+              <AddLinkText>Add Link</AddLinkText>
+            </AddLinkBtn>
+          </LinkWrapper>
 
-        {/* render buttons based on which folder user is in */}
-        {renderEditFolderButtons()}
+          {/* ****************** End Link Section  ******************* */}
 
-        <AddOrScanModal />
-        <UrlModal picker={false} />
-        <EditUrlModal />
-      </Container>
-    </ScrollView>
-  );
+          {/* render buttons based on which folder user is in */}
+          {renderEditFolderButtons()}
+
+          <AddOrScanModal />
+          <UrlModal picker={false} />
+          <EditUrlModal editPage={true}/>
+        </Container>
+      </ScrollView>
+    );
+  };
+
+  return <>{setStartCamera ? scannerView() : editFolderView(navigation)}</>;
 }
 
 export default EditFolderPage;

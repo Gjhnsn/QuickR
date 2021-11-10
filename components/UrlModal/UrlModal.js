@@ -34,6 +34,7 @@ import {
   CloseContainer,
 } from "../AddOrScanModal/styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
+import { openCamera } from '../../redux/startCameraSlice'
 
 function UrlModal({ picker, setNewLinks, newLinks }) {
   const dispatch = useDispatch();
@@ -45,10 +46,12 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     return state.modal.folderToEdit;
   });
 
+  const scannedLink = useSelector((state) => state.modal.scannedLink)
+
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(``);
+  const [inputUrl, setInputUrl] = useState(scannedLink);
   const [inputDescription, setInputDescription] = useState(``);
 
   const folderNamesArray = Object.keys(folderData);
@@ -143,6 +146,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
   };
 
   const renderModal = () => {
+
     if (isAddUrlModalOpen) {
       return (
         <ModalOverlay>
@@ -183,7 +187,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => {}}>
+                      <QrIconButton onPress={() => dispatch(openCamera())}>
                         <Image source={qrCodeIcon} />
                       </QrIconButton>
                     </UrlInputContainer>
