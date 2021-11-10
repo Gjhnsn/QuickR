@@ -9,6 +9,7 @@ export const modalSlice = createSlice({
     isEditUrlModalOpen: false,
     folderToEdit: null,
     linkToEdit: null,
+    scannedLink: null,
     editMode: false,
   },
   reducers: {
@@ -30,6 +31,9 @@ export const modalSlice = createSlice({
     setLinkToEdit: (state, action) => {
       state.linkToEdit = action.payload;
     },
+    setScannedLink: (state, action) => {
+      state.scannedLink = action.payload;
+    },
   },
 });
 
@@ -40,6 +44,7 @@ export const {
   toggleEditUrlModal,
   setFolderToEdit,
   setLinkToEdit,
+  setScannedLink,
 } = modalSlice.actions;
 export default modalSlice.reducer;
 

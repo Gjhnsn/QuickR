@@ -9,7 +9,10 @@ import { Modal, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import CloseIcon from "../../assets/closeIcon.png";
-import { toggleAddOrScanModal, toggleAddUrlModal } from "../../redux/modalSlice";
+import {
+  toggleAddOrScanModal,
+  toggleAddUrlModal,
+} from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   AddFolderContainer,
@@ -33,8 +36,15 @@ const AddOrScanModal = () => {
 
   const openAddUrlModal = () => {
     dispatch(toggleAddOrScanModal());
-    setTimeout(() => {dispatch(toggleAddUrlModal())}, 500)
-  }
+    setTimeout(() => {
+      dispatch(toggleAddUrlModal());
+    }, 500);
+  };
+
+  const openScanner = () => {
+    dispatch(toggleAddOrScanModal());
+    __startCamera(dispatch(openCamera()));
+  };
 
   const renderModal = () => {
     if (isAddOrScanModalOpen) {
@@ -57,7 +67,11 @@ const AddOrScanModal = () => {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
-                  <Pressable onPress={() => {openAddUrlModal()}}>
+                  <Pressable
+                    onPress={() => {
+                      openAddUrlModal();
+                    }}
+                  >
                     <AddFolderContainer>
                       <FolderImage source={link} />
                       <AddFolderText style={{ color: "white", fontSize: 18 }}>
@@ -65,7 +79,7 @@ const AddOrScanModal = () => {
                       </AddFolderText>
                     </AddFolderContainer>
                   </Pressable>
-                  <AddQrContainer onPress={() => __startCamera(dispatch(openCamera()))}>
+                  <AddQrContainer onPress={() => openScanner()}>
                     <QrImage source={qrCodeIcon} />
                     <AddQrText style={{ color: "white" }}>
                       Scan QR Code

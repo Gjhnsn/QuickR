@@ -45,6 +45,8 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     return state.modal.folderToEdit;
   });
 
+  const scannedLink = useSelector((state) => state.modal.scannedLink)
+
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const [inputName, setInputName] = useState(``);
@@ -143,6 +145,9 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
   };
 
   const renderModal = () => {
+
+    console.log('url: ', scannedLink);
+
     if (isAddUrlModalOpen) {
       return (
         <ModalOverlay>

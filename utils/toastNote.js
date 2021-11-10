@@ -47,3 +47,19 @@ export const deleteLinkToast = (link) => {
 
   return toast;
 };
+
+export const qrCodeScanned = () => {
+  let toast = Toast.show(`Url detected.`, {
+    duration: 1000,
+    position: 100,
+    shadow: false,
+    backgroundColor: "#363636",
+    textColor: "white",
+    animation: true,
+    hideOnPress: true,
+    delay: 500,
+    opacity: 1,
+  });
+
+  return toast;
+};
