@@ -125,6 +125,24 @@ const folderSlice = createSlice({
       delete state.allFolder[folderToDelete.name];
     },
 
+    editLink: (state, action) => {
+      const { linkID , folderName, updatedValues} = action.payload;
+
+      const allLinks = state.allFolder[folderName].items;
+
+      const filteredArr = allLinks.filter(link => link.id !== linkID);
+
+      const filteredLink = allLinks.filter(link => link.id === linkID);
+
+      const linkToUpdate = Object.assign({}, filteredLink[0]);
+      const updatedLink = Object.assign(linkToUpdate, updatedValues);
+
+
+      const newLinkArr = [...filteredArr, updatedLink];
+      state.allFolder[folderName].items = newLinkArr;
+    
+    },
+
     openAccordion: (state, action) => {
       const selectedFolder = action.payload;
       const stateKeys = Object.keys(state.allFolder);
@@ -171,5 +189,6 @@ export const {
   addNewFolder,
   editFolder,
   deleteFolder,
+  editLink,
 } = folderSlice.actions;
 export default folderSlice.reducer;

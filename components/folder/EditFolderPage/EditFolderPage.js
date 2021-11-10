@@ -1,4 +1,4 @@
-import { ScrollView, Alert } from "react-native";
+  import { ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -34,7 +34,10 @@ import {
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
-import { toggleAddOrScanModal } from "../../../redux/modalSlice";
+import {
+  toggleAddOrScanModal,
+  toggleEditUrlModal,
+} from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
@@ -46,6 +49,8 @@ import {
 } from "../../../redux/folderSlice";
 import { runToaster } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
+import EditUrlModal from "../../EditUrlModal/EditUrlModal";
+import { setLinkToEdit } from "../../../redux/modalSlice";
 
 function EditFolderPage({ navigation, route }) {
   const [folderName, setFolderName] = useState(``);
@@ -59,6 +64,8 @@ function EditFolderPage({ navigation, route }) {
     Object.keys(state.folder.allFolder)
   );
 
+  const allFolders = useSelector((state) => state.folder.allFolder);
+
   const currentLinks = useSelector((state) => state.folder.allFolder);
 
   const currentFolder = useSelector(
@@ -66,6 +73,8 @@ function EditFolderPage({ navigation, route }) {
   );
 
   const dispatch = useDispatch();
+
+
 
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
@@ -182,12 +191,19 @@ function EditFolderPage({ navigation, route }) {
 
   // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
 
+  const editButtonAction = (linkID) => {
+    dispatch(toggleEditUrlModal());
+    dispatch(setLinkToEdit(linkID));
+  };
+
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
-          <EditIcon source={editIcon} />
+          <Pressable onPress={() => editButtonAction(link.id)}>
+            <EditIcon source={editIcon} />
+          </Pressable>
         </AddedLinkWrapper>
       );
     });
@@ -212,7 +228,7 @@ function EditFolderPage({ navigation, route }) {
   return (
     <ScrollView>
       <Container>
-        <BackArrowContainer onPress={() => navigation.goBack()}>
+        <BackArrowContainer onPress={() =>  navigation.goBack()}>
           <BackArrowIcon source={backArrowIcon} />
         </BackArrowContainer>
         <FolderTitleContainer>
@@ -271,6 +287,7 @@ function EditFolderPage({ navigation, route }) {
 
         <AddOrScanModal />
         <UrlModal picker={false} />
+        <EditUrlModal />
       </Container>
     </ScrollView>
   );
