@@ -20,7 +20,7 @@ const Dashboard = ({ navigation }) => {
   
 
   const scannerView = () => {
-    return (<BarcodeScanner toggleModal={true} />)
+    return (<BarcodeScanner toggleModal={false} />)
   };
   
   const homeScreenView = (navigation) => {
@@ -45,22 +45,8 @@ const Dashboard = ({ navigation }) => {
     <GlobalContainer>
       <ColorBlob />
 
-      {/* Ternary goes here */}
-
       {setStartCamera ? scannerView() : homeScreenView(navigation)}
 
-{/* 
-      <ScrollView>
-        <AddNewItemMenu navigation={navigation} />
-        <AddOrScanModal />
-        <UrlModal picker={true}/>
-
-        <Container>
-          <TopBar />
-          <QrContainer />
-          <FolderContainer navigation={navigation} />
-        </Container>
-      </ScrollView> */}
     </GlobalContainer>
   );
 };

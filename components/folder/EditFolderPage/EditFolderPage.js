@@ -37,6 +37,7 @@ import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddOrScanModal,
   toggleEditUrlModal,
+  setLinkToEdit
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
@@ -50,7 +51,6 @@ import {
 import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
-import { setLinkToEdit } from "../../../redux/modalSlice";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 
 function EditFolderPage({ navigation, route }) {
@@ -295,7 +295,7 @@ function EditFolderPage({ navigation, route }) {
 
           <AddOrScanModal />
           <UrlModal picker={false} />
-          <EditUrlModal />
+          <EditUrlModal editPage={true}/>
         </Container>
       </ScrollView>
     );

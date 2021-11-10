@@ -33,7 +33,7 @@ import { editLink, deleteLink } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteLinkToast } from "../../utils/toastNote";
 
-const EditUrlModal = () => {
+const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
   const isEditUrlModalOpen = useSelector(
     (state) => state.modal.isEditUrlModalOpen
   );
@@ -66,6 +66,21 @@ const EditUrlModal = () => {
     );
     dispatch(toggleEditUrlModal());
   };
+
+  // -------------------------------- Leave this comment for add folder edit/delete function bug
+
+  // const editSaveLocal = () => {
+  //   const editedLinkArr = newLinks.filter(link => link !== link.id);
+  //   const updatedValues = {
+  //     name: inputName,
+  //     id: linkToEdit,
+  //     url: inputUrl,
+  //     description: inputDescription,
+  //     isSelected: false,
+  //   }
+  //   setNewLinks([...editedLinkArr, updatedValues]);
+
+  // }
 
   const handleLinkDelete = () => {
     dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
@@ -139,7 +154,7 @@ const EditUrlModal = () => {
                     <CancelBtn onPress={() => handleLinkDelete()}>
                       <DeleteText>Delete</DeleteText>
                     </CancelBtn>
-                    <CreateFolderBtn onPress={() => editSave()}>
+                    <CreateFolderBtn onPress={() => {editPage ? editSave() : editSaveLocal()}}>
                       <CreateText>Save</CreateText>
                     </CreateFolderBtn>
                   </BtnFooter>

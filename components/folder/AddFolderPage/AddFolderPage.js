@@ -1,4 +1,4 @@
-import { ScrollView, Alert } from "react-native";
+import { ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -34,7 +34,7 @@ import {
 } from "../EditFolderPage/styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
-import { toggleAddOrScanModal } from "../../../redux/modalSlice";
+import { toggleAddOrScanModal, setLinkToEdit, toggleEditUrlModal } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
@@ -42,6 +42,7 @@ import UrlModal from "../../UrlModal/UrlModal";
 import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
+import EditUrlModal from '../../EditUrlModal/EditUrlModal'
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
@@ -52,7 +53,7 @@ function AddFolderPage({ navigation }) {
     Object.keys(state.folder.allFolder)
   );
 
-  const setStartCamera = useSelector((state) => state.camera.setStartCamera)
+  const setStartCamera = useSelector((state) => state.camera.setStartCamera);
 
   const [newLinks, setNewLinks] = useState([]);
   const dispatch = useDispatch();
@@ -114,12 +115,19 @@ function AddFolderPage({ navigation }) {
 
   // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
 
+  const editButtonAction = (linkID) => {
+    dispatch(toggleEditUrlModal());
+    dispatch(setLinkToEdit(linkID));
+  };
+
   const renderLinks = (linksToRender) => {
     return linksToRender?.map((link) => {
       return (
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
-          <EditIcon source={editIcon} />
+          <Pressable onPress={() => editButtonAction(link)}>
+            <EditIcon source={editIcon} />
+          </Pressable>
         </AddedLinkWrapper>
       );
     });
@@ -142,95 +150,96 @@ function AddFolderPage({ navigation }) {
   // ---------------------------------------------------------JSX START
 
   const scannerView = () => {
-    return <BarcodeScanner toggleModal={false} />
-  }
+    
+    return <BarcodeScanner toggleModal={false} />;
+  };
 
   const addFolderView = (navigation) => {
     return (
       <ScrollView>
-      <Container>
-        <BackArrowContainer onPress={() => navigation.goBack()}>
-          <BackArrowIcon source={backArrowIcon} />
-        </BackArrowContainer>
-        <FolderTitleContainer>
-          <FolderTitle>Add Folder</FolderTitle>
-        </FolderTitleContainer>
+        <Container>
+          <BackArrowContainer onPress={() => navigation.goBack()}>
+            <BackArrowIcon source={backArrowIcon} />
+          </BackArrowContainer>
+          <FolderTitleContainer>
+            <FolderTitle>Add Folder</FolderTitle>
+          </FolderTitleContainer>
 
-        <FolderInputSection>
-          <FolderNameLabel>Folder Name</FolderNameLabel>
-          <FolderInput
-            placeholder="Name Your Folder..."
-            placeholderTextColor="#c1c1c1"
-            onChangeText={setFolderName}
-            value={folderName}
+          <FolderInputSection>
+            <FolderNameLabel>Folder Name</FolderNameLabel>
+            <FolderInput
+              placeholder="Name Your Folder..."
+              placeholderTextColor="#c1c1c1"
+              onChangeText={setFolderName}
+              value={folderName}
+            />
+          </FolderInputSection>
+
+          <DescriptionSection>
+            <DescriptionLabel>Description</DescriptionLabel>
+            <DescriptionInput
+              placeholder="Add Description..."
+              placeholderTextColor="#c1c1c1"
+              maxLength={85}
+              multiline={true}
+              onChangeText={setDescription}
+              value={description}
+            />
+          </DescriptionSection>
+          {/* ********** Color Picker ********** */}
+          <ColorGridSection>
+            <ColorGridLabelContainer>
+              <ColorGridLabel>Folder Color:</ColorGridLabel>
+              <CurrentFolderColor folderColor={folderColor} />
+            </ColorGridLabelContainer>
+
+            <ColorGrid>{pickFolderColor()}</ColorGrid>
+          </ColorGridSection>
+          {/* ************ Color Picker ************ */}
+          {/* ******************** Link Section *********************** */}
+
+          <LinkWrapper>
+            <AddedLinksLabel>Links</AddedLinksLabel>
+            <NewLinks>{renderLinks(newLinks)}</NewLinks>
+            <AddLinkBtn
+              onPress={() => {
+                dispatch(toggleAddOrScanModal());
+              }}
+            >
+              <AddLinkText>Add Link</AddLinkText>
+            </AddLinkBtn>
+          </LinkWrapper>
+
+          {/* ------------------ End Link Section  --------------------- */}
+
+          {/* ------------------Save / Cancel Buttons------------------- */}
+          <CreateCancelContainer>
+            <CancelBtn onPress={() => navigation.goBack()}>
+              <CancelText>Cancel</CancelText>
+            </CancelBtn>
+            <CreateFolderBtn onPress={() => createNewFolder()}>
+              <CreateText>Create</CreateText>
+            </CreateFolderBtn>
+          </CreateCancelContainer>
+
+          <AddOrScanModal />
+          <UrlModal
+            setNewLinks={setNewLinks}
+            newLinks={newLinks}
+            picker={false}
           />
-        </FolderInputSection>
-
-        <DescriptionSection>
-          <DescriptionLabel>Description</DescriptionLabel>
-          <DescriptionInput
-            placeholder="Add Description..."
-            placeholderTextColor="#c1c1c1"
-            maxLength={85}
-            multiline={true}
-            onChangeText={setDescription}
-            value={description}
+          <EditUrlModal 
+            setNewLinks={setNewLinks}
+            newLinks={newLinks}
+            editPage={false} 
           />
-        </DescriptionSection>
-        {/* ********** Color Picker ********** */}
-        <ColorGridSection>
-          <ColorGridLabelContainer>
-            <ColorGridLabel>Folder Color:</ColorGridLabel>
-            <CurrentFolderColor folderColor={folderColor} />
-          </ColorGridLabelContainer>
+        </Container>
+      </ScrollView>
+      
+    );
+  };
 
-          <ColorGrid>{pickFolderColor()}</ColorGrid>
-        </ColorGridSection>
-        {/* ************ Color Picker ************ */}
-        {/* ******************** Link Section *********************** */}
-
-        <LinkWrapper>
-          <AddedLinksLabel>Links</AddedLinksLabel>
-          <NewLinks>{renderLinks(newLinks)}</NewLinks>
-          <AddLinkBtn
-            onPress={() => {
-              dispatch(toggleAddOrScanModal());
-            }}
-          >
-            <AddLinkText>Add Link</AddLinkText>
-          </AddLinkBtn>
-        </LinkWrapper>
-
-        {/* ------------------ End Link Section  --------------------- */}
-
-        {/* ------------------Save / Cancel Buttons------------------- */}
-        <CreateCancelContainer>
-          <CancelBtn onPress={() => navigation.goBack()}>
-            <CancelText>Cancel</CancelText>
-          </CancelBtn>
-          <CreateFolderBtn onPress={() => createNewFolder()}>
-            <CreateText>Create</CreateText>
-          </CreateFolderBtn>
-        </CreateCancelContainer>
-
-        <AddOrScanModal />
-        <UrlModal
-          setNewLinks={setNewLinks}
-          newLinks={newLinks}
-          picker={false}
-        />
-      </Container>
-    </ScrollView>
-    )
-
-    
-  }
-
-  return (
-    <>
-    {setStartCamera ? scannerView() : addFolderView(navigation)}
-    </>
-  );
+  return <>{setStartCamera ? scannerView() : addFolderView(navigation)}</>;
 }
 
 export default AddFolderPage;

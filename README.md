@@ -41,9 +41,13 @@ This application will let users save QR Codes, and generate new ones from any ur
 9. Delete current folders (pass)
 10. Delete newly made folders (pass)
 11. Edit URL
+12. Scan URL from dashboard
+13. Scan URL from Add/Edit Pages
+14. Delete URL
 
 ## Features to be added in testing routine
 
 
-12. Delete URL
-13. Scan URL
+15. Edit URL from add folder
+16. Delete URL from add folder
+

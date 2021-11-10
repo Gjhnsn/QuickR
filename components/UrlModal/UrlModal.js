@@ -100,10 +100,6 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     setInputDescription("");
   };
 
-  const onScan = () => {
-    dispatch(openCamera())
-  }
-
   // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
 
   const displayFolders = () => {
@@ -150,8 +146,6 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
   };
 
   const renderModal = () => {
-
-    console.log('url: ', scannedLink);
 
     if (isAddUrlModalOpen) {
       return (

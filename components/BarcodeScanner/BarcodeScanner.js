@@ -30,7 +30,6 @@ const BarcodeScanner = ({ toggleModal }) => {
     }, 1200);
 
     // pass data to add link modal
-    // alert(`Code with type ${type} and data ${data} has been scanned`);
   };
 
   return (
