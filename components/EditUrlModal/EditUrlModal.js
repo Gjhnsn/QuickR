@@ -41,19 +41,7 @@ const EditUrlModal = () => {
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
 
-  const testLog = () => {
-    console.log(`linkToEdit: ${linkToEdit}`);
-    console.log(`folderToEdit: ${folderToEdit}`);
-  };
-
-  /*
-          name: "Google",
-        id: "as65d1f65a1sdf",
-        url: "www.google.com",
-        description: "pizza menu ",
-        isSelected: false,
-  */
-
+  const dispatch = useDispatch();
 
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
@@ -70,10 +58,6 @@ const EditUrlModal = () => {
     dispatch(editLink({linkID: linkToEdit, folderName: folderToEdit, updatedValues}));
     dispatch(toggleEditUrlModal())
   };
-
-  //   const currentLink = useSelector((state) => state.allFolder.items[linkToEdit])
-
-  const dispatch = useDispatch();
 
   const renderModal = () => {
     if (isEditUrlModalOpen) {

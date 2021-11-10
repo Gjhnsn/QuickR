@@ -43,18 +43,3 @@ export const {
 } = modalSlice.actions;
 export default modalSlice.reducer;
 
-/* 
-
-dispatch the link id when we click on link edit button
-
-folder.allFolder[folderToEdit].items <-- array
-
-loop through each item id and compare with the one that matches linkToEdit
-
-object assign 
-
-delete old link
-
-create new link with updated values
-
-*/
