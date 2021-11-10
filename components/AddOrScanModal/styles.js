@@ -61,7 +61,7 @@ export const AddFolderContainer = styled.View`
   margin-bottom: 10px;
 `;
 
-export const AddQrContainer = styled.View`
+export const AddQrContainer = styled.Pressable`
   width: 100%;
   height: 35px;
   display: flex;

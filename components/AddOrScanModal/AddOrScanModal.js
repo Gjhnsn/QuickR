@@ -21,6 +21,8 @@ import {
   QrImage,
   CloserOverlay,
 } from "../AddOrScanModal/styles";
+import { __startCamera } from "../../utils/startCamera";
+import { openCamera } from "../../redux/startCameraSlice";
 
 const AddOrScanModal = () => {
   const isAddOrScanModalOpen = useSelector(
@@ -63,7 +65,7 @@ const AddOrScanModal = () => {
                       </AddFolderText>
                     </AddFolderContainer>
                   </Pressable>
-                  <AddQrContainer>
+                  <AddQrContainer onPress={() => __startCamera(dispatch(openCamera()))}>
                     <QrImage source={qrCodeIcon} />
                     <AddQrText style={{ color: "white" }}>
                       Scan QR Code

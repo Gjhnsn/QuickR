@@ -41,6 +41,7 @@ import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
+import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
@@ -50,6 +51,8 @@ function AddFolderPage({ navigation }) {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+
+  const setStartCamera = useSelector((state) => state.camera.setStartCamera)
 
   const [newLinks, setNewLinks] = useState([]);
   const dispatch = useDispatch();
@@ -138,8 +141,13 @@ function AddFolderPage({ navigation }) {
 
   // ---------------------------------------------------------JSX START
 
-  return (
-    <ScrollView>
+  const scannerView = () => {
+    return <BarcodeScanner />
+  }
+
+  const addFolderView = (navigation) => {
+    return (
+      <ScrollView>
       <Container>
         <BackArrowContainer onPress={() => navigation.goBack()}>
           <BackArrowIcon source={backArrowIcon} />
@@ -213,6 +221,15 @@ function AddFolderPage({ navigation }) {
         />
       </Container>
     </ScrollView>
+    )
+
+    
+  }
+
+  return (
+    <>
+    {setStartCamera ? scannerView() : addFolderView(navigation)}
+    </>
   );
 }
 
