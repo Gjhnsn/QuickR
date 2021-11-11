@@ -35,12 +35,11 @@ import {
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
-  toggleAddOrScanModal,
+  toggleAddUrlModal,
   toggleEditUrlModal,
-  setLinkToEdit
+  setLinkToEdit,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
-import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import {
@@ -281,7 +280,7 @@ function EditFolderPage({ navigation, route }) {
             </NewLinks>
             <AddLinkBtn
               onPress={() => {
-                dispatch(toggleAddOrScanModal());
+                dispatch(toggleAddUrlModal());
               }}
             >
               <AddLinkText>Add Link</AddLinkText>
@@ -293,9 +292,8 @@ function EditFolderPage({ navigation, route }) {
           {/* render buttons based on which folder user is in */}
           {renderEditFolderButtons()}
 
-          <AddOrScanModal />
           <UrlModal picker={false} />
-          <EditUrlModal editPage={true}/>
+          <EditUrlModal editPage={true} />
         </Container>
       </ScrollView>
     );
