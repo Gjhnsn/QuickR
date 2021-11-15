@@ -30,13 +30,11 @@ import {
   BtnFooter,
   SaveText,
   PickerContainer,
-} from "./styles";
-import {
   CloserOverlay,
   ModalOverlay,
   GradientBackground,
   CloseContainer,
-} from "../AddOrScanModal/styles";
+} from "./styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
 

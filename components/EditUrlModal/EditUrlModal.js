@@ -27,7 +27,7 @@ import {
   ModalOverlay,
   GradientBackground,
   CloseContainer,
-} from "../AddOrScanModal/styles";
+} from "./styles";
 import { toggleEditUrlModal } from "../../redux/modalSlice";
 import { editLink, deleteLink } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
