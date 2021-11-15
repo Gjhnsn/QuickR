@@ -14,18 +14,37 @@ import {
   Link,
   LinkButton,
 } from "./styles";
-import MoreIcon from "../../assets/moreIcon.svg";
 import { Ionicons } from "@expo/vector-icons";
 import LinkIcon from "../../assets/link.png";
+import * as WebBrowser from "expo-web-browser";
 
 const QrContainer = () => {
   const currentQr = useSelector((state) => state.qr.url);
   const currentQrName = useSelector((state) => state.qr.urlName);
   const qrDescription = useSelector((state) => state.qr.description);
+  const qrLink = useSelector((state) => state.qr);
   const [openQrDescription, setOpenQrDescription] = useState(false);
+  const [result, setResult] = useState(null);
 
   const toggleDescription = () => {
     setOpenQrDescription(!openQrDescription);
+  };
+
+  const openWebView = async () => {
+    // check if urlLink begins with http or https, if it doesnt then add to beginning of string.
+    const checkUrlRegex = new RegExp("^(http|https)://").test(
+      qrLink.urlAddress
+    );
+
+    if (checkUrlRegex) {
+      let result = await WebBrowser.openBrowserAsync(qrLink.urlAddress);
+      setResult(result);
+    } else {
+      let result = await WebBrowser.openBrowserAsync(
+        `https://${qrLink.urlAddress}`
+      );
+      setResult(result);
+    }
   };
 
   const renderQrDescription = () => {
@@ -33,7 +52,7 @@ const QrContainer = () => {
       return (
         <DescriptionContainer>
           <DescriptionText>{qrDescription}</DescriptionText>
-          <LinkButton onPress={() => {}}>
+          <LinkButton onPress={() => openWebView()}>
             <Link resizeMode="contain" source={LinkIcon} />
           </LinkButton>
         </DescriptionContainer>
