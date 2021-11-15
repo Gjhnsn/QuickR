@@ -37,6 +37,7 @@ import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddUrlModal,
   toggleEditUrlModal,
+  setLinkToEdit,
 } from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ColorPicker from "../../ColorPicker/ColorPicker";
