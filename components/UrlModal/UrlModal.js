@@ -8,7 +8,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import CloseIcon from "../../assets/closeIcon.png";
 import linkIcon from "../../assets/link.png";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
-import { toggleAddUrlModal, setFolderToEdit } from "../../redux/modalSlice";
+import {
+  toggleAddUrlModal,
+  setFolderToEdit,
+  setScannedLink,
+} from "../../redux/modalSlice";
 import { Picker } from "@react-native-picker/picker";
 import {
   ModalContainer,
@@ -26,15 +30,13 @@ import {
   BtnFooter,
   SaveText,
   PickerContainer,
-} from "./styles";
-import {
   CloserOverlay,
   ModalOverlay,
   GradientBackground,
   CloseContainer,
-} from "../AddOrScanModal/styles";
+} from "./styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
-import { openCamera } from '../../redux/startCameraSlice'
+import { openCamera } from "../../redux/startCameraSlice";
 
 function UrlModal({ picker, setNewLinks, newLinks }) {
   const dispatch = useDispatch();
@@ -46,7 +48,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     return state.modal.folderToEdit;
   });
 
-  const scannedLink = useSelector((state) => state.modal.scannedLink)
+  let scannedLink = useSelector((state) => state.modal.scannedLink);
 
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
@@ -77,6 +79,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
       })
     );
     dispatch(toggleAddUrlModal());
+    dispatch(setScannedLink(""));
   };
 
   // ------------------------------------------------------------------------FINAL SUBMISSION LOCAL
@@ -93,8 +96,8 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
       },
     ]);
     dispatch(toggleAddUrlModal());
-
-    // fields should clear upon save
+    dispatch(setScannedLink(""));
+    // fields should clear upon sav
     setInputName("");
     setInputUrl("");
     setInputDescription("");
@@ -145,8 +148,19 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     }
   };
 
-  const renderModal = () => {
+  const closeAndClearInput = () => {
+    // fields should clear upon exit
+    setInputName("");
+    setInputUrl("");
+    setInputDescription("");
 
+    dispatch(toggleAddUrlModal());
+    dispatch(setScannedLink(""));
+  };
+
+  const handleQrScan = () => {};
+
+  const renderModal = () => {
     if (isAddUrlModalOpen) {
       return (
         <ModalOverlay>
@@ -155,11 +169,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
             visible={isAddUrlModalOpen}
             animationType="slide"
           >
-            <CloserOverlay
-              onPress={() => {
-                dispatch(toggleAddUrlModal());
-              }}
-            />
+            <CloserOverlay onPress={() => closeAndClearInput()} />
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
@@ -167,11 +177,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable
-                      onPress={() => {
-                        dispatch(toggleAddUrlModal());
-                      }}
-                    >
+                    <Pressable onPress={() => closeAndClearInput()}>
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>

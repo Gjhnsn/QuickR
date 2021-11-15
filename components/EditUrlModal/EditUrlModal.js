@@ -27,18 +27,18 @@ import {
   ModalOverlay,
   GradientBackground,
   CloseContainer,
-} from "../AddOrScanModal/styles";
+} from "./styles";
 import { toggleEditUrlModal } from "../../redux/modalSlice";
 import { editLink, deleteLink } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteLinkToast } from "../../utils/toastNote";
 
-const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
+const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const isEditUrlModalOpen = useSelector(
     (state) => state.modal.isEditUrlModalOpen
   );
 
-  const scannedLink = useSelector((state) => state.modal.scannedLink)
+  const scannedLink = useSelector((state) => state.modal.scannedLink);
 
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
@@ -88,6 +88,15 @@ const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
     deleteLinkToast(linkToEdit.name);
   };
 
+  const closeAndClearInput = () => {
+    // fields should clear upon exit
+    setInputName("");
+    setInputUrl("");
+    setInputDescription("");
+
+    dispatch(toggleEditUrlModal());
+  };
+
   const renderModal = () => {
     if (isEditUrlModalOpen) {
       return (
@@ -97,11 +106,7 @@ const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
             visible={isEditUrlModalOpen}
             animationType="slide"
           >
-            <CloserOverlay
-              onPress={() => {
-                dispatch(toggleEditUrlModal());
-              }}
-            />
+            <CloserOverlay onPress={() => closeAndClearInput()} />
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
@@ -109,11 +114,7 @@ const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable
-                      onPress={() => {
-                        dispatch(toggleEditUrlModal());
-                      }}
-                    >
+                    <Pressable onPress={() => closeAndClearInput()}>
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
@@ -154,7 +155,11 @@ const EditUrlModal = ({editPage, newLinks, setNewLinks}) => {
                     <CancelBtn onPress={() => handleLinkDelete()}>
                       <DeleteText>Delete</DeleteText>
                     </CancelBtn>
-                    <CreateFolderBtn onPress={() => {editPage ? editSave() : editSaveLocal()}}>
+                    <CreateFolderBtn
+                      onPress={() => {
+                        editPage ? editSave() : editSaveLocal();
+                      }}
+                    >
                       <CreateText>Save</CreateText>
                     </CreateFolderBtn>
                   </BtnFooter>

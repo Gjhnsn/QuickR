@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Dimensions, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,7 @@ const BarcodeScanner = ({ toggleModal }) => {
 
       // toggle add url modal
       toggleModal ? dispatch(toggleAddUrlModal()) : null;
+      dispatch(setScannedLink(""));
     }, 1200);
 
     // pass data to add link modal

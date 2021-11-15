@@ -9,10 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import folderIcon from "../../assets/folderIcon.png";
 import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import CloseIcon from "../../assets/closeIcon.png";
-import {
-  toggleNewItemModal,
-  toggleAddOrScanModal,
-} from "../../redux/modalSlice";
+import { toggleNewItemModal, toggleAddUrlModal } from "../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
   AddFolderContainer,
@@ -36,7 +33,7 @@ function AddNewItemMenu({ navigation }) {
     const openAddOrScan = () => {
       dispatch(toggleNewItemModal());
       setTimeout(() => {
-        dispatch(toggleAddOrScanModal());
+        dispatch(toggleAddUrlModal());
       }, 200);
     };
 

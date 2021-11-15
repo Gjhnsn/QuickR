@@ -34,15 +34,17 @@ import {
 } from "../EditFolderPage/styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
-import { toggleAddOrScanModal, setLinkToEdit, toggleEditUrlModal } from "../../../redux/modalSlice";
+import {
+  toggleAddUrlModal,
+  toggleEditUrlModal,
+} from "../../../redux/modalSlice";
 import { useSelector, useDispatch } from "react-redux";
-import AddOrScanModal from "../../AddOrScanModal/AddOrScanModal";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
-import EditUrlModal from '../../EditUrlModal/EditUrlModal'
+import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
@@ -150,7 +152,6 @@ function AddFolderPage({ navigation }) {
   // ---------------------------------------------------------JSX START
 
   const scannerView = () => {
-    
     return <BarcodeScanner toggleModal={false} />;
   };
 
@@ -203,7 +204,7 @@ function AddFolderPage({ navigation }) {
             <NewLinks>{renderLinks(newLinks)}</NewLinks>
             <AddLinkBtn
               onPress={() => {
-                dispatch(toggleAddOrScanModal());
+                dispatch(toggleAddUrlModal());
               }}
             >
               <AddLinkText>Add Link</AddLinkText>
@@ -221,21 +222,18 @@ function AddFolderPage({ navigation }) {
               <CreateText>Create</CreateText>
             </CreateFolderBtn>
           </CreateCancelContainer>
-
-          <AddOrScanModal />
           <UrlModal
             setNewLinks={setNewLinks}
             newLinks={newLinks}
             picker={false}
           />
-          <EditUrlModal 
+          <EditUrlModal
             setNewLinks={setNewLinks}
             newLinks={newLinks}
-            editPage={false} 
+            editPage={false}
           />
         </Container>
       </ScrollView>
-      
     );
   };
 
