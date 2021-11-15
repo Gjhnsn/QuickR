@@ -39,7 +39,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   );
 
   const scannedLink = useSelector((state) => state.modal.scannedLink);
-
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
 
@@ -52,7 +51,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const editSave = () => {
     const updatedValues = {
       name: inputName,
-      id: linkToEdit,
+      id: linkToEdit.id,
       url: inputUrl,
       description: inputDescription,
       isSelected: false,
@@ -69,18 +68,31 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
   // -------------------------------- Leave this comment for add folder edit/delete function bug
 
-  // const editSaveLocal = () => {
-  //   const editedLinkArr = newLinks.filter(link => link !== link.id);
-  //   const updatedValues = {
-  //     name: inputName,
-  //     id: linkToEdit,
-  //     url: inputUrl,
-  //     description: inputDescription,
-  //     isSelected: false,
-  //   }
-  //   setNewLinks([...editedLinkArr, updatedValues]);
+  const editSaveLocal = (linkId) => {
+    const editedLinkArr = newLinks.filter((link) => link.id !== linkId.id);
+    const updatedValues = {
+      name: inputName,
+      id: linkToEdit,
+      url: inputUrl,
+      description: inputDescription,
+      isSelected: false,
+    };
+    setNewLinks([...editedLinkArr, updatedValues]);
+    dispatch(toggleEditUrlModal());
+  };
 
-  // }
+  const deleteLocal = (linkToDelete) => {
+    // delete selected link: create new array with links that that do not match links ID
+    const editedLinkArr = newLinks.filter(
+      (link) => link.id !== linkToDelete.id
+    );
+
+    // update new links array in state
+    setNewLinks(editedLinkArr);
+
+    // close modal
+    dispatch(toggleEditUrlModal());
+  };
 
   const handleLinkDelete = () => {
     dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
@@ -152,12 +164,16 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                   </FormWrapper>
 
                   <BtnFooter>
-                    <CancelBtn onPress={() => handleLinkDelete()}>
+                    <CancelBtn
+                      onPress={() => {
+                        editPage ? handleLinkDelete() : deleteLocal(linkToEdit);
+                      }}
+                    >
                       <DeleteText>Delete</DeleteText>
                     </CancelBtn>
                     <CreateFolderBtn
                       onPress={() => {
-                        editPage ? editSave() : editSaveLocal();
+                        editPage ? editSave() : editSaveLocal(linkToEdit);
                       }}
                     >
                       <CreateText>Save</CreateText>
