@@ -33,7 +33,7 @@ export const QrInfo = styled.View`
 export const QrNameContainer = styled.View`
   width: 100%;
   height: 45px;
-  display flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 15px;

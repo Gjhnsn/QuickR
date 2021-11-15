@@ -9,12 +9,14 @@ export const qrSlice = createSlice({
     url: createQr(`hello`),
     urlName: `hello`,
     description: `description`,
+    urlAddress: `https://www.hello.com`,
   },
   reducers: {
     setQr: (state, action) => {
       state.url = createQr(action.payload.url);
       state.urlName = action.payload.urlName;
       state.description = action.payload.description;
+      state.urlAddress = action.payload.url;
     },
   },
 });
