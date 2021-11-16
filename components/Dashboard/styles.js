@@ -14,6 +14,7 @@ export const GlobalContainer = styled.View`
 export const Container = styled.SafeAreaView`
   flex: 1;
   margin-top: ${StatusBar.currentHeight || 0};
+  margin-bottom: 0;
   padding: 10px;
   align-items: center;
   width: ${windowWidth};

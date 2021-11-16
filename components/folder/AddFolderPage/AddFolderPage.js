@@ -1,4 +1,4 @@
-import { ScrollView, Alert, Pressable } from "react-native";
+import { SafeAreaView, ScrollView, Alert, Pressable } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -158,83 +158,85 @@ function AddFolderPage({ navigation }) {
 
   const addFolderView = (navigation) => {
     return (
-      <ScrollView>
-        <Container>
-          <BackArrowContainer onPress={() => navigation.goBack()}>
-            <BackArrowIcon source={backArrowIcon} />
-          </BackArrowContainer>
-          <FolderTitleContainer>
-            <FolderTitle>Add Folder</FolderTitle>
-          </FolderTitleContainer>
+      <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
+        <ScrollView>
+          <Container>
+            <BackArrowContainer onPress={() => navigation.goBack()}>
+              <BackArrowIcon source={backArrowIcon} />
+            </BackArrowContainer>
+            <FolderTitleContainer>
+              <FolderTitle>Add Folder</FolderTitle>
+            </FolderTitleContainer>
 
-          <FolderInputSection>
-            <FolderNameLabel>Folder Name</FolderNameLabel>
-            <FolderInput
-              placeholder="Name Your Folder..."
-              placeholderTextColor="#c1c1c1"
-              onChangeText={setFolderName}
-              value={folderName}
+            <FolderInputSection>
+              <FolderNameLabel>Folder Name</FolderNameLabel>
+              <FolderInput
+                placeholder="Name Your Folder..."
+                placeholderTextColor="#c1c1c1"
+                onChangeText={setFolderName}
+                value={folderName}
+              />
+            </FolderInputSection>
+
+            <DescriptionSection>
+              <DescriptionLabel>Description</DescriptionLabel>
+              <DescriptionInput
+                placeholder="Add Description..."
+                placeholderTextColor="#c1c1c1"
+                maxLength={85}
+                multiline={true}
+                onChangeText={setDescription}
+                value={description}
+              />
+            </DescriptionSection>
+            {/* ********** Color Picker ********** */}
+            <ColorGridSection>
+              <ColorGridLabelContainer>
+                <ColorGridLabel>Folder Color:</ColorGridLabel>
+                <CurrentFolderColor folderColor={folderColor} />
+              </ColorGridLabelContainer>
+
+              <ColorGrid>{pickFolderColor()}</ColorGrid>
+            </ColorGridSection>
+            {/* ************ Color Picker ************ */}
+            {/* ******************** Link Section *********************** */}
+
+            <LinkWrapper>
+              <AddedLinksLabel>Links</AddedLinksLabel>
+              <NewLinks>{renderLinks(newLinks)}</NewLinks>
+              <AddLinkBtn
+                onPress={() => {
+                  dispatch(toggleAddUrlModal());
+                }}
+              >
+                <AddLinkText>Add Link</AddLinkText>
+              </AddLinkBtn>
+            </LinkWrapper>
+
+            {/* ------------------ End Link Section  --------------------- */}
+
+            {/* ------------------Save / Cancel Buttons------------------- */}
+            <CreateCancelContainer>
+              <CancelBtn onPress={() => navigation.goBack()}>
+                <CancelText>Cancel</CancelText>
+              </CancelBtn>
+              <CreateFolderBtn onPress={() => createNewFolder()}>
+                <CreateText>Create</CreateText>
+              </CreateFolderBtn>
+            </CreateCancelContainer>
+            <UrlModal
+              setNewLinks={setNewLinks}
+              newLinks={newLinks}
+              picker={false}
             />
-          </FolderInputSection>
-
-          <DescriptionSection>
-            <DescriptionLabel>Description</DescriptionLabel>
-            <DescriptionInput
-              placeholder="Add Description..."
-              placeholderTextColor="#c1c1c1"
-              maxLength={85}
-              multiline={true}
-              onChangeText={setDescription}
-              value={description}
+            <EditUrlModal
+              setNewLinks={setNewLinks}
+              newLinks={newLinks}
+              editPage={false}
             />
-          </DescriptionSection>
-          {/* ********** Color Picker ********** */}
-          <ColorGridSection>
-            <ColorGridLabelContainer>
-              <ColorGridLabel>Folder Color:</ColorGridLabel>
-              <CurrentFolderColor folderColor={folderColor} />
-            </ColorGridLabelContainer>
-
-            <ColorGrid>{pickFolderColor()}</ColorGrid>
-          </ColorGridSection>
-          {/* ************ Color Picker ************ */}
-          {/* ******************** Link Section *********************** */}
-
-          <LinkWrapper>
-            <AddedLinksLabel>Links</AddedLinksLabel>
-            <NewLinks>{renderLinks(newLinks)}</NewLinks>
-            <AddLinkBtn
-              onPress={() => {
-                dispatch(toggleAddUrlModal());
-              }}
-            >
-              <AddLinkText>Add Link</AddLinkText>
-            </AddLinkBtn>
-          </LinkWrapper>
-
-          {/* ------------------ End Link Section  --------------------- */}
-
-          {/* ------------------Save / Cancel Buttons------------------- */}
-          <CreateCancelContainer>
-            <CancelBtn onPress={() => navigation.goBack()}>
-              <CancelText>Cancel</CancelText>
-            </CancelBtn>
-            <CreateFolderBtn onPress={() => createNewFolder()}>
-              <CreateText>Create</CreateText>
-            </CreateFolderBtn>
-          </CreateCancelContainer>
-          <UrlModal
-            setNewLinks={setNewLinks}
-            newLinks={newLinks}
-            picker={false}
-          />
-          <EditUrlModal
-            setNewLinks={setNewLinks}
-            newLinks={newLinks}
-            editPage={false}
-          />
-        </Container>
-      </ScrollView>
+          </Container>
+        </ScrollView>
+      </SafeAreaView>
     );
   };
 
