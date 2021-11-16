@@ -1,4 +1,4 @@
-import { ScrollView, Alert, Pressable } from "react-native";
+import { ScrollView, Alert, Pressable, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -231,71 +231,73 @@ function EditFolderPage({ navigation, route }) {
 
   const editFolderView = (navigation) => {
     return (
-      <ScrollView>
-        <Container>
-          <BackArrowContainer onPress={() => navigation.goBack()}>
-            <BackArrowIcon source={backArrowIcon} />
-          </BackArrowContainer>
-          <FolderTitleContainer>
-            <FolderTitle>Edit Folder</FolderTitle>
-          </FolderTitleContainer>
+      <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
+        <ScrollView>
+          <Container>
+            <BackArrowContainer onPress={() => navigation.goBack()}>
+              <BackArrowIcon source={backArrowIcon} />
+            </BackArrowContainer>
+            <FolderTitleContainer>
+              <FolderTitle>Edit Folder</FolderTitle>
+            </FolderTitleContainer>
 
-          <FolderInputSection>
-            <FolderNameLabel>Folder Name</FolderNameLabel>
-            <FolderInput
-              // placeholder={route.params.folder.name}
-              placeholderTextColor="#c1c1c1"
-              onChangeText={setFolderName}
-              value={folderName}
-            />
-          </FolderInputSection>
+            <FolderInputSection>
+              <FolderNameLabel>Folder Name</FolderNameLabel>
+              <FolderInput
+                // placeholder={route.params.folder.name}
+                placeholderTextColor="#c1c1c1"
+                onChangeText={setFolderName}
+                value={folderName}
+              />
+            </FolderInputSection>
 
-          <DescriptionSection>
-            <DescriptionLabel>Description</DescriptionLabel>
-            <DescriptionInput
-              // placeholder={route.params.folder.description}
-              placeholderTextColor="#c1c1c1"
-              maxLength={85}
-              multiline={true}
-              onChangeText={setDescription}
-              value={description}
-            />
-          </DescriptionSection>
-          {/* ********** Color Picker ********** */}
-          <ColorGridSection>
-            <ColorGridLabelContainer>
-              <ColorGridLabel>Folder Color:</ColorGridLabel>
-              <CurrentFolderColor folderColor={folderColor} />
-            </ColorGridLabelContainer>
+            <DescriptionSection>
+              <DescriptionLabel>Description</DescriptionLabel>
+              <DescriptionInput
+                // placeholder={route.params.folder.description}
+                placeholderTextColor="#c1c1c1"
+                maxLength={85}
+                multiline={true}
+                onChangeText={setDescription}
+                value={description}
+              />
+            </DescriptionSection>
+            {/* ********** Color Picker ********** */}
+            <ColorGridSection>
+              <ColorGridLabelContainer>
+                <ColorGridLabel>Folder Color:</ColorGridLabel>
+                <CurrentFolderColor folderColor={folderColor} />
+              </ColorGridLabelContainer>
 
-            <ColorGrid>{pickFolderColor()}</ColorGrid>
-          </ColorGridSection>
-          {/* ************ Color Picker ************ */}
-          {/* ******************** Link Section *********************** */}
+              <ColorGrid>{pickFolderColor()}</ColorGrid>
+            </ColorGridSection>
+            {/* ************ Color Picker ************ */}
+            {/* ******************** Link Section *********************** */}
 
-          <LinkWrapper>
-            <AddedLinksLabel>Links</AddedLinksLabel>
-            <NewLinks>
-              {renderLinks(currentLinks[folderToEdit]?.items)}
-            </NewLinks>
-            <AddLinkBtn
-              onPress={() => {
-                dispatch(toggleAddUrlModal());
-              }}
-            >
-              <AddLinkText>Add Link</AddLinkText>
-            </AddLinkBtn>
-          </LinkWrapper>
+            <LinkWrapper>
+              <AddedLinksLabel>Links</AddedLinksLabel>
+              <NewLinks>
+                {renderLinks(currentLinks[folderToEdit]?.items)}
+              </NewLinks>
+              <AddLinkBtn
+                onPress={() => {
+                  dispatch(toggleAddUrlModal());
+                }}
+              >
+                <AddLinkText>Add Link</AddLinkText>
+              </AddLinkBtn>
+            </LinkWrapper>
 
-          {/* ****************** End Link Section  ******************* */}
+            {/* ****************** End Link Section  ******************* */}
 
-          {/* render buttons based on which folder user is in */}
-          {renderEditFolderButtons()}
+            {/* render buttons based on which folder user is in */}
+            {renderEditFolderButtons()}
 
-          <UrlModal picker={false} />
-          <EditUrlModal editPage={true} />
-        </Container>
-      </ScrollView>
+            <UrlModal picker={false} />
+            <EditUrlModal editPage={true} />
+          </Container>
+        </ScrollView>
+      </SafeAreaView>
     );
   };
 

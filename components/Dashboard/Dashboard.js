@@ -4,7 +4,7 @@ import UrlModal from "../UrlModal/UrlModal";
 import FolderContainer from "../folder/FolderContainer/FolderContainer";
 import { Container } from "./styles";
 import TopBar from "../TopBar/TopBar";
-import { ScrollView } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import { GlobalContainer } from "./styles";
@@ -20,17 +20,19 @@ const Dashboard = ({ navigation }) => {
 
   const homeScreenView = (navigation) => {
     return (
-      <ScrollView>
-        <AddNewItemMenu navigation={navigation} />
-        <UrlModal picker={true} />
-        {/* Homescreen View */}
-        <Container>
-          <TopBar />
-          <QrContainer />
-          <FolderContainer navigation={navigation} />
-        </Container>
-        {/* Homescreen View */}
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <AddNewItemMenu navigation={navigation} />
+          <UrlModal picker={true} />
+          {/* Homescreen View */}
+          <Container>
+            <TopBar />
+            <QrContainer />
+            <FolderContainer navigation={navigation} />
+          </Container>
+          {/* Homescreen View */}
+        </ScrollView>
+      </SafeAreaView>
     );
   };
 
