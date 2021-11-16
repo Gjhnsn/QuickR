@@ -76,6 +76,7 @@ const folderSlice = createSlice({
   name: `folder`,
   initialState: {
     allFolder: INITIAL_STATE,
+    blobColor: "#5E5CE6",
   },
 
   reducers: {
@@ -83,6 +84,11 @@ const folderSlice = createSlice({
       const { folderName, addedLink } = action.payload;
 
       state.allFolder[folderName].items.push(addedLink);
+    },
+
+    setBlobColor: (state, action) => {
+      const color = action.payload;
+      state.blobColor = color;
     },
 
     addNewFolder: (state, action) => {
@@ -195,5 +201,6 @@ export const {
   deleteFolder,
   editLink,
   deleteLink,
+  setBlobColor,
 } = folderSlice.actions;
 export default folderSlice.reducer;
