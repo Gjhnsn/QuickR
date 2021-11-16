@@ -10,6 +10,7 @@ import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import { GlobalContainer } from "./styles";
 import BarcodeScanner from "../BarcodeScanner/BarcodeScanner";
 import { useSelector } from "react-redux";
+import { StatusBar } from "expo-status-bar";
 
 const Dashboard = ({ navigation }) => {
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
@@ -32,6 +33,7 @@ const Dashboard = ({ navigation }) => {
           </Container>
           {/* Homescreen View */}
         </ScrollView>
+        <StatusBar style="light" />
       </SafeAreaView>
     );
   };
