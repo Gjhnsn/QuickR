@@ -19,7 +19,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import LinkIcon from "../../assets/link.png";
 
-
 import * as WebBrowser from "expo-web-browser";
 
 const QrContainer = () => {
@@ -53,12 +52,9 @@ const QrContainer = () => {
 
 
   const onShare = async () => {
-    console.log(currentQr);
     try {
       const result = await Share.share({
-        title: "App link",
         message: `Checkout this link from QuickR ${qrLink.urlAddress}`,
-        url: currentQr,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -73,8 +69,6 @@ const QrContainer = () => {
       alert(error.message);
     }
   };
-
-
 
   const renderQrDescription = () => {
     if (openQrDescription) {
