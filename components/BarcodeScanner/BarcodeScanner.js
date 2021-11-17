@@ -40,7 +40,7 @@ const BarcodeScanner = ({ toggleModal }) => {
         onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
       >
         <CameraContainer>
-          <Pressable onPress={() => dispatch(closeCamera())} hitSlop={10}>
+          <Pressable onPress={() => dispatch(closeCamera())} hitSlop={15}>
             <Ionicons name="md-close" size={40} color="white" />
           </Pressable>
         </CameraContainer>
