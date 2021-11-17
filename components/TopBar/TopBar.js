@@ -5,7 +5,7 @@ import addIcon from "../../assets/addIcon.png";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleNewItemModal } from "../../redux/modalSlice";
 import { setFolderToEdit } from "../../redux/modalSlice";
-import SvgComponent from "../Svg/svgComponent";
+import LogoSvgComponent from "../Svg/logoSvgComponent";
 
 function TopBar() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ function TopBar() {
 
   return (
     <NavigationContainer>
-      <SvgComponent />
+      <LogoSvgComponent />
       <Pressable onPress={() => addButtonAction()}>
         <Image source={addIcon} />
       </Pressable>
