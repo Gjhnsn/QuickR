@@ -31,7 +31,7 @@ import {
   BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
-} from "../EditFolderPage/styles";
+} from "../AddFolderPage/styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
