@@ -177,7 +177,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable onPress={() => closeAndClearInput()}>
+                    <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
@@ -193,7 +193,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => dispatch(openCamera())}>
+                      <QrIconButton onPress={() => dispatch(openCamera())} hitslop={10}>
                         <Image source={qrCodeIcon} />
                       </QrIconButton>
                     </UrlInputContainer>
@@ -217,7 +217,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                   {picker ? showFolderPicker() : null}
 
                   <BtnFooter>
-                    <SaveBtnWrapper onPress={() => validateFolderSelection()}>
+                    <SaveBtnWrapper onPress={() => validateFolderSelection()} hitslop={10}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
                   </BtnFooter>

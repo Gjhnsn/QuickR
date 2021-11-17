@@ -60,6 +60,7 @@ function AddNewItemMenu({ navigation }) {
                 >
                   <CloseContainer>
                     <Pressable
+                      hitslop={10}
                       onPress={() => {
                         dispatch(toggleNewItemModal());
                       }}
@@ -67,13 +68,13 @@ function AddNewItemMenu({ navigation }) {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
-                  <AddFolderContainer onPress={() => createNewFolder()}>
+                  <AddFolderContainer onPress={() => createNewFolder()} hitslop={10}>
                     <FolderImage source={folderIcon} />
                     <AddFolderText style={{ color: "white", fontSize: 18 }}>
                       Add Folder
                     </AddFolderText>
                   </AddFolderContainer>
-                  <AddQrContainer onPress={() => openAddOrScan()}>
+                  <AddQrContainer onPress={() => openAddOrScan()} hitslop={10}>
                     <QrImage source={qrCodeIcon} />
                     <AddQrText style={{ color: "white" }}>
                       Add QR Code

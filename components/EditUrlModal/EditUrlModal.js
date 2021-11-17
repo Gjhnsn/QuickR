@@ -126,7 +126,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable onPress={() => closeAndClearInput()}>
+                    <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
@@ -142,7 +142,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => {}}>
+                      <QrIconButton onPress={() => {}} hitslop={10}> 
+                      {/* Need to hook up above onPress to scanner */}
                         <Image source={qrCodeIcon} />
                       </QrIconButton>
                     </UrlInputContainer>

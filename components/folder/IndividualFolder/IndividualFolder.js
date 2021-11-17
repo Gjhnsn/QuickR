@@ -39,7 +39,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
     navigation.navigate("EditFolderPage", {
       editMode: true,
       folder,
-    })
+    });
 
     dispatch(setFolderToEdit(folderName));
   };
@@ -50,9 +50,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
         <TitleContainer>
           <FolderColorBubble folderColor={folder.folderColor} />
           <FolderTitle>{folderName}</FolderTitle>
-          <Pressable
-            onPress={() => editButtonAction()}
-          >
+          <Pressable onPress={() => editButtonAction()} hitslop={10}>
             <EditButton source={editIcon} />
           </Pressable>
         </TitleContainer>

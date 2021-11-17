@@ -128,7 +128,7 @@ function AddFolderPage({ navigation }) {
       return (
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
-          <Pressable onPress={() => editButtonAction(link)}>
+          <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
             <EditIcon source={editIcon} />
           </Pressable>
         </AddedLinkWrapper>
@@ -161,7 +161,7 @@ function AddFolderPage({ navigation }) {
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
         <ScrollView>
           <Container>
-            <BackArrowContainer onPress={() => navigation.goBack()}>
+            <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
               <BackArrowIcon source={backArrowIcon} />
             </BackArrowContainer>
             <FolderTitleContainer>
