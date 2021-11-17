@@ -1,5 +1,5 @@
-import { ScrollView, Alert, Pressable, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import { ScrollView, Alert, Pressable, SafeAreaView, Animated } from "react-native";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Container,
@@ -31,6 +31,8 @@ import {
   BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
+  EditChange,
+  InputContainer,
 } from "./styles";
 import editIcon from "../../../assets/editIcon.png";
 import backArrowIcon from "../../../assets/backArrowIcon.png";
@@ -43,7 +45,6 @@ import { useSelector, useDispatch } from "react-redux";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
 import {
-  addNewFolder,
   editFolder,
   deleteFolder,
 } from "../../../redux/folderSlice";
@@ -52,14 +53,33 @@ import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 
-function EditFolderPage({ navigation, route }) {
-  const [folderName, setFolderName] = useState(``);
-  const [description, setDescription] = useState(``);
-  const [folderColor, setFolderColor] = useState(`red`);
+function EditFolderPage({ navigation }) {
+
+// ------------------------------------------------------------------------------------------------------------------------ INPUT MAGIC START
+
 
   const folderToEdit = useSelector((state) => {
     return state.modal.folderToEdit;
   });
+
+  const currentFolder = useSelector(
+    (state) => state.folder.allFolder[folderToEdit]
+  );
+
+
+  const [folderName, setFolderName] = useState(``);
+  const [description, setDescription] = useState(``);
+  const [folderColor, setFolderColor] = useState(`red`);
+
+  const [editInput, setEditInput] = useState(false);
+
+  useEffect(() => {
+    setFolderName(currentFolder.name);
+  }, [])
+ 
+// ------------------------------------------------------------------------------------------------------------------------ INPUT MAGIC END
+
+
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
@@ -70,9 +90,7 @@ function EditFolderPage({ navigation, route }) {
 
   const currentLinks = useSelector((state) => state.folder.allFolder);
 
-  const currentFolder = useSelector(
-    (state) => state.folder.allFolder[folderToEdit]
-  );
+ 
 
   const dispatch = useDispatch();
 
@@ -108,27 +126,6 @@ function EditFolderPage({ navigation, route }) {
   const clearInput = () => {
     setFolderName("");
     setDescription("");
-  };
-
-  // ---------------------------------------------------------ON PRESS FUNCTION FOR ADD BUTTON
-
-  const createNewFolder = () => {
-    if (validateFolderDetails()) {
-      dispatch(
-        addNewFolder({
-          name: folderName,
-          orderNumber: 5,
-          id: uuidv4(),
-          folderColor: folderColor,
-          description: description,
-          isLastActive: false,
-          isAccordionOpen: false,
-          items: [],
-        })
-      ),
-        navigation.goBack();
-      clearInput();
-    }
   };
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
@@ -170,6 +167,7 @@ function EditFolderPage({ navigation, route }) {
       };
       dispatch(editFolder({ updatedValues, folder: currentFolder }));
     }
+    console.log(currentFolder)
     clearInput();
     navigation.goBack();
   };
@@ -226,7 +224,7 @@ function EditFolderPage({ navigation, route }) {
   // ---------------------------------------------------------JSX START
 
   const scannerView = () => {
-    return <BarcodeScanner toggleModal={false} />;
+    return <BarcodeScanner toggleModal={false} />; 
   };
 
   const editFolderView = (navigation) => {
@@ -241,25 +239,46 @@ function EditFolderPage({ navigation, route }) {
               <FolderTitle>Edit Folder</FolderTitle>
             </FolderTitleContainer>
 
+
+
+
+
             <FolderInputSection>
+
               <FolderNameLabel>Folder Name</FolderNameLabel>
+
+
+              <InputContainer>
               <FolderInput
-                // placeholder={route.params.folder.name}
                 placeholderTextColor="#c1c1c1"
                 onChangeText={setFolderName}
                 value={folderName}
+                editable = {editInput}
+                editMode = {editInput}
               />
+              <EditChange onPress = {() => setEditInput(!editInput)}>
+                <EditIcon source={editIcon} />
+              </EditChange>
+
+              </InputContainer>
             </FolderInputSection>
+
+
+
+
+
+
 
             <DescriptionSection>
               <DescriptionLabel>Description</DescriptionLabel>
+              {/* <FolderDescriptionValue>{currentFolder.description}</FolderDescriptionValue> */}
               <DescriptionInput
                 // placeholder={route.params.folder.description}
                 placeholderTextColor="#c1c1c1"
                 maxLength={85}
                 multiline={true}
                 onChangeText={setDescription}
-                value={description}
+                // value={currentFolder.description}
               />
             </DescriptionSection>
             {/* ********** Color Picker ********** */}

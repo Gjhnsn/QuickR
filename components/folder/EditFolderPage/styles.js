@@ -1,4 +1,6 @@
 import styled from "styled-components/native";
+import { Animated, View } from "react-native";
+import React, { useEffect, useRef } from "react";
 
 export const Container = styled.View`
   background-color: #1c1d21;
@@ -45,11 +47,16 @@ export const FolderNameLabel = styled.Text`
 
 export const FolderInput = styled.TextInput`
   height: 50px;
-  background-color: #3b3b3d;
-  padding: 10px;
-  border-radius: 10px;
+  background-color: ${(props) => props.editMode ? `#3b3b3d` : `transparent` };
+  padding: ${(props) => props.editMode ? `10px` : `0px` };
+  border-bottom-width: ${(props) => props.editMode ? `1px` : `0px` };
+  border-bottom-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   color: #fff;
+  z-index: 10;
 `;
+
 
 export const DescriptionSection = styled.View`
   width: 100%;
@@ -200,3 +207,28 @@ export const CancelText = styled.Text`
   text-align: center;
   font-weight: 600;
 `;
+
+
+// ------------------------------------------- INPUT VALUES 
+
+
+
+export const EditChange = styled.Pressable`
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 5px;
+`;
+
+
+export const InputContainer = styled.View`
+
+`
+
+
