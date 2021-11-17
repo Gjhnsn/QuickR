@@ -1,4 +1,10 @@
-import { ScrollView, Alert, Pressable, SafeAreaView, Animated } from "react-native";
+import {
+  ScrollView,
+  Alert,
+  Pressable,
+  SafeAreaView,
+  Animated,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -44,20 +50,18 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
-import {
-  editFolder,
-  deleteFolder,
-} from "../../../redux/folderSlice";
+import { editFolder, deleteFolder } from "../../../redux/folderSlice";
 import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 
 function EditFolderPage({ navigation }) {
-
-// ------------------------------------------------------------------------------------------------------------------------ INPUT MAGIC START
-
-
+  const setStartCamera = useSelector((state) => state.camera.setStartCamera);
+  const currentLinks = useSelector((state) => state.folder.allFolder);
+  const folderKeys = useSelector((state) =>
+    Object.keys(state.folder.allFolder)
+  );
   const folderToEdit = useSelector((state) => {
     return state.modal.folderToEdit;
   });
@@ -66,33 +70,21 @@ function EditFolderPage({ navigation }) {
     (state) => state.folder.allFolder[folderToEdit]
   );
 
+  const dispatch = useDispatch();
+  
+  // ----------------------------------------------------------------------------------------- INPUT EDIT LOGIC
 
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`red`);
 
-  const [editInput, setEditInput] = useState(false);
+  const [editNameInput, setEditNameInput] = useState(false);
+  const [editDescriptionInput, setEditDescriptionInput] = useState(false);
 
   useEffect(() => {
     setFolderName(currentFolder.name);
-  }, [])
- 
-// ------------------------------------------------------------------------------------------------------------------------ INPUT MAGIC END
-
-
-  const folderKeys = useSelector((state) =>
-    Object.keys(state.folder.allFolder)
-  );
-
-  const setStartCamera = useSelector((state) => state.camera.setStartCamera);
-
-  const allFolders = useSelector((state) => state.folder.allFolder);
-
-  const currentLinks = useSelector((state) => state.folder.allFolder);
-
- 
-
-  const dispatch = useDispatch();
+    setDescription(currentFolder.description);
+  }, []);
 
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
@@ -112,7 +104,7 @@ function EditFolderPage({ navigation }) {
       configureAlert("Description");
       return false;
     }
-    if (folderKeys.includes(folderName)) {
+    if (folderKeys.includes(folderName) && currentFolder.name !== folderName) {
       Alert.alert("Folder Name Already Exists");
       return false;
     }
@@ -166,25 +158,11 @@ function EditFolderPage({ navigation }) {
         folderColor,
       };
       dispatch(editFolder({ updatedValues, folder: currentFolder }));
+      clearInput();
+      navigation.goBack();
+    } else {
+      return;
     }
-    console.log(currentFolder)
-    clearInput();
-    navigation.goBack();
-  };
-
-  // ---------------------------------------------------------DELETE/SAVE BUTTONS
-
-  const renderEditFolderButtons = () => {
-    return (
-      <CreateCancelContainer>
-        <CancelBtn onPress={() => navigation.goBack()}>
-          <CancelText onPress={() => deleteFolderHandler()}>Delete</CancelText>
-        </CancelBtn>
-        <CreateFolderBtn onPress={() => editSubmit()}>
-          <CreateText>Save</CreateText>
-        </CreateFolderBtn>
-      </CreateCancelContainer>
-    );
   };
 
   // ---------------------------------------------------------NEWLY ADDED LINKS OR REDUX LINKS
@@ -221,11 +199,13 @@ function EditFolderPage({ navigation }) {
     });
   };
 
-  // ---------------------------------------------------------JSX START
+  // --------------------------------------------------------------------------------------SCANNER VIEW
 
   const scannerView = () => {
-    return <BarcodeScanner toggleModal={false} />; 
+    return <BarcodeScanner toggleModal={false} />;
   };
+
+  // --------------------------------------------------------------------------------------JSX START
 
   const editFolderView = (navigation) => {
     return (
@@ -239,49 +219,50 @@ function EditFolderPage({ navigation }) {
               <FolderTitle>Edit Folder</FolderTitle>
             </FolderTitleContainer>
 
-
-
-
+            {/*   // --------------------------------------------------------------------------------------FOLDER NAME INPUT */}
 
             <FolderInputSection>
-
               <FolderNameLabel>Folder Name</FolderNameLabel>
 
-
               <InputContainer>
-              <FolderInput
-                placeholderTextColor="#c1c1c1"
-                onChangeText={setFolderName}
-                value={folderName}
-                editable = {editInput}
-                editMode = {editInput}
-              />
-              <EditChange onPress = {() => setEditInput(!editInput)}>
-                <EditIcon source={editIcon} />
-              </EditChange>
-
+                <FolderInput
+                  placeholderTextColor="#c1c1c1"
+                  onChangeText={setFolderName}
+                  value={folderName}
+                  editable={editNameInput}
+                  editMode={editNameInput}
+                />
+                <EditChange onPress={() => setEditNameInput(!editNameInput)}>
+                  <EditIcon source={editIcon} />
+                </EditChange>
               </InputContainer>
             </FolderInputSection>
 
-
-
-
-
-
+            {/*   // --------------------------------------------------------------------------------------FOLDER DESCRIPTION INPUT */}
 
             <DescriptionSection>
               <DescriptionLabel>Description</DescriptionLabel>
-              {/* <FolderDescriptionValue>{currentFolder.description}</FolderDescriptionValue> */}
-              <DescriptionInput
-                // placeholder={route.params.folder.description}
-                placeholderTextColor="#c1c1c1"
-                maxLength={85}
-                multiline={true}
-                onChangeText={setDescription}
-                // value={currentFolder.description}
-              />
+              <InputContainer>
+                <DescriptionInput
+                  placeholderTextColor="#c1c1c1"
+                  maxLength={85}
+                  multiline={true}
+                  onChangeText={setDescription}
+                  value={description}
+                  editable={editDescriptionInput}
+                  editMode={editDescriptionInput}
+                />
+
+                <EditChange
+                  onPress={() => setEditDescriptionInput(!editDescriptionInput)}
+                >
+                  <EditIcon source={editIcon} />
+                </EditChange>
+              </InputContainer>
             </DescriptionSection>
-            {/* ********** Color Picker ********** */}
+
+            {/*   // --------------------------------------------------------------------------------------COLOR PICKER */}
+
             <ColorGridSection>
               <ColorGridLabelContainer>
                 <ColorGridLabel>Folder Color:</ColorGridLabel>
@@ -290,8 +271,8 @@ function EditFolderPage({ navigation }) {
 
               <ColorGrid>{pickFolderColor()}</ColorGrid>
             </ColorGridSection>
-            {/* ************ Color Picker ************ */}
-            {/* ******************** Link Section *********************** */}
+
+            {/*   // --------------------------------------------------------------------------------------LINK CONTAINER */}
 
             <LinkWrapper>
               <AddedLinksLabel>Links</AddedLinksLabel>
@@ -307,11 +288,20 @@ function EditFolderPage({ navigation }) {
               </AddLinkBtn>
             </LinkWrapper>
 
-            {/* ****************** End Link Section  ******************* */}
+            {/*   // --------------------------------------------------------------------------------------DELETE AND SAVE BUTTONS */}
 
-            {/* render buttons based on which folder user is in */}
-            {renderEditFolderButtons()}
+            <CreateCancelContainer>
+              <CancelBtn onPress={() => navigation.goBack()}>
+                <CancelText onPress={() => deleteFolderHandler()}>
+                  Delete
+                </CancelText>
+              </CancelBtn>
+              <CreateFolderBtn onPress={() => editSubmit()}>
+                <CreateText>Save</CreateText>
+              </CreateFolderBtn>
+            </CreateCancelContainer>
 
+            {/*   // --------------------------------------------------------------------------------------MODALS */}
             <UrlModal picker={false} />
             <EditUrlModal editPage={true} />
           </Container>

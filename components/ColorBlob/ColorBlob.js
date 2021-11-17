@@ -1,15 +1,11 @@
-import React from 'react';
-import { Blob } from './styles';
-import {useSelector} from 'react-redux'
+import React from "react";
+import { Blob } from "./styles";
+import { useSelector } from "react-redux";
 
 function ColorBlob() {
-    const folderData = useSelector((state) => state.folder.allFolder) 
+  const getFolderColor = useSelector((state) => state.folder.blobColor);
 
-    return (
-        <Blob>
-
-        </Blob>
-    )
+  return <Blob blobColor={getFolderColor} />;
 }
 
-export default ColorBlob
+export default ColorBlob;

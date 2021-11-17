@@ -8,7 +8,7 @@ export const approvedColors = [
   `#BF5AF2`,
   `#F87971`,
   `#f0a865`,
-  `#FFF2AF`,
+  `#F1DE33`,
   `#97F2A5`,
   `#A7DBF0`,
   `#61A3E4`,
