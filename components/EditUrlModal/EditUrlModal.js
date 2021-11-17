@@ -158,7 +158,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={100}
+                      maxLength={85}
                       multiline={true}
                     />
                   </FormWrapper>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Share } from "react-native";
 import { useSelector } from "react-redux";
 import { __startCamera } from "../../utils/startCamera";
 import {
@@ -13,9 +13,12 @@ import {
   DescriptionText,
   Link,
   LinkButton,
+  ShareButton,
+  ButtonContainer,
 } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import LinkIcon from "../../assets/link.png";
+
 import * as WebBrowser from "expo-web-browser";
 
 const QrContainer = () => {
@@ -47,14 +50,39 @@ const QrContainer = () => {
     }
   };
 
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Checkout this link from QuickR ${qrLink.urlAddress}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const renderQrDescription = () => {
     if (openQrDescription) {
       return (
         <DescriptionContainer>
           <DescriptionText>{qrDescription}</DescriptionText>
-          <LinkButton onPress={() => openWebView()}>
-            <Link resizeMode="contain" source={LinkIcon} />
-          </LinkButton>
+          <ButtonContainer>
+            <ShareButton onPress={() => onShare()}>
+              <Ionicons name="share-outline" size={24} color={"white"} />
+            </ShareButton>
+            <LinkButton onPress={() => openWebView()}>
+              <Link resizeMode="contain" source={LinkIcon} />
+            </LinkButton>
+          </ButtonContainer>
         </DescriptionContainer>
       );
     }

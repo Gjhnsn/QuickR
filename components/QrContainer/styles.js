@@ -67,14 +67,21 @@ export const DescriptionText = styled.Text`
   opacity: 0.5;
 `;
 
-export const LinkButton = styled.Pressable`
-position: absolute;
-bottom: 0;
-right: 0;
-margin-right: 15px;
-margin-bottom: 15px;
+export const ButtonContainer = styled.View`
+  flex-direction: row;
+  width: 60px;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 15px;
+  margin-bottom: 15px;
 `;
+
+export const LinkButton = styled.Pressable``;
 
 export const Link = styled.Image`
   height: 19px;
-`
+`;
+export const ShareButton = styled.Pressable``;
