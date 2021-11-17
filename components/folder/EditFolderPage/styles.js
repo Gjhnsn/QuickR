@@ -1,6 +1,4 @@
 import styled from "styled-components/native";
-import { Animated, View } from "react-native";
-import React, { useEffect, useRef } from "react";
 
 export const Container = styled.View`
   background-color: #1c1d21;
