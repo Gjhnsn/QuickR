@@ -15,6 +15,7 @@ import { openAccordion } from "../../../redux/folderSlice";
 import editIcon from "../../../assets/editIcon.png";
 import { setFolderToEdit } from "../../../redux/modalSlice";
 import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
@@ -52,15 +53,19 @@ function IndividualFolder({ folder, folderName, navigation }) {
           {/* only render edit icon if accordion is open */}
           {accordion[folderName].isAccordionOpen ? (
             <Pressable onPress={() => editButtonAction()} hitslop={10}>
-              <EditButton source={editIcon} />
+              <MaterialCommunityIcons
+                name="pencil-outline"
+                size={20}
+                color="white"
+              />
             </Pressable>
           ) : null}
         </TitleContainer>
         {/* down arrow when folder is closed | up arrow when folder is open */}
         {accordion[folderName].isAccordionOpen ? (
-          <MaterialIcons name="keyboard-arrow-up" size={24} color="white" />
+          <MaterialIcons name="keyboard-arrow-up" size={30} color="#6F6F6F" />
         ) : (
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="white" />
+          <MaterialIcons name="keyboard-arrow-down" size={30} color="#6F6F6F" />
         )}
       </FolderInitialElements>
 
