@@ -1,30 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const INITIAL_STATE = {
-  MyFirstFolder: {
-    name: "My First Folder",
-    orderNumber: 0,
-    id: "1",
-    folderColor: "#5E5CE6",
-    description: "",
-    isLastActive: false,
-    isAccordionOpen: false,
-    items: [
-      {
-        name: "No Saved Links",
-        id: "",
-        url: "",
-        description: "",
-        isSelected: false,
-      },
-    ],
-  },
-};
-
 const folderSlice = createSlice({
   name: `folder`,
   initialState: {
-    allFolder: INITIAL_STATE,
+    allFolder: {},
     blobColor: "#5E5CE6",
   },
 
