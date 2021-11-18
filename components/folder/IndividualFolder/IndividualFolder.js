@@ -12,8 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
 import { setFolderToEdit } from "../../../redux/modalSlice";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 function IndividualFolder({ folder, folderName, navigation }) {
@@ -23,7 +22,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
   const showLinks = () => {
     if (accordion[folderName].isAccordionOpen) {
       return (
-        <LinearGradient colors={['#3D3C3E', "#252528", ]}>
+        <LinearGradient colors={['#313234', "#252528", ]}>
           <FolderOpenedElements>
             <LinksContainer
               folderColor={folder.folderColor}

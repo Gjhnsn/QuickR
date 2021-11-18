@@ -1,11 +1,11 @@
-import { View, Image, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import React from "react";
 import { NavigationContainer, LogoPlaceholder } from "./styles";
-import addIcon from "../../assets/addIcon.png";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleNewItemModal } from "../../redux/modalSlice";
 import { setFolderToEdit } from "../../redux/modalSlice";
 import SvgComponent from "../Svg/svgComponent";
+import { AntDesign } from "@expo/vector-icons";
 
 function TopBar() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function TopBar() {
     <NavigationContainer>
       <SvgComponent />
       <Pressable onPress={() => addButtonAction()} hitslop={10}>
-        <Image source={addIcon} />
+        <AntDesign name="plussquareo" size={45} color="white" />
       </Pressable>
     </NavigationContainer>
   );

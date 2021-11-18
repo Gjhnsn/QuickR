@@ -25,15 +25,11 @@ import {
   NewLinks,
   AddedLinks,
   AddedLinkWrapper,
-  EditIcon,
   AddedLinksLabel,
   BackArrowContainer,
-  BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
 } from "../AddFolderPage/styles";
-import editIcon from "../../../assets/editIcon.png";
-import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddUrlModal,
   toggleEditUrlModal,
@@ -46,6 +42,7 @@ import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
@@ -129,7 +126,11 @@ function AddFolderPage({ navigation }) {
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
-            <EditIcon source={editIcon} />
+          <MaterialCommunityIcons
+                  name="pencil-outline"
+                  size={20}
+                  color="white"
+                />
           </Pressable>
         </AddedLinkWrapper>
       );
@@ -162,7 +163,7 @@ function AddFolderPage({ navigation }) {
         <ScrollView>
           <Container>
             <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
-              <BackArrowIcon source={backArrowIcon} />
+            <Ionicons name="chevron-back" size={40} color="white" />
             </BackArrowContainer>
             <FolderTitleContainer>
               <FolderTitle>Add Folder</FolderTitle>

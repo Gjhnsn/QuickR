@@ -11,8 +11,6 @@ export const Container = styled.View`
 
 export const QrWrapper = styled.View`
   width: 300px;
-  height: 45px;
-  background-color: #363636;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 `;
@@ -21,13 +19,7 @@ export const QrImage = styled.Image`
   width: 300px;
   height: 300px;
   border-width: 1px;
-  border-color: #363636;
-`;
-
-export const QrInfo = styled.View`
-  background-color: #363636;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-color: #1c1d21;
 `;
 
 export const QrNameContainer = styled.View`
@@ -53,35 +45,34 @@ export const MoreIcon = styled.Image`
 `;
 
 export const DescriptionContainer = styled.View`
-  background-color: #363636;
   padding-left: 15px;
-  padding-right: 70px;
+  padding-right: 60px;
   padding-bottom: 15px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  height: 85px;
 `;
 
 export const DescriptionText = styled.Text`
   font-size: 14px;
   color: #fff;
   opacity: 0.5;
+  height: 70px;
 `;
 
 export const ButtonContainer = styled.View`
-  flex-direction: row;
-  width: 60px;
+  flex-direction: column;
+  height: 73px;
   align-items: center;
   justify-content: space-between;
   position: absolute;
   bottom: 0;
   right: 0;
   margin-right: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 13px;
 `;
 
 export const LinkButton = styled.Pressable``;
 
-export const Link = styled.Image`
-  height: 19px;
-`;
+
 export const ShareButton = styled.Pressable``;

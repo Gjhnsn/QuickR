@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import { Pressable, StyleSheet, Share } from "react-native";
+import { Pressable, StyleSheet, Share, View } from "react-native";
 import { useSelector } from "react-redux";
 import { __startCamera } from "../../utils/startCamera";
 import {
   Container,
   QrWrapper,
   QrImage,
-  QrInfo,
   QrName,
   QrNameContainer,
   DescriptionContainer,
   DescriptionText,
-  Link,
   LinkButton,
   ShareButton,
   ButtonContainer,
 } from "./styles";
-import { Ionicons } from "@expo/vector-icons";
-import LinkIcon from "../../assets/link.png";
+import { Ionicons, Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 import * as WebBrowser from "expo-web-browser";
 
@@ -50,7 +48,6 @@ const QrContainer = () => {
     }
   };
 
-
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -73,17 +70,32 @@ const QrContainer = () => {
   const renderQrDescription = () => {
     if (openQrDescription) {
       return (
-        <DescriptionContainer>
-          <DescriptionText>{qrDescription}</DescriptionText>
-          <ButtonContainer>
-            <ShareButton onPress={() => onShare()} hitslop={10}>
-              <Ionicons name="share-outline" size={24} color={"white"} />
-            </ShareButton>
-            <LinkButton onPress={() => openWebView()} hitslop={10}>
-              <Link resizeMode="contain" source={LinkIcon} />
-            </LinkButton>
-          </ButtonContainer>
-        </DescriptionContainer>
+        <View
+          style={{
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
+            overflow: "hidden",
+          }}
+        >
+          <LinearGradient
+            colors={["#252528", "#363636"]}
+            start={[1, 0]}
+            end={[0, 0]}
+            style={{ overflow: "hidden" }}
+          >
+            <DescriptionContainer>
+              <DescriptionText>{qrDescription}</DescriptionText>
+              <ButtonContainer>
+                <ShareButton onPress={() => onShare()} hitslop={10}>
+                  <Ionicons name="share-outline" size={30} color={"white"} />
+                </ShareButton>
+                <LinkButton onPress={() => openWebView()} hitslop={10}>
+                <Feather name="link" size={25} color="white" />
+                </LinkButton>
+              </ButtonContainer>
+            </DescriptionContainer>
+          </LinearGradient>
+        </View>
       );
     }
   };
@@ -91,21 +103,30 @@ const QrContainer = () => {
   return (
     <Container>
       <QrImage source={{ uri: currentQr }} />
-      <QrWrapper>
-        <QrInfo>
-          <QrNameContainer>
-            <QrName>{currentQrName}</QrName>
-            <Pressable onPress={() => toggleDescription()} hitslop={10}>
-              <Ionicons
-                name="ellipsis-horizontal"
-                size={30}
-                color="white"
-              />
-            </Pressable>
-          </QrNameContainer>
+      <View
+            style={{
+              borderBottomLeftRadius: 15,
+              borderBottomRightRadius: 15,
+              overflow: "hidden",
+            }}
+          >
+      <LinearGradient
+        colors={["#252528", "#363636"]}
+        start={[1, 0]}
+        end={[0, 0]}
+        style={{ overflow: "hidden" }}
+      >
+        <QrWrapper>          
+            <QrNameContainer>
+              <QrName>{currentQrName}</QrName>
+              <Pressable onPress={() => toggleDescription()} hitslop={10}>
+                <Ionicons name="ellipsis-horizontal" size={30} color="white" />
+              </Pressable>
+            </QrNameContainer>
           {renderQrDescription()}
-        </QrInfo>
-      </QrWrapper>
+        </QrWrapper>
+      </LinearGradient>
+      </View>
     </Container>
   );
 };

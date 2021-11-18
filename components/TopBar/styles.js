@@ -9,7 +9,7 @@ export const NavigationContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-right: 20px;
+  padding-right: 25px;
   padding-left: 20px;
 `;
 
