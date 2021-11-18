@@ -27,7 +27,7 @@ function FolderContainer({ navigation }) {
           <TextHeader>No Folders Yet!</TextHeader>
           <TextSubHeader>Add a folder to get started</TextSubHeader>
         </PlaceHolderTextWrapper>
-        <AddFolderButton onPress={() => dispatch(toggleAddUrlModal())}>
+        <AddFolderButton onPress={() => navigation.navigate("AddFolderPage")}>
           <ButtonText>Add Folder</ButtonText>
         </AddFolderButton>
       </PlaceHolderContainer>
