@@ -35,12 +35,6 @@ export const EditButton = styled.Image`
   width: 20px;
 `;
 
-export const FolderToggleButton = styled.Image`
-  height: 24px;
-  width: 24px;
-  transform: rotateZ(180deg);
-`;
-
 export const FolderInitialElements = styled.View`
   width: ${windowWidth};
   height: 65px;
