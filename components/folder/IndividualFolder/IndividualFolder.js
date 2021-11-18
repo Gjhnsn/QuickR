@@ -6,16 +6,14 @@ import {
   FolderTitle,
   FolderColorBubble,
   TitleContainer,
-  EditButton,
-  FolderToggleButton,
   FolderInitialElements,
   FolderOpenedElements,
 } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
-import editIcon from "../../../assets/editIcon.png";
-import upIcon from "../../../assets/upIcon.png";
 import { setFolderToEdit } from "../../../redux/modalSlice";
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
@@ -50,11 +48,23 @@ function IndividualFolder({ folder, folderName, navigation }) {
         <TitleContainer>
           <FolderColorBubble folderColor={folder.folderColor} />
           <FolderTitle>{folderName}</FolderTitle>
-          <Pressable onPress={() => editButtonAction()} hitslop={10}>
-            <EditButton source={editIcon} />
-          </Pressable>
+          {/* only render edit icon if accordion is open */}
+          {accordion[folderName].isAccordionOpen ? (
+            <Pressable onPress={() => editButtonAction()} hitslop={10}>
+              <MaterialCommunityIcons
+                name="pencil-outline"
+                size={20}
+                color="white"
+              />
+            </Pressable>
+          ) : null}
         </TitleContainer>
-        <FolderToggleButton source={upIcon} />
+        {/* down arrow when folder is closed | up arrow when folder is open */}
+        {accordion[folderName].isAccordionOpen ? (
+          <MaterialIcons name="keyboard-arrow-up" size={30} color="#6F6F6F" />
+        ) : (
+          <MaterialIcons name="keyboard-arrow-down" size={30} color="#6F6F6F" />
+        )}
       </FolderInitialElements>
 
       {showLinks()}
