@@ -8,7 +8,7 @@ import {
   ModalContainer,
   AddUrlText,
   AddUrlTitleContainer,
-  Input,
+  Input, 
   FormWrapper,
   UrlInputContainer,
   UrlInput,
@@ -38,7 +38,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     (state) => state.modal.isEditUrlModalOpen
   );
 
-  const scannedLink = useSelector((state) => state.modal.scannedLink);
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
 

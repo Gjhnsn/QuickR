@@ -11,6 +11,7 @@ export const ModalOverlay = styled.Pressable`
   width: ${windowWidth};
   position: absolute;
   justify-content: center;
+  align-items: flex-end;
 `;
 
 export const CloserOverlay = styled.Pressable`
@@ -42,8 +43,8 @@ export const CloseContainer = styled.View`
 `;
 
 export const ModalContainer = styled.View`
-  width: 280px;
-  height: 570px;
+  width: 100%;
+  height: 500px;
   background-color: rgb(54, 54, 54);
   align-self: center;
   margin-top: ${Dimensions.get("window").height / 8}px;

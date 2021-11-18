@@ -5,12 +5,13 @@ import { Dimensions } from "react-native";
 export const ModalOverlay = styled.Pressable`
   display: flex;
   z-index: 100;
-  background-color: #000;
+  background-color: blue;
   opacity: 0.75;
   height: ${Dimensions.get("window").height * 2}px;
   width: ${windowWidth};
   position: absolute;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
 `;
 
 export const CloserOverlay = styled.Pressable`
