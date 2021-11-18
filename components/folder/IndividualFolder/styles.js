@@ -3,7 +3,7 @@ import { windowWidth } from "../../../utils/windowDimensions";
 
 export const FolderContainer = styled.TouchableOpacity`
   width: ${windowWidth};
-  background-color: #363636;
+  
   display: flex;
   flex-direction: column;
   border-bottom-width: 1px;

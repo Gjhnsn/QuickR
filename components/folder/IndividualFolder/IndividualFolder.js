@@ -14,6 +14,7 @@ import { openAccordion } from "../../../redux/folderSlice";
 import { setFolderToEdit } from "../../../redux/modalSlice";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
@@ -22,13 +23,15 @@ function IndividualFolder({ folder, folderName, navigation }) {
   const showLinks = () => {
     if (accordion[folderName].isAccordionOpen) {
       return (
-        <FolderOpenedElements>
-          <LinksContainer
-            folderColor={folder.folderColor}
-            folderItems={folder.items}
-            folderName={folderName}
-          />
-        </FolderOpenedElements>
+        <LinearGradient colors={['#3D3C3E', "#252528", ]}>
+          <FolderOpenedElements>
+            <LinksContainer
+              folderColor={folder.folderColor}
+              folderItems={folder.items}
+              folderName={folderName}
+            />
+          </FolderOpenedElements>
+        </LinearGradient>
       );
     }
   };
@@ -43,32 +46,42 @@ function IndividualFolder({ folder, folderName, navigation }) {
   };
 
   return (
-    <FolderContainer onPress={() => dispatch(openAccordion(folderName))}>
-      <FolderInitialElements>
-        <TitleContainer>
-          <FolderColorBubble folderColor={folder.folderColor} />
-          <FolderTitle>{folderName}</FolderTitle>
-          {/* only render edit icon if accordion is open */}
+    <LinearGradient
+      colors={["#1C1D21", "#2A2A2A", "2B2B2B"]}
+      start={[1, 0]}
+      end={[0, 0]}
+    >
+      <FolderContainer onPress={() => dispatch(openAccordion(folderName))}>
+        <FolderInitialElements>
+          <TitleContainer>
+            <FolderColorBubble folderColor={folder.folderColor} />
+            <FolderTitle>{folderName}</FolderTitle>
+            {/* only render edit icon if accordion is open */}
+            {accordion[folderName].isAccordionOpen ? (
+              <Pressable onPress={() => editButtonAction()} hitslop={10}>
+                <MaterialCommunityIcons
+                  name="pencil-outline"
+                  size={20}
+                  color="white"
+                />
+              </Pressable>
+            ) : null}
+          </TitleContainer>
+          {/* down arrow when folder is closed | up arrow when folder is open */}
           {accordion[folderName].isAccordionOpen ? (
-            <Pressable onPress={() => editButtonAction()} hitslop={10}>
-              <MaterialCommunityIcons
-                name="pencil-outline"
-                size={20}
-                color="white"
-              />
-            </Pressable>
-          ) : null}
-        </TitleContainer>
-        {/* down arrow when folder is closed | up arrow when folder is open */}
-        {accordion[folderName].isAccordionOpen ? (
-          <MaterialIcons name="keyboard-arrow-up" size={30} color="#6F6F6F" />
-        ) : (
-          <MaterialIcons name="keyboard-arrow-down" size={30} color="#6F6F6F" />
-        )}
-      </FolderInitialElements>
+            <MaterialIcons name="keyboard-arrow-up" size={30} color="#6F6F6F" />
+          ) : (
+            <MaterialIcons
+              name="keyboard-arrow-down"
+              size={30}
+              color="#6F6F6F"
+            />
+          )}
+        </FolderInitialElements>
 
-      {showLinks()}
-    </FolderContainer>
+        {showLinks()}
+      </FolderContainer>
+    </LinearGradient>
   );
 }
 
