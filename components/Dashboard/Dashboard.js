@@ -15,7 +15,6 @@ import { StatusBar } from "expo-status-bar";
 const Dashboard = ({ navigation }) => {
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
   const folderData = useSelector((state) => state.folder.allFolder);
-  console.log(folderData);
 
   const scannerView = () => {
     return <BarcodeScanner toggleModal={false} />;

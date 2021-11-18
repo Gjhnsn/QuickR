@@ -29,9 +29,10 @@ import {
   CloseContainer,
 } from "./styles";
 import { toggleEditUrlModal } from "../../redux/modalSlice";
-import { editLink, deleteLink } from "../../redux/folderSlice";
+import { editLink, deleteLink, setBlobColor } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteLinkToast } from "../../utils/toastNote";
+import { resetQr } from "../../redux/qrSlice";
 
 const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const isEditUrlModalOpen = useSelector(
@@ -95,9 +96,20 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   };
 
   const handleLinkDelete = () => {
-    dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
-    dispatch(toggleEditUrlModal());
-    deleteLinkToast(linkToEdit.name);
+    const deleteAction = () => {
+      dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
+      dispatch(toggleEditUrlModal());
+      deleteLinkToast(linkToEdit.name);
+    };
+
+    if (linkToEdit.isSelected) {
+      deleteAction();
+      dispatch(resetQr());
+      // reset blob color on dash
+      dispatch(setBlobColor("#5E5CE6"));
+    } else {
+      deleteAction();
+    }
   };
 
   const closeAndClearInput = () => {
