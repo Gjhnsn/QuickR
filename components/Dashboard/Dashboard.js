@@ -4,7 +4,7 @@ import UrlModal from "../UrlModal/UrlModal";
 import FolderContainer from "../folder/FolderContainer/FolderContainer";
 import { Container } from "./styles";
 import TopBar from "../TopBar/TopBar";
-import { ScrollView, SafeAreaView } from "react-native";
+import { ScrollView, SafeAreaView, View, Text, Pressable } from "react-native";
 import ColorBlob from "../ColorBlob/ColorBlob";
 import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
 import { GlobalContainer } from "./styles";
@@ -14,6 +14,7 @@ import { StatusBar } from "expo-status-bar";
 
 const Dashboard = ({ navigation }) => {
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
+  const folderData = useSelector((state) => state.folder.allFolder);
 
   const scannerView = () => {
     return <BarcodeScanner toggleModal={false} />;
@@ -29,8 +30,10 @@ const Dashboard = ({ navigation }) => {
           <Container>
             <TopBar />
             <QrContainer />
+
             <FolderContainer navigation={navigation} />
           </Container>
+
           {/* Homescreen View */}
         </ScrollView>
         <StatusBar style="light" />

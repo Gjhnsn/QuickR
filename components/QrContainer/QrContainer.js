@@ -18,6 +18,7 @@ import {
 } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import LinkIcon from "../../assets/link.png";
+import QrSvgPlaceholderComponent from "../Svg/qrSvgPlaceholderComponent";
 
 import * as WebBrowser from "expo-web-browser";
 
@@ -49,7 +50,6 @@ const QrContainer = () => {
       setResult(result);
     }
   };
-
 
   const onShare = async () => {
     try {
@@ -90,22 +90,29 @@ const QrContainer = () => {
 
   return (
     <Container>
-      <QrImage source={{ uri: currentQr }} />
-      <QrWrapper>
-        <QrInfo>
-          <QrNameContainer>
-            <QrName>{currentQrName}</QrName>
-            <Pressable onPress={() => toggleDescription()} hitslop={10}>
-              <Ionicons
-                name="ellipsis-horizontal"
-                size={30}
-                color="white"
-              />
-            </Pressable>
-          </QrNameContainer>
-          {renderQrDescription()}
-        </QrInfo>
-      </QrWrapper>
+      {qrLink.urlAddress ? (
+        <>
+          <QrImage source={{ uri: currentQr }} />
+          <QrWrapper>
+            <QrInfo>
+              <QrNameContainer onPress={() => toggleDescription()} hitslop={10}>
+                <QrName>{currentQrName}</QrName>
+                <Pressable>
+                  <Ionicons
+                    name="ellipsis-horizontal"
+                    size={30}
+                    color="white"
+                    onPress={() => toggleDescription()}
+                  />
+                </Pressable>
+              </QrNameContainer>
+              {renderQrDescription()}
+            </QrInfo>
+          </QrWrapper>
+        </>
+      ) : (
+        <QrSvgPlaceholderComponent />
+      )}
     </Container>
   );
 };

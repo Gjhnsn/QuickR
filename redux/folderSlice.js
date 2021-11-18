@@ -1,81 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const INITIAL_STATE = {
-  Personal: {
-    name: "Personal",
-    orderNumber: 0,
-    id: "1",
-    folderColor: "blue",
-    description: "this is a personal folder",
-    isLastActive: false,
-    isAccordionOpen: false,
-    items: [
-      {
-        name: "Teriyaki Don Menu",
-        id: "023jru0fj2098j32rf",
-        url: "www.teriyakidon.com",
-        description:
-          "Menu for local japanese restraunt in fresno Dine in, Take Out, or Delivery. Open 7 days.", //88 characters
-        isSelected: false,
-      },
-      {
-        name: "Insurance",
-        id: "203u0jf0j20",
-        url: "www.insurance.com",
-        description: "insurance website",
-        isSelected: false,
-      },
-      {
-        name: "School Registration",
-        id: "203u0jf0asdfaj20",
-        url: "www.school.com",
-        description: "registration info",
-        isSelected: false,
-      },
-    ],
-  }, // Personal Ends Here
-  Menu: {
-    name: "Menu",
-    orderNumber: 1,
-    id: "2",
-    folderColor: "yellow",
-    description: "this is a Menu folder with menu codes",
-    isLastActive: false,
-    isAccordionOpen: false,
-    items: [
-      {
-        name: "Pizza Hut",
-        id: "as65d1f65a1sdf",
-        url: "www.pizzahut.com",
-        description: "pizza menu ",
-        isSelected: false,
-      },
-    ],
-  }, // Menu Ends Here
-  Social: {
-    name: "Social",
-    orderNumber: 3,
-    id: "23",
-    folderColor: "darkgreen",
-    description: "this is a social folder with IG accounts",
-    isLastActive: false,
-    isAccordionOpen: false,
-    items: [
-      {
-        name: "Google",
-        id: "as65d1f65a1sdf",
-        url: "www.google.com",
-        description: "pizza menu ",
-        isSelected: false,
-      },
-    ],
-  },
-};
-
 const folderSlice = createSlice({
   name: `folder`,
   initialState: {
-    allFolder: INITIAL_STATE,
+    allFolder: {},
     blobColor: "#5E5CE6",
   },
 
