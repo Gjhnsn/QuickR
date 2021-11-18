@@ -6,13 +6,11 @@ import {
   FolderTitle,
   FolderColorBubble,
   TitleContainer,
-  EditButton,
   FolderInitialElements,
   FolderOpenedElements,
 } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
-import editIcon from "../../../assets/editIcon.png";
 import { setFolderToEdit } from "../../../redux/modalSlice";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";

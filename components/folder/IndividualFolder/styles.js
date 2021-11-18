@@ -30,11 +30,6 @@ export const TitleContainer = styled.View`
   align-items: center;
 `;
 
-export const EditButton = styled.Image`
-  height: 20px;
-  width: 20px;
-`;
-
 export const FolderInitialElements = styled.View`
   width: ${windowWidth};
   height: 65px;
