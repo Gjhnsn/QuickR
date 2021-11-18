@@ -6,10 +6,10 @@ const createQr = (url) =>
 export const qrSlice = createSlice({
   name: "currentQr",
   initialState: {
-    url: createQr(`hello`),
-    urlName: `hello`,
-    description: `description`,
-    urlAddress: `https://www.hello.com`,
+    url: ``,
+    urlName: ``,
+    description: ``,
+    urlAddress: ``,
   },
   reducers: {
     setQr: (state, action) => {
@@ -18,8 +18,15 @@ export const qrSlice = createSlice({
       state.description = action.payload.description;
       state.urlAddress = action.payload.url;
     },
+    resetQr: (state) => {
+      // const { url, urlName, description, urlAddress } = state;
+      state.url = "";
+      state.urlName = "";
+      state.description = "";
+      state.urlAddress = "";
+    },
   },
 });
 
-export const { setQr } = qrSlice.actions;
+export const { setQr, resetQr } = qrSlice.actions;
 export default qrSlice.reducer;

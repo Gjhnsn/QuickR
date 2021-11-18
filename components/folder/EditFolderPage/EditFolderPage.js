@@ -45,13 +45,18 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ColorPicker from "../../ColorPicker/ColorPicker";
 import UrlModal from "../../UrlModal/UrlModal";
-import { editFolder, deleteFolder } from "../../../redux/folderSlice";
+import {
+  editFolder,
+  deleteFolder,
+  setBlobColor,
+} from "../../../redux/folderSlice";
 import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { resetQr } from "../../../redux/qrSlice";
 
 function EditFolderPage({ navigation }) {
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
@@ -59,6 +64,7 @@ function EditFolderPage({ navigation }) {
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
   );
+  const blobColor = useSelector((state) => state.folder.blobColor);
   const folderToEdit = useSelector((state) => {
     return state.modal.folderToEdit;
   });
@@ -68,7 +74,7 @@ function EditFolderPage({ navigation }) {
   );
 
   const dispatch = useDispatch();
-  
+
   // ----------------------------------------------------------------------------------------- INPUT EDIT LOGIC
 
   const [folderName, setFolderName] = useState(``);
@@ -120,29 +126,41 @@ function EditFolderPage({ navigation }) {
   // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
 
   const deleteFolderHandler = () => {
-    Alert.alert(
-      `Delete ${currentFolder.name}?`,
-      "All of this folders contents will be lost",
-      [
-        {
-          text: "Cancel",
-          onPress: () => {
-            return;
+    const deleteAction = () => {
+      Alert.alert(
+        `Delete ${currentFolder.name}?`,
+        "All of this folders contents will be lost",
+        [
+          {
+            text: "Cancel",
+            onPress: () => {
+              return;
+            },
+            style: "default",
           },
-          style: "default",
-        },
-        // If 'OK' then proceed with deleting folder
-        {
-          text: "OK",
-          onPress: () => {
-            dispatch(deleteFolder({ folderToDelete: currentFolder }));
-            navigation.goBack();
-            deleteFolderToast(currentFolder.name);
+          // If 'OK' then proceed with deleting folder
+          {
+            text: "OK",
+            onPress: () => {
+              dispatch(deleteFolder({ folderToDelete: currentFolder }));
+              navigation.goBack();
+              deleteFolderToast(currentFolder.name);
+            },
+            style: "default",
           },
-          style: "default",
-        },
-      ]
-    );
+        ]
+      );
+    };
+
+    // if active link is in folder currently being deleted, reset active QR
+    if (currentFolder.folderColor === blobColor) {
+      deleteAction();
+      dispatch(resetQr());
+      //update blob color
+      dispatch(setBlobColor("#5E5CE6"));
+    } else {
+      deleteAction();
+    }
   };
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR SAVE BUTTON

@@ -16,6 +16,7 @@ import {
 } from "./styles";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import QrSvgPlaceholderComponent from "../Svg/qrSvgPlaceholderComponent";
 
 import * as WebBrowser from "expo-web-browser";
 
@@ -90,7 +91,7 @@ const QrContainer = () => {
                   <Ionicons name="share-outline" size={30} color={"white"} />
                 </ShareButton>
                 <LinkButton onPress={() => openWebView()} hitslop={10}>
-                <Feather name="link" size={25} color="white" />
+                  <Feather name="link" size={25} color="white" />
                 </LinkButton>
               </ButtonContainer>
             </DescriptionContainer>
@@ -102,31 +103,37 @@ const QrContainer = () => {
 
   return (
     <Container>
-      <QrImage source={{ uri: currentQr }} />
+      {qrLink.urlAddress ? (
+        <>
+          <QrImage source={{ uri: currentQr }} />
       <View
-            style={{
-              borderBottomLeftRadius: 15,
-              borderBottomRightRadius: 15,
-              overflow: "hidden",
-            }}
-          >
-      <LinearGradient
-        colors={["#252528", "#363636"]}
-        start={[1, 0]}
-        end={[0, 0]}
-        style={{ overflow: "hidden" }}
+        style={{
+          borderBottomLeftRadius: 15,
+          borderBottomRightRadius: 15,
+          overflow: "hidden",
+        }}
       >
-        <QrWrapper>          
+        <LinearGradient
+          colors={["#252528", "#363636"]}
+          start={[1, 0]}
+          end={[0, 0]}
+          style={{ overflow: "hidden" }}
+        >
+          <QrWrapper>
             <QrNameContainer>
               <QrName>{currentQrName}</QrName>
               <Pressable onPress={() => toggleDescription()} hitslop={10}>
                 <Ionicons name="ellipsis-horizontal" size={30} color="white" />
               </Pressable>
             </QrNameContainer>
-          {renderQrDescription()}
-        </QrWrapper>
-      </LinearGradient>
+            {renderQrDescription()}
+          </QrWrapper>
+        </LinearGradient>
       </View>
+        </>
+      ) : (
+        <QrSvgPlaceholderComponent />
+      )}
     </Container>
   );
 };
