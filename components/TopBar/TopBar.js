@@ -18,7 +18,7 @@ function TopBar() {
   return (
     <NavigationContainer>
       <LogoSvgComponent />
-      <Pressable onPress={() => addButtonAction()}>
+      <Pressable onPress={() => addButtonAction()} hitslop={10}>
         <Image source={addIcon} />
       </Pressable>
     </NavigationContainer>

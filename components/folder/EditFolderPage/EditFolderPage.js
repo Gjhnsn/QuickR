@@ -195,7 +195,7 @@ function EditFolderPage({ navigation }) {
       return (
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
-          <Pressable onPress={() => editButtonAction(link)}>
+          <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
             <EditIcon source={editIcon} />
           </Pressable>
         </AddedLinkWrapper>
@@ -230,7 +230,7 @@ function EditFolderPage({ navigation }) {
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
         <ScrollView>
           <Container>
-            <BackArrowContainer onPress={() => navigation.goBack()}>
+            <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
               <BackArrowIcon source={backArrowIcon} />
             </BackArrowContainer>
             <FolderTitleContainer>
@@ -250,7 +250,7 @@ function EditFolderPage({ navigation }) {
                   editable={editNameInput}
                   editMode={editNameInput}
                 />
-                <EditChange onPress={() => setEditNameInput(!editNameInput)}>
+                <EditChange onPress={() => setEditNameInput(!editNameInput)} hitslop={10}>
                   <EditIcon source={editIcon} />
                 </EditChange>
               </InputContainer>
@@ -273,6 +273,7 @@ function EditFolderPage({ navigation }) {
 
                 <EditChange
                   onPress={() => setEditDescriptionInput(!editDescriptionInput)}
+                  hitslop={10}
                 >
                   <EditIcon source={editIcon} />
                 </EditChange>

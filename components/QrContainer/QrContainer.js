@@ -76,10 +76,10 @@ const QrContainer = () => {
         <DescriptionContainer>
           <DescriptionText>{qrDescription}</DescriptionText>
           <ButtonContainer>
-            <ShareButton onPress={() => onShare()}>
+            <ShareButton onPress={() => onShare()} hitslop={10}>
               <Ionicons name="share-outline" size={24} color={"white"} />
             </ShareButton>
-            <LinkButton onPress={() => openWebView()}>
+            <LinkButton onPress={() => openWebView()} hitslop={10}>
               <Link resizeMode="contain" source={LinkIcon} />
             </LinkButton>
           </ButtonContainer>
@@ -95,7 +95,7 @@ const QrContainer = () => {
           <QrImage source={{ uri: currentQr }} />
           <QrWrapper>
             <QrInfo>
-              <QrNameContainer>
+              <QrNameContainer onPress={() => toggleDescription()} hitslop={10}>
                 <QrName>{currentQrName}</QrName>
                 <Pressable>
                   <Ionicons
