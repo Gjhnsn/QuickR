@@ -3,7 +3,6 @@ import {
   Alert,
   Pressable,
   SafeAreaView,
-  Animated,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -31,17 +30,13 @@ import {
   NewLinks,
   AddedLinks,
   AddedLinkWrapper,
-  EditIcon,
   AddedLinksLabel,
   BackArrowContainer,
-  BackArrowIcon,
   ColorGridLabelContainer,
   CurrentFolderColor,
   EditChange,
   InputContainer,
 } from "./styles";
-import editIcon from "../../../assets/editIcon.png";
-import backArrowIcon from "../../../assets/backArrowIcon.png";
 import {
   toggleAddUrlModal,
   toggleEditUrlModal,
@@ -59,6 +54,8 @@ import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 import { resetQr } from "../../../redux/qrSlice";
 
 function EditFolderPage({ navigation }) {
@@ -196,7 +193,11 @@ function EditFolderPage({ navigation }) {
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
-            <EditIcon source={editIcon} />
+          <MaterialCommunityIcons
+                  name="pencil-outline"
+                  size={20}
+                  color="white"
+                />
           </Pressable>
         </AddedLinkWrapper>
       );
@@ -231,7 +232,7 @@ function EditFolderPage({ navigation }) {
         <ScrollView>
           <Container>
             <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
-              <BackArrowIcon source={backArrowIcon} />
+            <Ionicons name="chevron-back" size={40} color="white" />
             </BackArrowContainer>
             <FolderTitleContainer>
               <FolderTitle>Edit Folder</FolderTitle>
@@ -251,7 +252,11 @@ function EditFolderPage({ navigation }) {
                   editMode={editNameInput}
                 />
                 <EditChange onPress={() => setEditNameInput(!editNameInput)} hitslop={10}>
-                  <EditIcon source={editIcon} />
+                <MaterialCommunityIcons
+                  name="pencil-outline"
+                  size={20}
+                  color="white"
+                />
                 </EditChange>
               </InputContainer>
             </FolderInputSection>
@@ -275,7 +280,11 @@ function EditFolderPage({ navigation }) {
                   onPress={() => setEditDescriptionInput(!editDescriptionInput)}
                   hitslop={10}
                 >
-                  <EditIcon source={editIcon} />
+                  <MaterialCommunityIcons
+                  name="pencil-outline"
+                  size={20}
+                  color="white"
+                />
                 </EditChange>
               </InputContainer>
             </DescriptionSection>

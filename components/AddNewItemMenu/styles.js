@@ -74,20 +74,14 @@ export const AddQrContainer = styled.Pressable`
 export const AddFolderText = styled.Text`
     color: #fff;
     font-size: 18px;
+    margin-left: 16px;
 `;
 
 export const AddQrText = styled.Text`
     color: #fff;
     font-size: 18px;
+    margin-left: 16px;
 `;
-
-export const FolderImage = styled.Image`
-    margin-right: 16px;
-`
-
-export const QrImage = styled.Image`
-    margin-right: 16px;
-`
 
 
 

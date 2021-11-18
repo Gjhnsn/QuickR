@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 export const LinkContainer = styled.Pressable`
     width: 100%;
     height: 55px;
-    background-color: #363636;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
