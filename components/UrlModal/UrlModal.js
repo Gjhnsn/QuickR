@@ -158,7 +158,6 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     dispatch(setScannedLink(""));
   };
 
-  const handleQrScan = () => {};
 
   const renderModal = () => {
     if (isAddUrlModalOpen) {

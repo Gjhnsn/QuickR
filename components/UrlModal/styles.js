@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { windowWidth } from "../../utils/windowDimensions";
+import { windowWidth, windowHeight } from "../../utils/windowDimensions";
 import { Dimensions } from "react-native";
 
 export const ModalOverlay = styled.Pressable`
@@ -7,11 +7,10 @@ export const ModalOverlay = styled.Pressable`
   z-index: 100;
   background-color: #000;
   opacity: 0.75;
-  height: ${Dimensions.get("window").height * 2}px;
+  height: ${Dimensions.get("window")}px;
   width: ${windowWidth};
   position: absolute;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: row;
 `;
 
 export const CloserOverlay = styled.Pressable`
@@ -44,10 +43,10 @@ export const CloseContainer = styled.View`
 
 export const ModalContainer = styled.View`
   width: 100%;
-  height: 500px;
+  height: 80%;
   background-color: rgb(54, 54, 54);
-  align-self: center;
-  margin-top: ${Dimensions.get("window").height / 8}px;
+  align-self: flex-start;
+  margin-top: 40%;
   border-radius: 10px;
 `;
 
@@ -166,3 +165,5 @@ export const SaveBtnWrapper = styled.Pressable`
 export const SaveText = styled.Text`
   color: #fff;
 `;
+
+
