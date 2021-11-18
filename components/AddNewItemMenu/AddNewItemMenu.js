@@ -22,6 +22,7 @@ import {
   CloserOverlay,
 } from "../AddNewItemMenu/styles";
 import { setFolderToEdit } from "../../redux/modalSlice";
+import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 function AddNewItemMenu({ navigation }) {
   const isNewItemModalOpen = useSelector(
@@ -65,17 +66,17 @@ function AddNewItemMenu({ navigation }) {
                         dispatch(toggleNewItemModal());
                       }}
                     >
-                      <Image source={CloseIcon} />
+                      <AntDesign name="closesquareo" size={35} color="white" />
                     </Pressable>
                   </CloseContainer>
                   <AddFolderContainer onPress={() => createNewFolder()} hitslop={10}>
-                    <FolderImage source={folderIcon} />
+                  <MaterialIcons name="folder" size={30} color="white" />
                     <AddFolderText style={{ color: "white", fontSize: 18 }}>
                       Add Folder
                     </AddFolderText>
                   </AddFolderContainer>
                   <AddQrContainer onPress={() => openAddOrScan()} hitslop={10}>
-                    <QrImage source={qrCodeIcon} />
+                  <MaterialIcons name="qr-code-scanner" size={30} color="white" />
                     <AddQrText style={{ color: "white" }}>
                       Add QR Code
                     </AddQrText>

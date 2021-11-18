@@ -10,13 +10,8 @@ export const Container = styled.View`
 
 export const BackArrowContainer = styled.Pressable`
   position: absolute;
-  padding-left: 30px;
-  margin-top: 60px;
-`;
-
-export const BackArrowIcon = styled.Image`
-  height: 20px;
-  width: 15px;
+  padding-left: 20px;
+  margin-top: 40px;
 `;
 
 export const FolderTitleContainer = styled.View`
@@ -158,11 +153,6 @@ export const AddedLinkWrapper = styled.View`
 
 export const AddedLinks = styled.Text`
   color: #fff;
-`;
-
-export const EditIcon = styled.Image`
-  width: 15px;
-  height: 15px;
 `;
 
 export const AddLinkBtn = styled.Pressable`

@@ -208,7 +208,7 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={85}
+                      maxLength={130}
                       multiline={true}
                     />
                   </FormWrapper>
