@@ -16,6 +16,7 @@ export const LinkContainer = styled.Pressable`
 export const LinkText = styled.Text`
     color: #fff;
     font-size: 16px; 
+    font-family: OpenSans_400Regular;
 `;
 
 export const LinkChosen = styled.View`

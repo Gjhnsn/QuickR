@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import { windowWidth } from "../../../utils/windowDimensions";
 
+
 export const Container = styled.View`
   width: ${windowWidth};
   margin-top: 85px;
@@ -24,13 +25,14 @@ export const PlaceHolderTextWrapper = styled.View`
 export const TextHeader = styled.Text`
   color: white;
   font-size: 20px;
-  font-weight: 600;
+  font-family: OpenSans_700Bold;
   margin: 5px;
 `;
 
 export const TextSubHeader = styled.Text`
   color: white;
   font-size: 16px;
+  font-family: OpenSans_400Regular;
   margin-bottom: 5px;
 `;
 
@@ -47,6 +49,6 @@ export const AddFolderButton = styled.Pressable`
 export const ButtonText = styled.Text`
   color: white;
   font-size: 16px;
-  font-weight: 600;
+  font-family: OpenSans_700Bold;
   align-self: center;
 `;

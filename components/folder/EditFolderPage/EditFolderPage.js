@@ -1,9 +1,4 @@
-import {
-  ScrollView,
-  Alert,
-  Pressable,
-  SafeAreaView,
-} from "react-native";
+import { ScrollView, Alert, Pressable, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -54,7 +49,7 @@ import { deleteFolderToast } from "../../../utils/toastNote";
 import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { resetQr } from "../../../redux/qrSlice";
 
@@ -79,7 +74,9 @@ function EditFolderPage({ navigation }) {
 
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
-  const [folderColor, setFolderColor] = useState(`red`);
+  const [folderColor, setFolderColor] = useState(
+    `${currentFolder ? currentFolder.folderColor : "#FF453A"}`
+  );
 
   const [editNameInput, setEditNameInput] = useState(false);
   const [editDescriptionInput, setEditDescriptionInput] = useState(false);
@@ -156,8 +153,10 @@ function EditFolderPage({ navigation }) {
     if (currentFolder.folderColor === blobColor) {
       deleteAction();
       dispatch(resetQr());
-      //update blob color
+      // update blob color
       dispatch(setBlobColor("#5E5CE6"));
+      // update folder color to default
+      setFolderColor("#FF453A");
     } else {
       deleteAction();
     }
@@ -193,11 +192,11 @@ function EditFolderPage({ navigation }) {
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
-          <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={20}
-                  color="white"
-                />
+            <MaterialCommunityIcons
+              name="pencil-outline"
+              size={20}
+              color="white"
+            />
           </Pressable>
         </AddedLinkWrapper>
       );
@@ -231,8 +230,11 @@ function EditFolderPage({ navigation }) {
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
         <ScrollView>
           <Container>
-            <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
-            <Ionicons name="chevron-back" size={40} color="white" />
+            <BackArrowContainer
+              onPress={() => navigation.goBack()}
+              hitslop={10}
+            >
+              <Ionicons name="chevron-back" size={40} color="white" />
             </BackArrowContainer>
             <FolderTitleContainer>
               <FolderTitle>Edit Folder</FolderTitle>
@@ -251,12 +253,15 @@ function EditFolderPage({ navigation }) {
                   editable={editNameInput}
                   editMode={editNameInput}
                 />
-                <EditChange onPress={() => setEditNameInput(!editNameInput)} hitslop={10}>
-                <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={20}
-                  color="white"
-                />
+                <EditChange
+                  onPress={() => setEditNameInput(!editNameInput)}
+                  hitslop={10}
+                >
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    size={20}
+                    color="white"
+                  />
                 </EditChange>
               </InputContainer>
             </FolderInputSection>
@@ -281,10 +286,10 @@ function EditFolderPage({ navigation }) {
                   hitslop={10}
                 >
                   <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={20}
-                  color="white"
-                />
+                    name="pencil-outline"
+                    size={20}
+                    color="white"
+                  />
                 </EditChange>
               </InputContainer>
             </DescriptionSection>
@@ -320,9 +325,7 @@ function EditFolderPage({ navigation }) {
 
             <CreateCancelContainer>
               <CancelBtn onPress={() => deleteFolderHandler()}>
-                <CancelText >
-                  Delete
-                </CancelText>
+                <CancelText>Delete</CancelText>
               </CancelBtn>
               <CreateFolderBtn onPress={() => editSubmit()}>
                 <CreateText>Save</CreateText>
