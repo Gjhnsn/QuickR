@@ -48,12 +48,10 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     return state.modal.folderToEdit;
   });
 
-  let scannedLink = useSelector((state) => state.modal.scannedLink);
-
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(scannedLink);
+  const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
 
   const folderNamesArray = Object.keys(folderData);

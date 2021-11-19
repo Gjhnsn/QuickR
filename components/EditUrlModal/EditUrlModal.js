@@ -45,7 +45,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const dispatch = useDispatch();
 
   const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(scannedLink);
+  const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
 
   const editSave = () => {
