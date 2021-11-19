@@ -5,9 +5,6 @@ import { addUrlToFolder } from "../../redux/folderSlice";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { LinearGradient } from "expo-linear-gradient";
-import CloseIcon from "../../assets/closeIcon.png";
-import linkIcon from "../../assets/link.png";
-import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import {
   toggleAddUrlModal,
   setFolderToEdit,
@@ -39,6 +36,7 @@ import {
 } from "./styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
+import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const dispatch = useDispatch();
@@ -179,11 +177,11 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                 >
                   <CloseContainer>
                     <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
-                      <Image source={CloseIcon} />
+                    <AntDesign name="closesquareo" size={35} color="white" />
                     </Pressable>
                   </CloseContainer>
                   <AddUrlTitleContainer>
-                    <Image source={linkIcon} />
+                  <Feather name="link" size={25} color="white" />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
                   <FormWrapper>
@@ -195,7 +193,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                         value={inputUrl}
                       />
                       <QrIconButton onPress={() => dispatch(openCamera())} hitslop={10}>
-                        <Image source={qrCodeIcon} />
+                      <MaterialIcons name="qr-code-scanner" size={30} color="white" />
                       </QrIconButton>
                     </UrlInputContainer>
                     <Input
