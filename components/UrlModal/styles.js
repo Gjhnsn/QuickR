@@ -1,16 +1,14 @@
 import styled from "styled-components/native";
 import { windowWidth, windowHeight } from "../../utils/windowDimensions";
-import { Dimensions } from "react-native";
 
 export const ModalOverlay = styled.Pressable`
   display: flex;
   z-index: 100;
-  background-color: #000;
-  opacity: 0.75;
-  height: ${Dimensions.get("window")}px;
+  opacity: 0.8;
+  height: ${windowHeight};
   width: ${windowWidth};
   position: absolute;
-  flex-direction: row;
+  flex-direction: row; 
 `;
 
 export const CloserOverlay = styled.Pressable`
@@ -48,6 +46,8 @@ export const ModalContainer = styled.View`
   align-self: flex-start;
   margin-top: 40%;
   border-radius: 10px;
+  display: flex;
+
 `;
 
 export const AddUrlTitleContainer = styled.View`
@@ -73,7 +73,7 @@ export const FormWrapper = styled.View`
 
 export const UrlInputContainer = styled.View`
   width: 100%;
-  height: 35px;
+  height: 50px;
   background-color: #3b3b3d;
   margin-top: 20px;
   border: 1px solid white;
@@ -88,6 +88,7 @@ export const UrlInput = styled.TextInput`
   padding-right: 35px;
   color: #fff;
   width: 100%;
+  height: 50px;
 `;
 
 export const QrIconButton = styled.Pressable`
@@ -107,6 +108,7 @@ export const Input = styled.TextInput`
   flex-direction: row;
   align-items: center;
   color: #fff;
+  height: 50px;
 `;
 
 export const DescriptionInput = styled.TextInput`
@@ -152,18 +154,44 @@ export const FolderItemText = styled.Text`
 
 export const BtnFooter = styled.View`
   align-items: center;
-  margin-top: 20px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 export const SaveBtnWrapper = styled.Pressable`
-  width: 40%;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
+background-color: #3e8637;
+width: 48%;
+height: 45px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+border-radius: 10px;
 `;
 
 export const SaveText = styled.Text`
-  color: #fff;
+color: white;
+text-align: center;
+font-weight: 600;
+`;
+
+export const CancelText = styled.Text`
+color: white;
+text-align: center;
+font-weight: 600;
+`;
+
+export const CancelBtnWrapper = styled.Pressable`
+background-color: #df4c46;
+width: 48%;
+height: 45px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+border-radius: 10px;
 `;
 
 

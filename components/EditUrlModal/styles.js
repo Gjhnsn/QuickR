@@ -5,7 +5,6 @@ import { Dimensions } from "react-native";
 export const ModalOverlay = styled.Pressable`
   display: flex;
   z-index: 100;
-  background-color: #000;
   opacity: 0.75;
   height: ${Dimensions.get("window").height * 2}px;
   width: ${windowWidth};
@@ -44,9 +43,8 @@ export const CloseContainer = styled.View`
 export const BtnFooter = styled.View`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-top: 40px;
   justify-content: space-between;
 `;

@@ -85,6 +85,7 @@ export const DescriptionInput = styled.TextInput`
   border-top-right-radius: 10px;
   color: #fff;
   z-index: 10;
+  min-height: 50px;
 `;
 
 export const ColorGridSection = styled.View`
