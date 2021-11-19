@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import CloseIcon from "../../assets/closeIcon.png";
-import linkIcon from "../../assets/link.png";
-import qrCodeIcon from "../../assets/qrCodeIcon.png";
 import {
   ModalContainer,
   AddUrlText,
@@ -28,11 +25,13 @@ import {
   GradientBackground,
   CloseContainer,
 } from "./styles";
-import { toggleEditUrlModal } from "../../redux/modalSlice";
+import { toggleEditUrlModal, setScannedLink } from "../../redux/modalSlice";
 import { editLink, deleteLink, setBlobColor } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteLinkToast } from "../../utils/toastNote";
 import { resetQr } from "../../redux/qrSlice";
+import { openCamera } from "../../redux/startCameraSlice";
+import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const isEditUrlModalOpen = useSelector(
@@ -41,6 +40,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
+  let scannedLink = useSelector((state) => state.modal.scannedLink);
 
   const dispatch = useDispatch();
 
@@ -64,6 +64,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       })
     );
     dispatch(toggleEditUrlModal());
+    dispatch(setScannedLink(""));
+    setInputUrl("");
   };
 
   // --------------------------------------------------------------------INPUT VALUES ON EDIT
@@ -74,7 +76,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       return 
     } else {
       setInputName(linkToEdit.name);
-      setInputUrl(linkToEdit.url);
+      setInputUrl(scannedLink);
       setInputDescription(linkToEdit.description);
     }
   }, [linkToEdit])
@@ -93,6 +95,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     };
     setNewLinks([...editedLinkArr, updatedValues]);
     dispatch(toggleEditUrlModal());
+    dispatch(setScannedLink(""));
+    setInputUrl("");
   };
 
   const deleteLocal = (linkToDelete) => {
@@ -152,12 +156,12 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                 >
                   <CloseContainer>
                     <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
-                      <Image source={CloseIcon} />
+                    <AntDesign name="closesquareo" size={35} color="white" />
                     </Pressable>
                   </CloseContainer>
 
                   <AddUrlTitleContainer>
-                    <Image source={linkIcon} />
+                  <Feather name="link" size={25} color="white" />
                     <AddUrlText>Edit Url</AddUrlText>
                   </AddUrlTitleContainer>
                   <FormWrapper>
@@ -168,9 +172,9 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => {}} hitslop={10}> 
+                      <QrIconButton onPress={() => dispatch(openCamera())} hitslop={10}> 
                       {/* Need to hook up above onPress to scanner */}
-                        <Image source={qrCodeIcon} />
+                      <MaterialIcons name="qr-code-scanner" size={30} color="white" />
                       </QrIconButton>
                     </UrlInputContainer>
                     <Input
@@ -178,14 +182,14 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
-                      maxLength={50}
+                      
                     />
                     <DescriptionInput
                       placeholder="Description"
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={85}
+                      maxLength={130}
                       multiline={true}
                     />
                   </FormWrapper>
