@@ -319,8 +319,8 @@ function EditFolderPage({ navigation }) {
             {/*   // --------------------------------------------------------------------------------------DELETE AND SAVE BUTTONS */}
 
             <CreateCancelContainer>
-              <CancelBtn onPress={() => navigation.goBack()}>
-                <CancelText onPress={() => deleteFolderHandler()}>
+              <CancelBtn onPress={() => deleteFolderHandler()}>
+                <CancelText >
                   Delete
                 </CancelText>
               </CancelBtn>
