@@ -14,6 +14,7 @@ export const FolderTitle = styled.Text`
   font-size: 18px;
   color: #fff;
   margin-right: 16px;
+  font-family: OpenSans_600SemiBold;
 `;
 
 export const FolderColorBubble = styled.View`

@@ -75,12 +75,14 @@ export const AddFolderText = styled.Text`
     color: #fff;
     font-size: 18px;
     margin-left: 16px;
+    font-family: OpenSans_700Bold;
 `;
 
 export const AddQrText = styled.Text`
     color: #fff;
     font-size: 18px;
     margin-left: 16px;
+    font-family: OpenSans_700Bold;
 `;
 
 

@@ -37,6 +37,7 @@ export const QrName = styled.Text`
   font-size: 16px;
   color: #fff;
   letter-spacing: 1px;
+  font-family: OpenSans_700Bold;
 `;
 
 export const MoreIcon = styled.Image`
@@ -58,6 +59,8 @@ export const DescriptionText = styled.Text`
   color: #fff;
   opacity: 0.5;
   height: 70px;
+  font-family: OpenSans_400Regular;
+  letter-spacing: 1px;
 `;
 
 export const ButtonContainer = styled.View`

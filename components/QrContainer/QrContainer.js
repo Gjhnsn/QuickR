@@ -72,7 +72,7 @@ const QrContainer = () => {
     if (openQrDescription) {
       return (
         <View
-          style={{
+          style={{ 
             borderBottomLeftRadius: 15,
             borderBottomRightRadius: 15,
             overflow: "hidden",

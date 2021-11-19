@@ -21,7 +21,7 @@ function FolderContainer({ navigation }) {
 
   const renderPlaceHolder = () => {
     return (
-      <PlaceHolderContainer>
+      <PlaceHolderContainer> 
         <NoFolderSvgPlaceholderComponent />
         <PlaceHolderTextWrapper>
           <TextHeader>No Folders Yet!</TextHeader>
