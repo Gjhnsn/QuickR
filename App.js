@@ -1,21 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { RootSiblingParent } from "react-native-root-siblings";
+import Navigation from "./nav/Navigation";
+import { NavigationContainer } from "@react-navigation/native";
+import { PersistGate } from "redux-persist/integration/react";
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  OpenSans_300Light,
+  OpenSans_400Regular,
+  OpenSans_600SemiBold,
+  OpenSans_700Bold,
+} from "@expo-google-fonts/open-sans";
+
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  let [fontsLoaded] = useFonts({
+    OpenSans_300Light,
+    OpenSans_400Regular,
+    OpenSans_600SemiBold,
+    OpenSans_700Bold,
+  })
+
+  if(!fontsLoaded) {
+    return <AppLoading/>
+  } else {
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <RootSiblingParent>
+            <NavigationContainer>
+              <Navigation />
+            </NavigationContainer>
+          </RootSiblingParent>
+        </PersistGate>
+      </Provider>
+    );
+  }
+
+}
