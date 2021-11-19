@@ -34,11 +34,13 @@ import {
   ModalOverlay,
   GradientBackground,
   CloseContainer,
+  CancelBtnWrapper,
+  CancelText,
 } from "./styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
 
-function UrlModal({ picker, setNewLinks, newLinks }) {
+function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const dispatch = useDispatch();
   const folderData = useSelector((state) => state.folder.allFolder);
   const isAddUrlModalOpen = useSelector(
@@ -158,7 +160,6 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
     dispatch(setScannedLink(""));
   };
 
-  const handleQrScan = () => {};
 
   const renderModal = () => {
     if (isAddUrlModalOpen) {
@@ -217,9 +218,13 @@ function UrlModal({ picker, setNewLinks, newLinks }) {
                   {picker ? showFolderPicker() : null}
 
                   <BtnFooter>
+                  <CancelBtnWrapper onPress={() => dispatch(toggleAddUrlModal())} hitslop={10}>
+                      <CancelText>Cancel</CancelText>
+                    </CancelBtnWrapper>
                     <SaveBtnWrapper onPress={() => validateFolderSelection()} hitslop={10}>
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
+                    
                   </BtnFooter>
                 </LinearGradient>
               </GradientBackground>

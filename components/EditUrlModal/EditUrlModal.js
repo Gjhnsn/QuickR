@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import CloseIcon from "../../assets/closeIcon.png";
@@ -8,7 +8,7 @@ import {
   ModalContainer,
   AddUrlText,
   AddUrlTitleContainer,
-  Input,
+  Input, 
   FormWrapper,
   UrlInputContainer,
   UrlInput,
@@ -39,7 +39,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     (state) => state.modal.isEditUrlModalOpen
   );
 
-  const scannedLink = useSelector((state) => state.modal.scannedLink);
   const linkToEdit = useSelector((state) => state.modal.linkToEdit);
   const folderToEdit = useSelector((state) => state.modal.folderToEdit);
 
@@ -66,6 +65,20 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     );
     dispatch(toggleEditUrlModal());
   };
+
+  // --------------------------------------------------------------------INPUT VALUES ON EDIT
+
+
+  useEffect(() => {
+    if(!linkToEdit) {
+      return 
+    } else {
+      setInputName(linkToEdit.name);
+      setInputUrl(linkToEdit.url);
+      setInputDescription(linkToEdit.description);
+    }
+  }, [linkToEdit])
+
 
   // -------------------------------- Leave this comment for add folder edit/delete function bug
 
@@ -142,6 +155,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       <Image source={CloseIcon} />
                     </Pressable>
                   </CloseContainer>
+
                   <AddUrlTitleContainer>
                     <Image source={linkIcon} />
                     <AddUrlText>Edit Url</AddUrlText>
