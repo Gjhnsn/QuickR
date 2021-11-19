@@ -42,12 +42,12 @@ import { addNewFolder } from "../../../redux/folderSlice";
 import { approvedColors } from "../../../utils/approvedColors";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
-  const [folderColor, setFolderColor] = useState(`red`);
+  const [folderColor, setFolderColor] = useState(`#FF453A`);
 
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
@@ -126,11 +126,11 @@ function AddFolderPage({ navigation }) {
         <AddedLinkWrapper key={link.id}>
           <AddedLinks>{link.name}</AddedLinks>
           <Pressable onPress={() => editButtonAction(link)} hitslop={10}>
-          <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={20}
-                  color="white"
-                />
+            <MaterialCommunityIcons
+              name="pencil-outline"
+              size={20}
+              color="white"
+            />
           </Pressable>
         </AddedLinkWrapper>
       );
@@ -162,8 +162,11 @@ function AddFolderPage({ navigation }) {
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
         <ScrollView>
           <Container>
-            <BackArrowContainer onPress={() => navigation.goBack()} hitslop={10}>
-            <Ionicons name="chevron-back" size={40} color="white" />
+            <BackArrowContainer
+              onPress={() => navigation.goBack()}
+              hitslop={10}
+            >
+              <Ionicons name="chevron-back" size={40} color="white" />
             </BackArrowContainer>
             <FolderTitleContainer>
               <FolderTitle>Add Folder</FolderTitle>
