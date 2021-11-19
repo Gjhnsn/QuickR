@@ -22,8 +22,9 @@ export const FolderTitleContainer = styled.View`
 `;
 
 export const FolderTitle = styled.Text`
-  color: #fff;
-  font-size: 32px;
+color: #fff;
+font-size: 32px;
+font-family: OpenSans_700Bold;
 `;
 
 export const EditChange = styled.Pressable`
@@ -51,6 +52,8 @@ export const FolderInputSection = styled.View`
 export const FolderNameLabel = styled.Text`
   color: #fff;
   margin-bottom: 20px;
+  font-family: OpenSans_600SemiBold;
+  font-size: 18px;
 `;
 
 export const FolderInput = styled.TextInput`
@@ -75,6 +78,8 @@ export const DescriptionSection = styled.View`
 export const DescriptionLabel = styled.Text`
   color: #fff;
   margin-bottom: 20px;
+  font-family: OpenSans_600SemiBold;
+  font-size: 18px;
 `;
 export const DescriptionInput = styled.TextInput`
   background-color: ${(props) => (props.editMode ? `#3b3b3d` : `transparent`)};
@@ -112,6 +117,8 @@ export const CurrentFolderColor = styled.View`
 
 export const ColorGridLabel = styled.Text`
   color: #fff;
+  font-family: OpenSans_600SemiBold;
+  font-size: 18px;
 `;
 
 // Entire color picker container
@@ -140,6 +147,8 @@ export const NewLinks = styled.View`
 export const AddedLinksLabel = styled.Text`
   color: #fff;
   margin-bottom: 20px;
+  font-family: OpenSans_600SemiBold;
+  font-size: 18px;
 `;
 
 export const AddedLinkWrapper = styled.View`
@@ -165,6 +174,7 @@ export const AddLinkText = styled.Text`
   color: white;
   padding: 10px;
   text-align: center;
+  font-family: OpenSans_700Bold;
 `;
 
 export const CreateCancelContainer = styled.View`
@@ -191,11 +201,13 @@ export const CreateText = styled.Text`
   color: white;
   text-align: center;
   font-weight: 600;
+  font-family: OpenSans_700Bold;
 `;
 
 export const SaveText = styled.Text`
   color: white;
   text-align: center;
+  font-family: OpenSans_700Bold;
 `;
 
 export const CancelBtn = styled.Pressable`
@@ -212,4 +224,5 @@ export const CancelText = styled.Text`
   color: white;
   text-align: center;
   font-weight: 600;
+  font-family: OpenSans_700Bold;
 `;
