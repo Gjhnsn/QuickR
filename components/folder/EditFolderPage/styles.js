@@ -8,7 +8,7 @@ export const Container = styled.View`
   height: 120%;
   padding-top: 100px;
   padding-bottom: 50px;
-  margin-top: ${Platform.OS === "ios" ? "0px" : StatusBar.currentHeight}px;
+  margin-top: ${Platform.OS === "ios" ? 0 : -40}px;
 `;
 
 export const BackArrowContainer = styled.Pressable`

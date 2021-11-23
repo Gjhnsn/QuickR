@@ -13,9 +13,7 @@ export const GlobalContainer = styled.View`
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  /* margin-top: ${StatusBar.currentHeight || 0}; */
-   margin-top: ${Platform.OS === "ios" ? "0px" : StatusBar.currentHeight}px; 
-
+   margin-top: ${Platform.OS === "ios" ? 0 : -20}px; 
   margin-bottom: 0;
   padding: 10px;
   align-items: center;

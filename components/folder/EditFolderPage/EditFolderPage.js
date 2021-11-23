@@ -1,4 +1,4 @@
-import { ScrollView, Alert, Pressable, SafeAreaView } from "react-native";
+import { ScrollView, Alert, Pressable, SafeAreaView, StatusBar } from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -228,6 +228,9 @@ function EditFolderPage({ navigation }) {
   const editFolderView = (navigation) => {
     return (
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
+        <StatusBar
+          backgroundColor='#1c1d21'
+          />
         <ScrollView>
           <Container>
             <BackArrowContainer
