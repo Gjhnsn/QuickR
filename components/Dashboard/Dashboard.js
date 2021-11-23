@@ -26,6 +26,7 @@ const Dashboard = ({ navigation }) => {
       <SafeAreaView>
         <StatusBar
           backgroundColor={colorForBlob}
+          barStyle="light-content"
           />
         <ScrollView showsVerticalScrollIndicator={false}>
           <AddNewItemMenu navigation={navigation} />
