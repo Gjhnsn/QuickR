@@ -1,5 +1,5 @@
 import { Pressable, Modal, Image, Alert, Platform } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
 import "react-native-get-random-values";
@@ -49,10 +49,12 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     return state.modal.folderToEdit;
   });
 
+  const scannedLink = useSelector((state) => state.modal.scannedLink)
+
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(``);
+  const [inputUrl, setInputUrl] = useState(scannedLink);
   const [inputDescription, setInputDescription] = useState(``);
 
   const folderNamesArray = Object.keys(folderData);
@@ -108,7 +110,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     return folderNamesArray.map((folderName) => {
       return (
         <Picker.Item
-          color="black"
+          color={Platform.OS === "ios" ? "white" : "black"}
           key={folderName}
           label={folderName}
           value={folderName}
@@ -140,7 +142,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
               height: 100,
             }}
           >
-            <Picker.Item key={0} label="Select a folder..." value={null} style={{backgroundColor: 'blue'}} />
+            <Picker.Item key={0} label="Select a folder..." value={null} />
             {displayFolders()}
           </Picker>
         </PickerContainer>
