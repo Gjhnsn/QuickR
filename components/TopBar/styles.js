@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { windowWidth } from "../../utils/windowDimensions";
+import { Platform, StatusBar } from "react-native";
 
 export const NavigationContainer = styled.View`
   width: ${windowWidth};
@@ -11,6 +12,8 @@ export const NavigationContainer = styled.View`
   align-items: center;
   padding-right: 25px;
   padding-left: 20px;
+  margin-top: ${Platform.OS === "ios" ? "0px" : StatusBar.currentHeight};
+  /* margin-top: 100px; */
 `;
 
 export const LogoPlaceholder = styled.View`
