@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
-import { SafeAreaView, Platform } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, Platform, StatusBar } from "react-native";
+
 import { windowWidth } from "../../utils/windowDimensions";
 
 export const GlobalContainer = styled.View`
@@ -14,7 +14,7 @@ export const GlobalContainer = styled.View`
 export const Container = styled.SafeAreaView`
   flex: 1;
   /* margin-top: ${StatusBar.currentHeight || 0}; */
-  margin-top: ${Platform.OS === "ios" ? "0px" : StatusBar.currentHeight}px;
+   margin-top: ${Platform.OS === "ios" ? "0px" : StatusBar.currentHeight}px; 
 
   margin-bottom: 0;
   padding: 10px;
