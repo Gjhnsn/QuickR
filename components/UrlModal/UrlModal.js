@@ -1,4 +1,4 @@
-import { Pressable, Modal, Image, Alert } from "react-native";
+import { Pressable, Modal, Image, Alert, Platform } from "react-native";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -33,6 +33,7 @@ import {
   CloseContainer,
   CancelBtnWrapper,
   CancelText,
+  PickerBackground
 } from "./styles";
 import { selectValidFolderToast } from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
@@ -106,7 +107,13 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
       return (
-        <Picker.Item key={folderName} label={folderName} value={folderName} />
+        <Picker.Item
+          color="black"
+          key={folderName}
+          label={folderName}
+          value={folderName}
+          style={{backgroundColor: 'blue'}}
+        />
       );
     });
   };
@@ -120,6 +127,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
         <PickerContainer>
           <Picker
+            dropdownIconColor="white"
+            mode="dropdown" // android only
+            style={{ color: "#c1c1c1", marginTop: 10 }}
             selectedValue={currentEditFolder}
             onValueChange={(itemValue) => {
               dispatch(setFolderToEdit(itemValue));
@@ -130,7 +140,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
               height: 100,
             }}
           >
-            <Picker.Item key={0} label="Select a folder..." value={null} />
+            <Picker.Item key={0} label="Select a folder..." value={null} style={{backgroundColor: 'blue'}} />
             {displayFolders()}
           </Picker>
         </PickerContainer>
@@ -156,7 +166,6 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     dispatch(setScannedLink(""));
   };
 
-
   const renderModal = () => {
     if (isAddUrlModalOpen) {
       return (
@@ -174,12 +183,15 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
-                    <AntDesign name="closesquareo" size={35} color="white" />
+                    <Pressable
+                      onPress={() => closeAndClearInput()}
+                      hitslop={10}
+                    >
+                      <AntDesign name="closesquareo" size={35} color="white" />
                     </Pressable>
                   </CloseContainer>
                   <AddUrlTitleContainer>
-                  <Feather name="link" size={25} color="white" />
+                    <Feather name="link" size={25} color="white" />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
                   <FormWrapper>
@@ -190,8 +202,15 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => dispatch(openCamera())} hitslop={10}>
-                      <MaterialIcons name="qr-code-scanner" size={30} color="white" />
+                      <QrIconButton
+                        onPress={() => dispatch(openCamera())}
+                        hitslop={10}
+                      >
+                        <MaterialIcons
+                          name="qr-code-scanner"
+                          size={30}
+                          color="white"
+                        />
                       </QrIconButton>
                     </UrlInputContainer>
                     <Input
@@ -214,13 +233,18 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                   {picker ? showFolderPicker() : null}
 
                   <BtnFooter>
-                  <CancelBtnWrapper onPress={() => dispatch(toggleAddUrlModal())} hitslop={10}>
+                    <CancelBtnWrapper
+                      onPress={() => dispatch(toggleAddUrlModal())}
+                      hitslop={10}
+                    >
                       <CancelText>Cancel</CancelText>
                     </CancelBtnWrapper>
-                    <SaveBtnWrapper onPress={() => validateFolderSelection()} hitslop={10}>
+                    <SaveBtnWrapper
+                      onPress={() => validateFolderSelection()}
+                      hitslop={10}
+                    >
                       <SaveText>Save</SaveText>
                     </SaveBtnWrapper>
-                    
                   </BtnFooter>
                 </LinearGradient>
               </GradientBackground>

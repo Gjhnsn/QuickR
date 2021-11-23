@@ -1,11 +1,12 @@
 import Toast from "react-native-root-toast";
+import {  Platform } from "react-native";
 
 export const deleteFolderToast = (deletedFolder) => {
   let toast = Toast.show(`${deletedFolder} Has Been Deleted`, {
     duration: 2000,
     position: 100,
     shadow: false,
-    backgroundColor: "#363636",
+    backgroundColor: `${Platform.OS === "ios" ? '#363636' : '#131313'}`,
     textColor: "white",
     animation: true,
     hideOnPress: true,
@@ -19,9 +20,9 @@ export const deleteFolderToast = (deletedFolder) => {
 export const selectValidFolderToast = () => {
   let toast = Toast.show(`Please select a valid folder.`, {
     duration: 2000,
-    position: -100,
+    position: 100,
     shadow: false,
-    backgroundColor: "#363636",
+    backgroundColor: `${Platform.OS === "ios" ? '#363636' : '#131313'}`,
     textColor: "white",
     animation: true,
     hideOnPress: true,
@@ -37,7 +38,7 @@ export const deleteLinkToast = (link) => {
     duration: 2000,
     position: 100,
     shadow: false,
-    backgroundColor: "#363636",
+    backgroundColor: `${Platform.OS === "ios" ? '#363636' : '#131313'}`,
     textColor: "white",
     animation: true,
     hideOnPress: true,
@@ -53,7 +54,7 @@ export const qrCodeScanned = () => {
     duration: 1000,
     position: 100,
     shadow: false,
-    backgroundColor: "#363636",
+    backgroundColor: `${Platform.OS === "ios" ? '#363636' : '#131313'}`,
     textColor: "white",
     animation: true,
     hideOnPress: true,
