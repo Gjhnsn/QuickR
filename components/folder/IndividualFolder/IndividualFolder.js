@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, Platform } from "react-native";
 import LinksContainer from "../LinksContainer/LinksContainer";
 import {
   FolderContainer,
@@ -22,7 +22,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
   const showLinks = () => {
     if (accordion[folderName].isAccordionOpen) {
       return (
-        <LinearGradient colors={['#313234', "#252528", ]}>
+        <LinearGradient colors={Platform.OS === "ios" ? ['#313234', "#252528"] : ['#313234', "#252528" ]}>
           <FolderOpenedElements>
             <LinksContainer
               folderColor={folder.folderColor}
@@ -46,7 +46,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
 
   return (
     <LinearGradient
-      colors={["#1C1D21", "#2A2A2A", "2B2B2B"]}
+      colors={Platform.OS === 'ios' ? ["#1C1D21", "#2A2A2A", "#2B2B2B"] : ["#1C1D21", "#2A2A2A", "#2B2B2B"]}
       start={[1, 0]}
       end={[0, 0]}
     >
@@ -77,7 +77,6 @@ function IndividualFolder({ folder, folderName, navigation }) {
             />
           )}
         </FolderInitialElements>
-
         {showLinks()}
       </FolderContainer>
     </LinearGradient>

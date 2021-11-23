@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { windowHeight, windowWidth } from "../../utils/windowDimensions";
+import {  Platform, StatusBar } from "react-native";
 
 
 export const ModalOverlay = styled.View`
@@ -12,7 +13,7 @@ export const ModalOverlay = styled.View`
 `;
 
 export const ModalButtonContainer = styled.View`
-    margin-top: 50px;
+margin-top: ${Platform.OS === "ios" ? 50 : StatusBar.currentHeight - 45}px;
     z-index: 105;
     background-color: rgb(54,54,54);
     width: 280px;

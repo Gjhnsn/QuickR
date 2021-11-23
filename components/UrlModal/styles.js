@@ -8,7 +8,7 @@ export const ModalOverlay = styled.Pressable`
   height: ${windowHeight};
   width: ${windowWidth};
   position: absolute;
-  flex-direction: row; 
+  flex-direction: row;
 `;
 
 export const CloserOverlay = styled.Pressable`
@@ -47,7 +47,6 @@ export const ModalContainer = styled.View`
   margin-top: 40%;
   border-radius: 10px;
   display: flex;
-
 `;
 
 export const AddUrlTitleContainer = styled.View`
@@ -121,6 +120,8 @@ export const DescriptionInput = styled.TextInput`
   border-radius: 5px;
   padding-top: 10px;
   color: #fff;
+  text-align: left;
+  text-align-vertical: top;
 `;
 
 export const FolderSection = styled.View`
@@ -163,35 +164,37 @@ export const BtnFooter = styled.View`
 `;
 
 export const SaveBtnWrapper = styled.Pressable`
-background-color: #3e8637;
-width: 48%;
-height: 45px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-border-radius: 10px;
+  background-color: #3e8637;
+  width: 48%;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
 `;
 
 export const SaveText = styled.Text`
-color: white;
-text-align: center;
-font-weight: 600;
+  color: white;
+  text-align: center;
+  font-weight: 600;
 `;
 
 export const CancelText = styled.Text`
-color: white;
-text-align: center;
-font-weight: 600;
+  color: white;
+  text-align: center;
+  font-weight: 600;
 `;
 
 export const CancelBtnWrapper = styled.Pressable`
-background-color: #df4c46;
-width: 48%;
-height: 45px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-border-radius: 10px;
+  background-color: #df4c46;
+  width: 48%;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
 `;
 
-
+export const PickerBackground = {
+  backgroundColor: "black",
+};
