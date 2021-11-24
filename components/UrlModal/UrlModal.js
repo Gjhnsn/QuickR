@@ -52,13 +52,17 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     return state.modal.folderToEdit;
   });
 
+  const [inputName, setInputName] = useState(``);
+  const [inputUrl, setInputUrl] = useState(``);
+  const [inputDescription, setInputDescription] = useState(``);
+
   const scannedLink = useSelector((state) => state.modal.scannedLink);
 
-  // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
+  useEffect(() => {
+    scannedLink ? setInputUrl(scannedLink) : setInputUrl(``);
+  }, [scannedLink])
 
-  const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(scannedLink);
-  const [inputDescription, setInputDescription] = useState(``);
+  // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
   const folderNamesArray = Object.keys(folderData);
 
@@ -84,7 +88,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
         })
       );
       dispatch(toggleAddUrlModal());
-      dispatch(setScannedLink(""));
+      dispatch(setScannedLink(null));
     }
   };
 
@@ -103,7 +107,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
         },
       ]);
       dispatch(toggleAddUrlModal());
-      dispatch(setScannedLink(""));
+      dispatch(setScannedLink(null));
       // fields should clear upon sav
       setInputName("");
       setInputUrl("");
@@ -202,7 +206,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     setInputDescription("");
 
     dispatch(toggleAddUrlModal());
-    dispatch(setScannedLink(""));
+    dispatch(setScannedLink(null));
   };
 
   const renderModal = () => {

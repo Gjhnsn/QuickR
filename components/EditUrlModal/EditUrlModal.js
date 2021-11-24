@@ -68,7 +68,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
         })
       );
       dispatch(toggleEditUrlModal());
-      dispatch(setScannedLink(""));
+      dispatch(setScannedLink(null));
       setInputUrl("");
     }
   };
@@ -80,7 +80,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       return;
     } else {
       setInputName(linkToEdit.name);
-      setInputUrl(linkToEdit.url);
+      scannedLink ? setInputUrl(scannedLink) : setInputUrl(linkToEdit.url);
       setInputDescription(linkToEdit.description);
     }
   }, [linkToEdit]);
@@ -129,7 +129,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       };
       setNewLinks([...editedLinkArr, updatedValues]);
       dispatch(toggleEditUrlModal());
-      dispatch(setScannedLink(""));
+      dispatch(setScannedLink(null));
       setInputUrl("");
     }
   };
@@ -146,7 +146,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     // close modal
     dispatch(toggleEditUrlModal());
 
-    dispatch(setScannedLink(""));
+    dispatch(setScannedLink(null));
   };
 
   const handleLinkDelete = () => {
@@ -154,7 +154,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
       dispatch(toggleEditUrlModal());
       deleteLinkToast(linkToEdit.name);
-      dispatch(setScannedLink(""));
+      dispatch(setScannedLink(null));
     };
 
     if (linkToEdit.isSelected) {
@@ -167,14 +167,13 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     }
   };
 
-  const closeAndClearInput = () => {
+  const closeAndResetInput = () => {
     // fields should clear upon exit
-    setInputName("");
-    setInputUrl("");
-    setInputDescription("");
-
+    setInputName(linkToEdit.name);
+    setInputUrl(linkToEdit.url);
+    setInputDescription(linkToEdit.description);
+    dispatch(setScannedLink(null));
     dispatch(toggleEditUrlModal());
-    dispatch(setScannedLink(""));
   };
 
   const renderModal = () => {
@@ -186,7 +185,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
             visible={isEditUrlModalOpen}
             animationType="slide"
           >
-            <CloserOverlay onPress={() => closeAndClearInput()} />
+            <CloserOverlay onPress={() => closeAndResetInput()} />
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
@@ -195,7 +194,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                 >
                   <CloseContainer>
                     <Pressable
-                      onPress={() => closeAndClearInput()}
+                      onPress={() => closeAndResetInput()}
                       hitslop={10}
                     >
                       <AntDesign name="closesquareo" size={35} color="white" />

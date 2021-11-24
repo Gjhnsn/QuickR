@@ -27,9 +27,8 @@ const BarcodeScanner = ({ toggleModal }) => {
 
       // toggle add url modal
       toggleModal ? dispatch(toggleAddUrlModal()) : null;
-      dispatch(setScannedLink(""));
-    }, 1200);
 
+    }, 1200);
     // pass data to add link modal
   };
 
