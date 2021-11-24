@@ -1,11 +1,13 @@
 import styled from "styled-components/native";
+import { Platform, StatusBar } from "react-native";
 
 export const Container = styled.View`
   background-color: #1c1d21;
   width: 100%;
   height: 120%;
   padding-top: 100px;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
+  margin-top: ${Platform.OS === "ios" ? 0 : -40}px;
 `;
 
 export const BackArrowContainer = styled.Pressable`

@@ -5,7 +5,7 @@ import {
   ModalContainer,
   AddUrlText,
   AddUrlTitleContainer,
-  Input, 
+  Input,
   FormWrapper,
   UrlInputContainer,
   UrlInput,
@@ -28,7 +28,10 @@ import {
 import { toggleEditUrlModal, setScannedLink } from "../../redux/modalSlice";
 import { editLink, deleteLink, setBlobColor } from "../../redux/folderSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteLinkToast } from "../../utils/toastNote";
+import {
+  deleteLinkToast,
+  urlInputValidationToaster,
+} from "../../utils/toastNote";
 import { resetQr } from "../../redux/qrSlice";
 import { openCamera } from "../../redux/startCameraSlice";
 import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -49,54 +52,86 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const [inputDescription, setInputDescription] = useState(``);
 
   const editSave = () => {
-    const updatedValues = {
-      name: inputName,
-      id: linkToEdit.id,
-      url: inputUrl,
-      description: inputDescription,
-      isSelected: false,
-    };
-    dispatch(
-      editLink({
-        linkID: linkToEdit.id,
-        folderName: folderToEdit,
-        updatedValues,
-      })
-    );
-    dispatch(toggleEditUrlModal());
-    dispatch(setScannedLink(""));
-    setInputUrl("");
+    if (inputValidationCheck()) {
+      const updatedValues = {
+        name: inputName,
+        id: linkToEdit.id,
+        url: inputUrl,
+        description: inputDescription,
+        isSelected: false,
+      };
+      dispatch(
+        editLink({
+          linkID: linkToEdit.id,
+          folderName: folderToEdit,
+          updatedValues,
+        })
+      );
+      dispatch(toggleEditUrlModal());
+      dispatch(setScannedLink(null));
+      setInputUrl("");
+    }
   };
 
   // --------------------------------------------------------------------INPUT VALUES ON EDIT
 
-
   useEffect(() => {
-    if(!linkToEdit) {
-      return 
+    if (!linkToEdit) {
+      return;
     } else {
       setInputName(linkToEdit.name);
-      setInputUrl(scannedLink);
+      scannedLink ? setInputUrl(scannedLink) : setInputUrl(linkToEdit.url);
       setInputDescription(linkToEdit.description);
     }
-  }, [linkToEdit])
+  }, [linkToEdit]);
 
+  // ------------------------------------------------------------------- VALIDATION
 
-  // -------------------------------- Leave this comment for add folder edit/delete function bug
+  const inputValidationCheck = () => {
+    if (
+      inputName.trim() === "" &&
+      inputUrl.trim() === "" &&
+      inputDescription.trim() === ""
+    ) {
+      urlInputValidationToaster(`Form fields`);
+      return false;
+    }
+
+    if (inputUrl.trim() === "") {
+      urlInputValidationToaster(`Url`);
+      return false;
+    }
+
+    if (inputName.trim() === "") {
+      urlInputValidationToaster(`Name`);
+      return false;
+    }
+
+    if (inputDescription.trim() === "") {
+      urlInputValidationToaster(`Description`);
+      return false;
+    }
+
+    return true;
+  };
+
+  // ------------------------------------------------------------------- LOCAL VALUES
 
   const editSaveLocal = (linkId) => {
-    const editedLinkArr = newLinks.filter((link) => link.id !== linkId.id);
-    const updatedValues = {
-      name: inputName,
-      id: linkToEdit,
-      url: inputUrl,
-      description: inputDescription,
-      isSelected: false,
-    };
-    setNewLinks([...editedLinkArr, updatedValues]);
-    dispatch(toggleEditUrlModal());
-    dispatch(setScannedLink(""));
-    setInputUrl("");
+    if (inputValidationCheck()) {
+      const editedLinkArr = newLinks.filter((link) => link.id !== linkId.id);
+      const updatedValues = {
+        name: inputName,
+        id: linkToEdit,
+        url: inputUrl,
+        description: inputDescription,
+        isSelected: false,
+      };
+      setNewLinks([...editedLinkArr, updatedValues]);
+      dispatch(toggleEditUrlModal());
+      dispatch(setScannedLink(null));
+      setInputUrl("");
+    }
   };
 
   const deleteLocal = (linkToDelete) => {
@@ -110,6 +145,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
     // close modal
     dispatch(toggleEditUrlModal());
+
+    dispatch(setScannedLink(null));
   };
 
   const handleLinkDelete = () => {
@@ -117,6 +154,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
       dispatch(toggleEditUrlModal());
       deleteLinkToast(linkToEdit.name);
+      dispatch(setScannedLink(null));
     };
 
     if (linkToEdit.isSelected) {
@@ -129,12 +167,12 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     }
   };
 
-  const closeAndClearInput = () => {
+  const closeAndResetInput = () => {
     // fields should clear upon exit
-    setInputName("");
-    setInputUrl("");
-    setInputDescription("");
-
+    setInputName(linkToEdit.name);
+    setInputUrl(linkToEdit.url);
+    setInputDescription(linkToEdit.description);
+    dispatch(setScannedLink(null));
     dispatch(toggleEditUrlModal());
   };
 
@@ -147,7 +185,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
             visible={isEditUrlModalOpen}
             animationType="slide"
           >
-            <CloserOverlay onPress={() => closeAndClearInput()} />
+            <CloserOverlay onPress={() => closeAndResetInput()} />
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
@@ -155,13 +193,16 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                   colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
                 >
                   <CloseContainer>
-                    <Pressable onPress={() => closeAndClearInput()} hitslop={10}>
-                    <AntDesign name="closesquareo" size={35} color="white" />
+                    <Pressable
+                      onPress={() => closeAndResetInput()}
+                      hitslop={10}
+                    >
+                      <AntDesign name="closesquareo" size={35} color="white" />
                     </Pressable>
                   </CloseContainer>
 
                   <AddUrlTitleContainer>
-                  <Feather name="link" size={25} color="white" />
+                    <Feather name="link" size={25} color="white" />
                     <AddUrlText>Edit Url</AddUrlText>
                   </AddUrlTitleContainer>
                   <FormWrapper>
@@ -172,9 +213,16 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                         onChangeText={setInputUrl}
                         value={inputUrl}
                       />
-                      <QrIconButton onPress={() => dispatch(openCamera())} hitslop={10}> 
-                      {/* Need to hook up above onPress to scanner */}
-                      <MaterialIcons name="qr-code-scanner" size={30} color="white" />
+                      <QrIconButton
+                        onPress={() => dispatch(openCamera())}
+                        hitslop={10}
+                      >
+                        {/* Need to hook up above onPress to scanner */}
+                        <MaterialIcons
+                          name="qr-code-scanner"
+                          size={30}
+                          color="white"
+                        />
                       </QrIconButton>
                     </UrlInputContainer>
                     <Input
@@ -182,7 +230,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
-                      
                     />
                     <DescriptionInput
                       placeholder="Description"

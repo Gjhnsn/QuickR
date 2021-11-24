@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { windowWidth } from "../../utils/windowDimensions";
+import { Platform, StatusBar } from "react-native";
 
 export const NavigationContainer = styled.View`
   width: ${windowWidth};

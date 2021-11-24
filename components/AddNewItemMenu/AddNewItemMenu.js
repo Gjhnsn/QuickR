@@ -23,6 +23,7 @@ import {
 } from "../AddNewItemMenu/styles";
 import { setFolderToEdit } from "../../redux/modalSlice";
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { setScannedLink } from "../../redux/modalSlice";
 
 function AddNewItemMenu({ navigation }) {
   const isNewItemModalOpen = useSelector(
@@ -31,8 +32,10 @@ function AddNewItemMenu({ navigation }) {
   const dispatch = useDispatch();
 
   const renderModal = () => {
+    
     const openAddOrScan = () => {
       dispatch(toggleNewItemModal());
+      dispatch(setScannedLink(null));
       setTimeout(() => {
         dispatch(toggleAddUrlModal());
       }, 200);
