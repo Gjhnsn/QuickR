@@ -33,9 +33,12 @@ import {
   CloseContainer,
   CancelBtnWrapper,
   CancelText,
-  PickerBackground
+  PickerBackground,
 } from "./styles";
-import { selectValidFolderToast } from "../../utils/toastNote";
+import {
+  selectValidFolderToast,
+  urlInputValidationToaster,
+} from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
 import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
@@ -49,59 +52,97 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     return state.modal.folderToEdit;
   });
 
-  const scannedLink = useSelector((state) => state.modal.scannedLink)
+  const [inputName, setInputName] = useState(``);
+  const [inputUrl, setInputUrl] = useState(``);
+  const [inputDescription, setInputDescription] = useState(``);
+
+  const scannedLink = useSelector((state) => state.modal.scannedLink);
+
+  useEffect(() => {
+    scannedLink ? setInputUrl(scannedLink) : setInputUrl(``);
+  }, [scannedLink])
 
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
-
-  const [inputName, setInputName] = useState(``);
-  const [inputUrl, setInputUrl] = useState(scannedLink);
-  const [inputDescription, setInputDescription] = useState(``);
 
   const folderNamesArray = Object.keys(folderData);
 
   const finalSubmissionRedux = () => {
-    // fields should clear upon save
-    setInputName("");
-    setInputUrl("");
-    setInputDescription("");
+    if (inputValidationCheck()) {
+      // fields should clear upon save
+      setInputName("");
+      setInputUrl("");
+      setInputDescription("");
 
-    dispatch(
-      addUrlToFolder({
-        addedLink: {
+      dispatch(
+        addUrlToFolder({
+          addedLink: {
+            name: inputName,
+            id: uuidv4(),
+            url: inputUrl,
+            description: inputDescription,
+            isSelected: false,
+          },
+          folderName: `${
+            currentEditFolder ? currentEditFolder : folderNamesArray[0]
+          }`,
+        })
+      );
+      dispatch(toggleAddUrlModal());
+      dispatch(setScannedLink(null));
+    }
+  };
+
+  // ------------------------------------------------------------------------FINAL SUBMISSION LOCAL
+
+  const finalSubmissionLocal = () => {
+    if (inputValidationCheck()) {
+      setNewLinks([
+        ...newLinks,
+        {
           name: inputName,
           id: uuidv4(),
           url: inputUrl,
           description: inputDescription,
           isSelected: false,
         },
-        folderName: `${
-          currentEditFolder ? currentEditFolder : folderNamesArray[0]
-        }`,
-      })
-    );
-    dispatch(toggleAddUrlModal());
-    dispatch(setScannedLink(""));
+      ]);
+      dispatch(toggleAddUrlModal());
+      dispatch(setScannedLink(null));
+      // fields should clear upon sav
+      setInputName("");
+      setInputUrl("");
+      setInputDescription("");
+    }
   };
 
-  // ------------------------------------------------------------------------FINAL SUBMISSION LOCAL
+  //-------------------------------------------------------------------------VALIDATION
 
-  const finalSubmissionLocal = () => {
-    setNewLinks([
-      ...newLinks,
-      {
-        name: inputName,
-        id: uuidv4(),
-        url: inputUrl,
-        description: inputDescription,
-        isSelected: false,
-      },
-    ]);
-    dispatch(toggleAddUrlModal());
-    dispatch(setScannedLink(""));
-    // fields should clear upon sav
-    setInputName("");
-    setInputUrl("");
-    setInputDescription("");
+  const inputValidationCheck = () => {
+    if (
+      inputName.trim() === "" &&
+      inputUrl.trim() === "" &&
+      inputDescription.trim() === ""
+    ) {
+      urlInputValidationToaster(`Form fields`);
+      return false;
+    }
+
+    if (inputUrl.trim() === "") {
+      urlInputValidationToaster(`Url`);
+      return false;
+    }
+
+    if (inputName.trim() === "") {
+      urlInputValidationToaster(`Name`);
+      return false;
+    }
+
+    if (inputDescription.trim() === "") {
+      urlInputValidationToaster(`Description`);
+      return false;
+    }
+
+    return true;
   };
 
   // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
@@ -114,7 +155,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
           key={folderName}
           label={folderName}
           value={folderName}
-          style={{backgroundColor: 'blue'}}
+          style={{ backgroundColor: "blue" }}
         />
       );
     });
@@ -165,7 +206,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
     setInputDescription("");
 
     dispatch(toggleAddUrlModal());
-    dispatch(setScannedLink(""));
+    dispatch(setScannedLink(null));
   };
 
   const renderModal = () => {

@@ -1,4 +1,10 @@
-import { ScrollView, Alert, Pressable, SafeAreaView, StatusBar } from "react-native";
+import {
+  ScrollView,
+  Alert,
+  Pressable,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -50,10 +56,12 @@ import { approvedColors } from "../../../utils/approvedColors";
 import EditUrlModal from "../../EditUrlModal/EditUrlModal";
 import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { setScannedLink } from "../../../redux/modalSlice";
 import { resetQr } from "../../../redux/qrSlice";
 
 function EditFolderPage({ navigation }) {
+  const scannedLink = useSelector((state) => state.modal.scannedLink);
+
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
   const currentLinks = useSelector((state) => state.folder.allFolder);
   const folderKeys = useSelector((state) =>
@@ -228,9 +236,7 @@ function EditFolderPage({ navigation }) {
   const editFolderView = (navigation) => {
     return (
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
-        <StatusBar
-          backgroundColor='#1c1d21'
-          />
+        <StatusBar backgroundColor="#1c1d21" />
         <ScrollView>
           <Container>
             <BackArrowContainer

@@ -64,3 +64,19 @@ export const qrCodeScanned = () => {
 
   return toast;
 };
+
+export const urlInputValidationToaster = (missingValue) => {
+  let toast = Toast.show(`${missingValue} cannot be empty.`, {
+    duration: 1000,
+    position: 100,
+    shadow: false,
+    backgroundColor: `${Platform.OS === "ios" ? '#363636' : '#131313'}`,
+    textColor: "white",
+    animation: true,
+    hideOnPress: true,
+    delay: 0,
+    opacity: 1,
+  });
+
+  return toast;
+};
