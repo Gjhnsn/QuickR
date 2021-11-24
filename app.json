@@ -2,7 +2,7 @@
   "expo": {
     "name": "QuickR",
     "slug": "QuickR",
-    "version": "1.0.0",
+    "version": "0.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,13 +18,15 @@
     ],
     "userInterfaceStyle": "dark",
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gjhnsn.QuickR"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.gjhnsn.QuickR"
     },
     "web": {
       "favicon": "./assets/favicon.png"
