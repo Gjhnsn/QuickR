@@ -145,6 +145,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
     // close modal
     dispatch(toggleEditUrlModal());
+
+    dispatch(setScannedLink(""));
   };
 
   const handleLinkDelete = () => {
@@ -152,6 +154,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       dispatch(deleteLink({ folderName: folderToEdit, linkID: linkToEdit.id }));
       dispatch(toggleEditUrlModal());
       deleteLinkToast(linkToEdit.name);
+      dispatch(setScannedLink(""));
     };
 
     if (linkToEdit.isSelected) {
@@ -171,6 +174,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
     setInputDescription("");
 
     dispatch(toggleEditUrlModal());
+    dispatch(setScannedLink(""));
   };
 
   const renderModal = () => {
