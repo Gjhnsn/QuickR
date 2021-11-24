@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Pressable, Image } from "react-native";
+import { Modal, Pressable, Image, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ModalContainer,
@@ -76,7 +76,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       return 
     } else {
       setInputName(linkToEdit.name);
-      setInputUrl(scannedLink);
+      setInputUrl(linkToEdit.url);
       setInputDescription(linkToEdit.description);
     }
   }, [linkToEdit])
@@ -84,19 +84,29 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
   // -------------------------------- Leave this comment for add folder edit/delete function bug
 
+  const inputValidationCheck = () => {
+    if(inputName === '' || inputUrl === '' || inputDescription === '') return false
+    return true
+  }
   const editSaveLocal = (linkId) => {
-    const editedLinkArr = newLinks.filter((link) => link.id !== linkId.id);
-    const updatedValues = {
-      name: inputName,
-      id: linkToEdit,
-      url: inputUrl,
-      description: inputDescription,
-      isSelected: false,
+
+    if(inputValidationCheck()) {
+      const editedLinkArr = newLinks.filter((link) => link.id !== linkId.id);
+      const updatedValues = {
+        name: inputName,
+        id: linkToEdit,
+        url: inputUrl,
+        description: inputDescription,
+        isSelected: false,
     };
-    setNewLinks([...editedLinkArr, updatedValues]);
-    dispatch(toggleEditUrlModal());
-    dispatch(setScannedLink(""));
-    setInputUrl("");
+      setNewLinks([...editedLinkArr, updatedValues]);
+      dispatch(toggleEditUrlModal());
+      dispatch(setScannedLink(""));
+      setInputUrl("");
+    }
+    
+    // display toast indicating fields are empty
+    Alert.alert("Error", `Fields cannot be empty.`);
   };
 
   const deleteLocal = (linkToDelete) => {
