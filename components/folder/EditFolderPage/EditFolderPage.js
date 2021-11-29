@@ -98,18 +98,9 @@ function EditFolderPage({ navigation }) {
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
-    const checkDescriptionValue = description.trim() === "";
 
-    if (checkFolderValue && checkDescriptionValue) {
-      configureAlert("Folder Name and Description ");
-      return false;
-    }
     if (checkFolderValue) {
       configureAlert("Folder Name");
-      return false;
-    }
-    if (checkDescriptionValue) {
-      configureAlert("Description");
       return false;
     }
     if (folderKeys.includes(folderName) && currentFolder.name !== folderName) {

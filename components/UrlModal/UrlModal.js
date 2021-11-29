@@ -60,7 +60,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   useEffect(() => {
     scannedLink ? setInputUrl(scannedLink) : setInputUrl(``);
-  }, [scannedLink])
+  }, [scannedLink]);
 
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
@@ -118,11 +118,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   //-------------------------------------------------------------------------VALIDATION
 
   const inputValidationCheck = () => {
-    if (
-      inputName.trim() === "" &&
-      inputUrl.trim() === "" &&
-      inputDescription.trim() === ""
-    ) {
+    if (inputName.trim() === "" && inputUrl.trim() === "") {
       urlInputValidationToaster(`Form fields`);
       return false;
     }
@@ -134,11 +130,6 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
     if (inputName.trim() === "") {
       urlInputValidationToaster(`Name`);
-      return false;
-    }
-
-    if (inputDescription.trim() === "") {
-      urlInputValidationToaster(`Description`);
       return false;
     }
 

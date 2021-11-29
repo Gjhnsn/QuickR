@@ -1,4 +1,10 @@
-import { SafeAreaView, ScrollView, Alert, Pressable, StatusBar } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  Alert,
+  Pressable,
+  StatusBar,
+} from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -62,18 +68,9 @@ function AddFolderPage({ navigation }) {
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
-    const checkDescriptionValue = description.trim() === "";
 
-    if (checkFolderValue && checkDescriptionValue) {
-      configureAlert("Folder Name and Description ");
-      return false;
-    }
     if (checkFolderValue) {
       configureAlert("Folder Name");
-      return false;
-    }
-    if (checkDescriptionValue) {
-      configureAlert("Description");
       return false;
     }
     if (folderKeys.includes(folderName)) {
@@ -160,9 +157,7 @@ function AddFolderPage({ navigation }) {
   const addFolderView = (navigation) => {
     return (
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
-        <StatusBar
-          backgroundColor='#1c1d21'
-          />
+        <StatusBar backgroundColor="#1c1d21" />
         <ScrollView>
           <Container>
             <BackArrowContainer

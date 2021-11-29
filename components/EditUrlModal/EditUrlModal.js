@@ -88,11 +88,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   // ------------------------------------------------------------------- VALIDATION
 
   const inputValidationCheck = () => {
-    if (
-      inputName.trim() === "" &&
-      inputUrl.trim() === "" &&
-      inputDescription.trim() === ""
-    ) {
+    if (inputName.trim() === "" && inputUrl.trim() === "") {
       urlInputValidationToaster(`Form fields`);
       return false;
     }
@@ -104,11 +100,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
     if (inputName.trim() === "") {
       urlInputValidationToaster(`Name`);
-      return false;
-    }
-
-    if (inputDescription.trim() === "") {
-      urlInputValidationToaster(`Description`);
       return false;
     }
 
