@@ -15,7 +15,6 @@ export const FolderTitle = styled.Text`
   color: #fff;
   margin-right: 16px;
   font-family: OpenSans_600SemiBold;
-  width: 250px;
 `;
 
 export const FolderColorBubble = styled.View`
@@ -30,7 +29,13 @@ export const TitleContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;  
+  justify-content: flex-start;
+`;
+
+export const TitleEditWrapper = styled.View`
+  flex-direction: row;
+  width: 250px;
+  align-items: center;
 `;
 
 export const FolderInitialElements = styled.View`

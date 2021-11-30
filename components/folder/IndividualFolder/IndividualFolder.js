@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Platform } from "react-native";
+import { Pressable, Platform, View } from "react-native";
 import LinksContainer from "../LinksContainer/LinksContainer";
 import {
   FolderContainer,
@@ -8,6 +8,7 @@ import {
   TitleContainer,
   FolderInitialElements,
   FolderOpenedElements,
+  TitleEditWrapper,
 } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { openAccordion } from "../../../redux/folderSlice";
@@ -54,7 +55,8 @@ function IndividualFolder({ folder, folderName, navigation }) {
         <FolderInitialElements>
           <TitleContainer>
             <FolderColorBubble folderColor={folder.folderColor} />
-            <FolderTitle>{folderName}</FolderTitle>
+            <TitleEditWrapper>
+            <FolderTitle numberOfLines={1}>{folderName}</FolderTitle>
             {/* only render edit icon if accordion is open */}
             {accordion[folderName].isAccordionOpen ? (
               <Pressable onPress={() => editButtonAction()} hitslop={10}>
@@ -64,7 +66,9 @@ function IndividualFolder({ folder, folderName, navigation }) {
                   color="white"
                 />
               </Pressable>
+              
             ) : null}
+            </TitleEditWrapper>
           </TitleContainer>
           {/* down arrow when folder is closed | up arrow when folder is open */}
           {accordion[folderName].isAccordionOpen ? (
