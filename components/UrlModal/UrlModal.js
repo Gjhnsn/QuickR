@@ -1,4 +1,4 @@
-import { Pressable, Modal, Image, Alert, Platform } from "react-native";
+import { Pressable, Modal } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -10,19 +10,16 @@ import {
   setFolderToEdit,
   setScannedLink,
 } from "../../redux/modalSlice";
-import { Picker } from "@react-native-picker/picker";
 import {
   ModalContainer,
   AddUrlText,
   AddUrlTitleContainer,
   Input,
   FormWrapper,
-  UrlInputContainer,
+  UrlInputContainer, 
   UrlInput,
   DescriptionInput,
   QrIconButton,
-  ChooseFolderLabel,
-  FolderSection,
   SaveBtnWrapper,
   BtnFooter,
   SaveText,
@@ -33,7 +30,12 @@ import {
   CloseContainer,
   CancelBtnWrapper,
   CancelText,
-  PickerBackground,
+  PickerFolderContainer,
+  PickerFolder,
+  FolderNameColorContainer,
+  PickerFolderColor,
+  PickerFolderName,
+  PickerFolderStatus
 } from "./styles";
 import {
   selectValidFolderToast,
@@ -138,16 +140,19 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
 
+
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
+
+      const folderColor = folderData[folderName].folderColor
       return (
-        <Picker.Item
-          color={Platform.OS === "ios" ? "white" : "black"}
-          key={folderName}
-          label={folderName}
-          value={folderName}
-          style={{ backgroundColor: "blue" }}
-        />
+        <PickerFolder key={folderName} onPress={() => dispatch(setFolderToEdit(folderName))}>
+        <FolderNameColorContainer>
+          <PickerFolderColor folderColor={folderColor}/>
+          <PickerFolderName>{folderName}</PickerFolderName>
+        </FolderNameColorContainer>
+        <PickerFolderStatus folderColor = {currentEditFolder === folderName ? folderColor : null} />
+      </PickerFolder>
       );
     });
   };
@@ -156,29 +161,11 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   const showFolderPicker = () => {
     return (
-      <FolderSection>
-        <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
-
-        <PickerContainer>
-          <Picker
-            dropdownIconColor="white"
-            mode="dropdown" // android only
-            style={{ color: "#c1c1c1", marginTop: 10 }}
-            selectedValue={currentEditFolder}
-            onValueChange={(itemValue) => {
-              dispatch(setFolderToEdit(itemValue));
-            }}
-            itemStyle={{
-              color: "white",
-              fontSize: 14,
-              height: 100,
-            }}
-          >
-            <Picker.Item key={0} label="Select a folder..." value={null} />
-            {displayFolders()}
-          </Picker>
-        </PickerContainer>
-      </FolderSection>
+      <PickerContainer>
+        <PickerFolderContainer>
+          {displayFolders()}
+        </PickerFolderContainer>
+      </PickerContainer>
     );
   };
 

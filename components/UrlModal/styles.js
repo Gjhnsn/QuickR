@@ -147,15 +147,13 @@ export const SelectFolder = styled.View`
   border-radius: 5px;
 `;
 
-export const PickerContainer = styled.View``;
-
 export const FolderItemText = styled.Text`
   color: #fff;
 `;
 
 export const BtnFooter = styled.View`
   align-items: center;
-  margin-top: 40px;
+  margin-top: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -195,6 +193,60 @@ export const CancelBtnWrapper = styled.Pressable`
   border-radius: 10px;
 `;
 
-export const PickerBackground = {
-  backgroundColor: "black",
-};
+export const PickerContainer = styled.View`
+  max-height: 200px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+`;
+
+export const PickerFolderContainer = styled.ScrollView`
+  width: 100%;
+  max-height: 200px;
+`;
+
+export const PickerFolder = styled.Pressable`
+  height: 50px;
+  width: 100%;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #3b3b3d;
+`;
+
+export const FolderNameColorContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+`;
+
+export const PickerFolderName = styled.Text`
+  font-size: 18px;
+  font-family: OpenSans_600SemiBold;
+  color: #fff;
+`;
+
+export const PickerFolderColor = styled.View`
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background-color: ${(props) => props.folderColor};
+  margin-right: 15px;
+`;
+
+export const PickerFolderStatus = styled.View`
+  height: 100%;
+  width: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: ${(props) => props.folderColor ? props.folderColor : `transparent`};
+`;
+
+export const PickerLabel = styled.Text`
+  font-size: 16px;
+`;
