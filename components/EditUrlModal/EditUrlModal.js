@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Pressable, Image } from "react-native";
+import { Modal, Pressable, Image, View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ModalContainer,
@@ -18,6 +18,8 @@ import {
   DeleteText,
   CreateFolderBtn,
   CreateText,
+  InputLimitWrapper,
+  InputLimitIndicator,
 } from "./styles";
 import {
   CloserOverlay,
@@ -50,6 +52,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   const editSave = () => {
     if (inputValidationCheck()) {
@@ -221,15 +225,22 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
+                      maxLength={maxFolderNameLength}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputName.length}/${maxFolderNameLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                     <DescriptionInput
                       placeholder="Description"
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={130}
+                      maxLength={maxDescriptionLength}
                       multiline={true}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputDescription.length}/${maxDescriptionLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                   </FormWrapper>
 
                   <BtnFooter>
