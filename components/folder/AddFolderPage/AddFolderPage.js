@@ -4,6 +4,8 @@ import {
   Alert,
   Pressable,
   StatusBar,
+  Text,
+  View,
 } from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -35,6 +37,8 @@ import {
   BackArrowContainer,
   ColorGridLabelContainer,
   CurrentFolderColor,
+  InputLimitWrapper,
+  InputLimitIndicator,
 } from "../AddFolderPage/styles";
 import {
   toggleAddUrlModal,
@@ -54,6 +58,8 @@ function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`#FF453A`);
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
@@ -177,7 +183,14 @@ function AddFolderPage({ navigation }) {
                 placeholderTextColor="#c1c1c1"
                 onChangeText={setFolderName}
                 value={folderName}
+                maxLength={maxFolderNameLength} // currently set to 50
               />
+              {/* --------------- character counter --------------------- */}
+              <InputLimitWrapper>
+                <InputLimitIndicator>
+                  {`${folderName.length}/${maxFolderNameLength}`}
+                </InputLimitIndicator>
+              </InputLimitWrapper>
             </FolderInputSection>
 
             <DescriptionSection>
@@ -185,11 +198,17 @@ function AddFolderPage({ navigation }) {
               <DescriptionInput
                 placeholder="Add Description..."
                 placeholderTextColor="#c1c1c1"
-                maxLength={85}
+                maxLength={maxDescriptionLength}
                 multiline={true}
-                onChangeText={setDescription}
+                onChangeText={setDescription} //
                 value={description}
               />
+              {/* ------------ character counter -------------------- */}
+              <InputLimitWrapper>
+                <InputLimitIndicator>
+                  {`${description.length}/${maxDescriptionLength}`}
+                </InputLimitIndicator>
+              </InputLimitWrapper>
             </DescriptionSection>
             {/* ********** Color Picker ********** */}
             <ColorGridSection>

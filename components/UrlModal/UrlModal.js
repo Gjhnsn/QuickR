@@ -1,4 +1,4 @@
-import { Pressable, Modal, Image, Alert, Platform } from "react-native";
+import { Pressable, Modal, Image, Alert, Platform, View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -34,6 +34,8 @@ import {
   CancelBtnWrapper,
   CancelText,
   PickerBackground,
+  InputLimitWrapper,
+  InputLimitIndicator,
 } from "./styles";
 import {
   selectValidFolderToast,
@@ -61,6 +63,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   useEffect(() => {
     scannedLink ? setInputUrl(scannedLink) : setInputUrl(``);
   }, [scannedLink]);
+
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
@@ -252,16 +257,22 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
-                      maxLength={50}
+                      maxLength={maxFolderNameLength}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputName.length}/${maxFolderNameLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                     <DescriptionInput
                       placeholder="Description"
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={130}
+                      maxLength={maxDescriptionLength}
                       multiline={true}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputDescription.length}/${maxDescriptionLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                   </FormWrapper>
 
                   {picker ? showFolderPicker() : null}

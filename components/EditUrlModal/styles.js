@@ -85,3 +85,12 @@ export const DeleteText = styled.Text`
   text-align: center;
   font-weight: 600;
 `;
+
+export const InputLimitWrapper = styled.View`
+  align-items: flex-end;
+  margin-top: 5px;
+`;
+
+export const InputLimitIndicator = styled.Text`
+  color: white;
+`;
