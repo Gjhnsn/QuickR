@@ -35,7 +35,9 @@ import {
   FolderNameColorContainer,
   PickerFolderColor,
   PickerFolderName,
-  PickerFolderStatus
+  PickerFolderStatus,
+  InputLimitWrapper,
+  InputLimitIndicator,
 } from "./styles";
 import {
   selectValidFolderToast,
@@ -63,6 +65,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   useEffect(() => {
     scannedLink ? setInputUrl(scannedLink) : setInputUrl(``);
   }, [scannedLink]);
+
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   // ------------------------------------------------------------------------FINAL SUBMISSION REDUX
 
@@ -239,16 +244,22 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
-                      maxLength={50}
+                      maxLength={maxFolderNameLength}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputName.length}/${maxFolderNameLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                     <DescriptionInput
                       placeholder="Description"
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={130}
+                      maxLength={maxDescriptionLength}
                       multiline={true}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputDescription.length}/${maxDescriptionLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                   </FormWrapper>
 
                   {picker ? showFolderPicker() : null}

@@ -4,6 +4,8 @@ import {
   Pressable,
   SafeAreaView,
   StatusBar,
+  View,
+  Text,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -37,6 +39,7 @@ import {
   CurrentFolderColor,
   EditChange,
   InputContainer,
+  InputLimitWrapper,
 } from "./styles";
 import {
   toggleAddUrlModal,
@@ -58,6 +61,7 @@ import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { setScannedLink } from "../../../redux/modalSlice";
 import { resetQr } from "../../../redux/qrSlice";
+import { InputLimitIndicator } from "../AddFolderPage/styles";
 
 function EditFolderPage({ navigation }) {
   const scannedLink = useSelector((state) => state.modal.scannedLink);
@@ -88,6 +92,8 @@ function EditFolderPage({ navigation }) {
 
   const [editNameInput, setEditNameInput] = useState(false);
   const [editDescriptionInput, setEditDescriptionInput] = useState(false);
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   useEffect(() => {
     setFolderName(currentFolder.name);
@@ -253,6 +259,14 @@ function EditFolderPage({ navigation }) {
                   editable={editNameInput}
                   editMode={editNameInput}
                 />
+                {/* ----------------------- Charcter counter for input -----------------------*/}
+                {editNameInput ? (
+                  <InputLimitWrapper editMode={editNameInput}>
+                    <InputLimitIndicator>
+                      {`${folderName.length}/${maxFolderNameLength}`}
+                    </InputLimitIndicator>
+                  </InputLimitWrapper>
+                ) : null}
                 <EditChange
                   onPress={() => setEditNameInput(!editNameInput)}
                   hitslop={10}
@@ -280,7 +294,14 @@ function EditFolderPage({ navigation }) {
                   editable={editDescriptionInput}
                   editMode={editDescriptionInput}
                 />
-
+                {/*---------------- description character counter ----------------*/}
+                {editDescriptionInput ? (
+                  <InputLimitWrapper editMode={editDescriptionInput}>
+                    <InputLimitIndicator>
+                      {`${description.length}/${maxDescriptionLength}`}
+                    </InputLimitIndicator>
+                  </InputLimitWrapper>
+                ) : null}
                 <EditChange
                   onPress={() => setEditDescriptionInput(!editDescriptionInput)}
                   hitslop={10}
