@@ -39,7 +39,6 @@ export const CloseContainer = styled.View`
   margin-top: 15px;
 `;
 
-// before: height: 80%; margin-top: 40%;
 export const ModalContainer = styled.View`
   width: 100%;
   height: 100%; 
