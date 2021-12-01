@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Share, View } from "react-native";
 import { useSelector } from "react-redux";
-import { __startCamera } from "../../utils/startCamera";
 import {
   Container,
   QrWrapper,

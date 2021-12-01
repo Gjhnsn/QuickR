@@ -1,25 +1,26 @@
-import styled from "styled-components/native"
+import styled from "styled-components/native";
 import { windowHeight, windowWidth } from "../../utils/windowDimensions";
 
-// STYLED COMPONENT 
-export const Screen = styled.View` 
-    flex: 1;
-    width: ${windowWidth};
+// STYLED COMPONENT
+export const Screen = styled.View`
+  flex: 1;
+  width: ${windowWidth};
 `;
 
 // OBJECT
 export const CameraScreen = {
-    flex: '1',
+  flex: 1,
 };
 
-// STYLED COMPONENT 
+// STYLED COMPONENT
 export const CameraContainer = styled.View`
-    background-color: transparent;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-top: 15px;
-    padding: 15px;
-    width: ${windowWidth};
-    height: ${windowHeight};  
-    height: 75px;
+  background-color: transparent;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 15px;
+  padding: 15px;
+  width: ${windowWidth};
+  height: ${windowHeight};
+  height: 75px;
 `;
+

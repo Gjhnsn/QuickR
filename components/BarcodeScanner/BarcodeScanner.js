@@ -1,16 +1,28 @@
-import React, { useState } from "react";
-import { Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Pressable, Text, View, Linking, Platform } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Ionicons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
-import { closeCamera } from "../../redux/startCameraSlice";
-import { Screen, CameraScreen, CameraContainer, CloseIcon } from "./styles";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCamera, openCamera } from "../../redux/startCameraSlice";
+import {
+  Screen,
+  CameraScreen,
+  CameraContainer,
+} from "./styles";
 import { qrCodeScanned } from "../../utils/toastNote";
 import { toggleAddUrlModal, setScannedLink } from "../../redux/modalSlice";
+import PlaceHolder from "../Placeholder/PlaceHolder";
 
-const BarcodeScanner = ({ toggleModal }) => {
+const BarcodeScanner = ({ toggleModal, navigation }) => {
   const [scanned, setScanned] = useState(false);
+  const [hasPermission, setHasPermission] = useState(false);
+
   const dispatch = useDispatch();
+
+  const requestCameraAppPermission = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === "granted");
+  };
 
   const handleQRCodeScan = ({ type, data }) => {
     setScanned(true);
@@ -27,25 +39,28 @@ const BarcodeScanner = ({ toggleModal }) => {
 
       // toggle add url modal
       toggleModal ? dispatch(toggleAddUrlModal()) : null;
-
     }, 1200);
     // pass data to add link modal
   };
 
-  return (
-    <Screen>
-      <BarCodeScanner
-        style={CameraScreen}
-        onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
-      >
-        <CameraContainer>
-          <Pressable onPress={() => dispatch(closeCamera())} hitSlop={15}>
-            <Ionicons name="md-close" size={40} color="white" />
-          </Pressable>
-        </CameraContainer>
-      </BarCodeScanner>
-    </Screen>
-  );
+  const renderScanner = () => {
+    return (
+      <Screen>
+        <BarCodeScanner
+          style={CameraScreen}
+          onBarCodeScanned={scanned ? undefined : handleQRCodeScan}
+        >
+          <CameraContainer>
+            <Pressable onPress={() => dispatch(closeCamera())} hitSlop={15}>
+              <Ionicons name="md-close" size={40} color="white" />
+            </Pressable>
+          </CameraContainer>
+        </BarCodeScanner>
+      </Screen>
+    );
+  };
+
+  return <>{hasPermission ? renderScanner() : <PlaceHolder requestCameraAppPermission={requestCameraAppPermission}/>}</>;
 };
 
 export default BarcodeScanner;
