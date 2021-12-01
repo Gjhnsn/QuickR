@@ -1,4 +1,4 @@
-import { Pressable, Modal } from "react-native";
+import { Pressable, Modal, ScrollView, Dimensions } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -16,7 +16,7 @@ import {
   AddUrlTitleContainer,
   Input,
   FormWrapper,
-  UrlInputContainer, 
+  UrlInputContainer,
   UrlInput,
   DescriptionInput,
   QrIconButton,
@@ -145,19 +145,22 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   // ------------------------------------------------------------------------RENDERED FOLDERS IN PICKER
 
-
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
-
-      const folderColor = folderData[folderName].folderColor
+      const folderColor = folderData[folderName].folderColor;
       return (
-        <PickerFolder key={folderName} onPress={() => dispatch(setFolderToEdit(folderName))}>
-        <FolderNameColorContainer>
-          <PickerFolderColor folderColor={folderColor}/>
-          <PickerFolderName>{folderName}</PickerFolderName>
-        </FolderNameColorContainer>
-        <PickerFolderStatus folderColor = {currentEditFolder === folderName ? folderColor : null} />
-      </PickerFolder>
+        <PickerFolder
+          key={folderName}
+          onPress={() => dispatch(setFolderToEdit(folderName))}
+        >
+          <FolderNameColorContainer>
+            <PickerFolderColor folderColor={folderColor} />
+            <PickerFolderName>{folderName}</PickerFolderName>
+          </FolderNameColorContainer>
+          <PickerFolderStatus
+            folderColor={currentEditFolder === folderName ? folderColor : null}
+          />
+        </PickerFolder>
       );
     });
   };
@@ -167,9 +170,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const showFolderPicker = () => {
     return (
       <PickerContainer>
-        <PickerFolderContainer>
-          {displayFolders()}
-        </PickerFolderContainer>
+        <PickerFolderContainer>{displayFolders()}</PickerFolderContainer>
       </PickerContainer>
     );
   };
@@ -205,8 +206,8 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
-                  style={{ height: `130%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
+                  style={{ height: `100%` }}
+                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
                 >
                   <CloseContainer>
                     <Pressable
@@ -220,6 +221,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                     <Feather name="link" size={25} color="white" />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
+
                   <FormWrapper>
                     <UrlInputContainer>
                       <UrlInput

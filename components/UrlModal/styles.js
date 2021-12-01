@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { windowWidth, windowHeight } from "../../utils/windowDimensions";
+import { Platform, Dimensions } from "react-native";
 
 export const ModalOverlay = styled.Pressable`
   display: flex;
@@ -19,11 +20,11 @@ export const CloserOverlay = styled.Pressable`
 
 export const GradientBackground = styled.View`
   position: absolute;
-  top: 0;
+  height: 100%;
   left: 0;
+  top: 0;
   border-radius: 10px;
   width: 100%;
-  height: 100%;
   z-index: 100;
   overflow: hidden;
 `;
@@ -41,10 +42,10 @@ export const CloseContainer = styled.View`
 
 export const ModalContainer = styled.View`
   width: 100%;
-  height: 100%; 
+  height: 100%;
   background-color: rgb(54, 54, 54);
   align-self: flex-start;
-  margin-top: 20%;
+  margin-top: ${Platform.OS === "ios" ? `20%` : 0};
   border-radius: 10px;
   display: flex;
 `;
@@ -153,12 +154,16 @@ export const FolderItemText = styled.Text`
 
 export const BtnFooter = styled.View`
   align-items: center;
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: 15px; 
+  position: absolute;
+  bottom: 0;
+  padding-bottom: ${Platform.OS === "ios" ? '30%' : '20px'};
+  width: 100%;
 `;
 
 export const SaveBtnWrapper = styled.Pressable`
@@ -194,11 +199,12 @@ export const CancelBtnWrapper = styled.Pressable`
 `;
 
 export const PickerContainer = styled.View`
-  max-height: 200px;
+ 
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
   margin-top: 15px;
+  max-height: 150px;
 `;
 
 export const PickerFolderContainer = styled.ScrollView`

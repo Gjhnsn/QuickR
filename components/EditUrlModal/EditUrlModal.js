@@ -184,8 +184,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
-                  style={{ height: `130%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
+                  style={{ height: `100%` }}
+                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
                 >
                   <CloseContainer>
                     <Pressable
