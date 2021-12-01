@@ -1,4 +1,4 @@
-import { Pressable, Modal, Image, Alert, Platform, View, Text } from "react-native";
+import { Pressable, Modal, ScrollView, Dimensions } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUrlToFolder } from "../../redux/folderSlice";
@@ -10,7 +10,6 @@ import {
   setFolderToEdit,
   setScannedLink,
 } from "../../redux/modalSlice";
-import { Picker } from "@react-native-picker/picker";
 import {
   ModalContainer,
   AddUrlText,
@@ -21,8 +20,6 @@ import {
   UrlInput,
   DescriptionInput,
   QrIconButton,
-  ChooseFolderLabel,
-  FolderSection,
   SaveBtnWrapper,
   BtnFooter,
   SaveText,
@@ -33,7 +30,12 @@ import {
   CloseContainer,
   CancelBtnWrapper,
   CancelText,
-  PickerBackground,
+  PickerFolderContainer,
+  PickerFolder,
+  FolderNameColorContainer,
+  PickerFolderColor,
+  PickerFolderName,
+  PickerFolderStatus,
   InputLimitWrapper,
   InputLimitIndicator,
 } from "./styles";
@@ -43,7 +45,6 @@ import {
 } from "../../utils/toastNote";
 import { openCamera } from "../../redux/startCameraSlice";
 import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
-
 
 function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const dispatch = useDispatch();
@@ -146,14 +147,20 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   const displayFolders = () => {
     return folderNamesArray.map((folderName) => {
+      const folderColor = folderData[folderName].folderColor;
       return (
-        <Picker.Item
-          color={Platform.OS === "ios" ? "white" : "black"}
+        <PickerFolder
           key={folderName}
-          label={folderName}
-          value={folderName}
-          style={{ backgroundColor: "blue" }}
-        />
+          onPress={() => dispatch(setFolderToEdit(folderName))}
+        >
+          <FolderNameColorContainer>
+            <PickerFolderColor folderColor={folderColor} />
+            <PickerFolderName>{folderName}</PickerFolderName>
+          </FolderNameColorContainer>
+          <PickerFolderStatus
+            folderColor={currentEditFolder === folderName ? folderColor : null}
+          />
+        </PickerFolder>
       );
     });
   };
@@ -162,29 +169,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   const showFolderPicker = () => {
     return (
-      <FolderSection>
-        <ChooseFolderLabel>Choose Folder</ChooseFolderLabel>
-
-        <PickerContainer>
-          <Picker
-            dropdownIconColor="white"
-            mode="dropdown" // android only
-            style={{ color: "#c1c1c1", marginTop: 10 }}
-            selectedValue={currentEditFolder}
-            onValueChange={(itemValue) => {
-              dispatch(setFolderToEdit(itemValue));
-            }}
-            itemStyle={{
-              color: "white",
-              fontSize: 14,
-              height: 100,
-            }}
-          >
-            <Picker.Item key={0} label="Select a folder..." value={null} />
-            {displayFolders()}
-          </Picker>
-        </PickerContainer>
-      </FolderSection>
+      <PickerContainer>
+        <PickerFolderContainer>{displayFolders()}</PickerFolderContainer>
+      </PickerContainer>
     );
   };
 
@@ -219,8 +206,8 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
-                  style={{ height: `130%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
+                  style={{ height: `100%` }}
+                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
                 >
                   <CloseContainer>
                     <Pressable
@@ -234,6 +221,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
                     <Feather name="link" size={25} color="white" />
                     <AddUrlText>Add Url</AddUrlText>
                   </AddUrlTitleContainer>
+
                   <FormWrapper>
                     <UrlInputContainer>
                       <UrlInput
