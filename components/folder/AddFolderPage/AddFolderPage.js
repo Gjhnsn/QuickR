@@ -39,6 +39,7 @@ import {
   CurrentFolderColor,
   InputLimitWrapper,
   InputLimitIndicator,
+  VersionText,
 } from "../AddFolderPage/styles";
 import {
   toggleAddUrlModal,
@@ -245,6 +246,7 @@ function AddFolderPage({ navigation }) {
                 <CreateText>Create</CreateText>
               </CreateFolderBtn>
             </CreateCancelContainer>
+            <VersionText>V.0.1.1</VersionText>
             <UrlModal
               setNewLinks={setNewLinks}
               newLinks={newLinks}

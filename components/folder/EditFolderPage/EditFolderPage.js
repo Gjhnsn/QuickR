@@ -40,6 +40,7 @@ import {
   EditChange,
   InputContainer,
   InputLimitWrapper,
+  VersionText,
 } from "./styles";
 import {
   toggleAddUrlModal,
@@ -352,6 +353,7 @@ function EditFolderPage({ navigation }) {
                 <CreateText>Save</CreateText>
               </CreateFolderBtn>
             </CreateCancelContainer>
+            <VersionText>V.0.1.1</VersionText>
 
             {/*   // --------------------------------------------------------------------------------------MODALS */}
             <UrlModal picker={false} />

@@ -77,7 +77,6 @@ export const DescriptionInput = styled.TextInput`
   border-top-right-radius: 10px;
   color: #fff;
   text-align: left;
-  text-align-vertical: top;
 `;
 
 export const ColorGridSection = styled.View`
@@ -221,4 +220,11 @@ export const InputLimitWrapper = styled.View`
 
 export const InputLimitIndicator = styled.Text`
   color: white;
+`;
+
+export const VersionText = styled.Text`
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
 `;
