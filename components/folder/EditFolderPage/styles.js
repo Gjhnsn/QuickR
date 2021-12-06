@@ -239,3 +239,10 @@ export const InputLimitWrapper = styled.View`
 export const InputLimitIndicator = styled.Text`
   color: white;
 `;
+
+export const VersionText = styled.Text`
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
+`;
