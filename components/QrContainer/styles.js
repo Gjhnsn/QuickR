@@ -38,6 +38,9 @@ export const QrName = styled.Text`
   color: #fff;
   letter-spacing: 1px;
   font-family: OpenSans_700Bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 85%;
 `;
 
 export const MoreIcon = styled.Image`
@@ -47,18 +50,18 @@ export const MoreIcon = styled.Image`
 
 export const DescriptionContainer = styled.View`
   padding-left: 15px;
-  padding-right: 60px;
+  padding-right: 65px;
   padding-bottom: 15px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
-  height: 85px;
+  min-height: 80px;
+  margin-top: 10px;
 `;
 
 export const DescriptionText = styled.Text`
   font-size: 14px;
   color: #fff;
   opacity: 0.5;
-  height: 70px;
   font-family: OpenSans_400Regular;
   letter-spacing: 1px;
 `;
@@ -76,6 +79,5 @@ export const ButtonContainer = styled.View`
 `;
 
 export const LinkButton = styled.Pressable``;
-
 
 export const ShareButton = styled.Pressable``;

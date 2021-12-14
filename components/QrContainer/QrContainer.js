@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Share, View } from "react-native";
 import { useSelector } from "react-redux";
-import { __startCamera } from "../../utils/startCamera";
 import {
   Container,
   QrWrapper,
@@ -121,7 +120,9 @@ const QrContainer = () => {
         >
           <QrWrapper>
             <QrNameContainer>
-              <QrName>{currentQrName}</QrName>
+              
+              <QrName numberOfLines={openQrDescription ? 2 : 1} >{currentQrName}</QrName>
+
               <Pressable onPress={() => toggleDescription()} hitslop={10}>
                 <Ionicons name="ellipsis-horizontal" size={30} color="white" />
               </Pressable>

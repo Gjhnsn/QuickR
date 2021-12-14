@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Pressable, Image } from "react-native";
+import { Modal, Pressable, Image, View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
   ModalContainer,
@@ -18,6 +18,8 @@ import {
   DeleteText,
   CreateFolderBtn,
   CreateText,
+  InputLimitWrapper,
+  InputLimitIndicator,
 } from "./styles";
 import {
   CloserOverlay,
@@ -50,6 +52,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const [inputName, setInputName] = useState(``);
   const [inputUrl, setInputUrl] = useState(``);
   const [inputDescription, setInputDescription] = useState(``);
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   const editSave = () => {
     if (inputValidationCheck()) {
@@ -88,11 +92,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   // ------------------------------------------------------------------- VALIDATION
 
   const inputValidationCheck = () => {
-    if (
-      inputName.trim() === "" &&
-      inputUrl.trim() === "" &&
-      inputDescription.trim() === ""
-    ) {
+    if (inputName.trim() === "" && inputUrl.trim() === "") {
       urlInputValidationToaster(`Form fields`);
       return false;
     }
@@ -104,11 +104,6 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
 
     if (inputName.trim() === "") {
       urlInputValidationToaster(`Name`);
-      return false;
-    }
-
-    if (inputDescription.trim() === "") {
-      urlInputValidationToaster(`Description`);
       return false;
     }
 
@@ -189,8 +184,8 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
             <ModalContainer>
               <GradientBackground>
                 <LinearGradient
-                  style={{ height: `130%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(0,0,0, 1)"]}
+                  style={{ height: `100%` }}
+                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
                 >
                   <CloseContainer>
                     <Pressable
@@ -230,15 +225,22 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputName}
                       value={inputName}
+                      maxLength={maxFolderNameLength}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputName.length}/${maxFolderNameLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                     <DescriptionInput
                       placeholder="Description"
                       placeholderTextColor="#C1C1C1"
                       onChangeText={setInputDescription}
                       value={inputDescription}
-                      maxLength={130}
+                      maxLength={maxDescriptionLength}
                       multiline={true}
                     />
+                    <InputLimitWrapper>
+                      <InputLimitIndicator>{`${inputDescription.length}/${maxDescriptionLength}`}</InputLimitIndicator>
+                    </InputLimitWrapper>
                   </FormWrapper>
 
                   <BtnFooter>

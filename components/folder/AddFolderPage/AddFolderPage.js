@@ -1,4 +1,12 @@
-import { SafeAreaView, ScrollView, Alert, Pressable, StatusBar } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  Alert,
+  Pressable,
+  StatusBar,
+  Text,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -29,6 +37,9 @@ import {
   BackArrowContainer,
   ColorGridLabelContainer,
   CurrentFolderColor,
+  InputLimitWrapper,
+  InputLimitIndicator,
+  VersionText,
 } from "../AddFolderPage/styles";
 import {
   toggleAddUrlModal,
@@ -48,6 +59,8 @@ function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(`#FF453A`);
+  const maxFolderNameLength = 30;
+  const maxDescriptionLength = 75;
 
   const folderKeys = useSelector((state) =>
     Object.keys(state.folder.allFolder)
@@ -62,18 +75,9 @@ function AddFolderPage({ navigation }) {
 
   const validateFolderDetails = () => {
     const checkFolderValue = folderName.trim() === "";
-    const checkDescriptionValue = description.trim() === "";
 
-    if (checkFolderValue && checkDescriptionValue) {
-      configureAlert("Folder Name and Description ");
-      return false;
-    }
     if (checkFolderValue) {
       configureAlert("Folder Name");
-      return false;
-    }
-    if (checkDescriptionValue) {
-      configureAlert("Description");
       return false;
     }
     if (folderKeys.includes(folderName)) {
@@ -160,9 +164,7 @@ function AddFolderPage({ navigation }) {
   const addFolderView = (navigation) => {
     return (
       <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
-        <StatusBar
-          backgroundColor='#1c1d21'
-          />
+        <StatusBar backgroundColor="#1c1d21" />
         <ScrollView>
           <Container>
             <BackArrowContainer
@@ -182,7 +184,14 @@ function AddFolderPage({ navigation }) {
                 placeholderTextColor="#c1c1c1"
                 onChangeText={setFolderName}
                 value={folderName}
+                maxLength={maxFolderNameLength} // currently set to 50
               />
+              {/* --------------- character counter --------------------- */}
+              <InputLimitWrapper>
+                <InputLimitIndicator>
+                  {`${folderName.length}/${maxFolderNameLength}`}
+                </InputLimitIndicator>
+              </InputLimitWrapper>
             </FolderInputSection>
 
             <DescriptionSection>
@@ -190,11 +199,17 @@ function AddFolderPage({ navigation }) {
               <DescriptionInput
                 placeholder="Add Description..."
                 placeholderTextColor="#c1c1c1"
-                maxLength={85}
+                maxLength={maxDescriptionLength}
                 multiline={true}
-                onChangeText={setDescription}
+                onChangeText={setDescription} //
                 value={description}
               />
+              {/* ------------ character counter -------------------- */}
+              <InputLimitWrapper>
+                <InputLimitIndicator>
+                  {`${description.length}/${maxDescriptionLength}`}
+                </InputLimitIndicator>
+              </InputLimitWrapper>
             </DescriptionSection>
             {/* ********** Color Picker ********** */}
             <ColorGridSection>
@@ -231,6 +246,7 @@ function AddFolderPage({ navigation }) {
                 <CreateText>Create</CreateText>
               </CreateFolderBtn>
             </CreateCancelContainer>
+            <VersionText>V.0.2.0</VersionText>
             <UrlModal
               setNewLinks={setNewLinks}
               newLinks={newLinks}

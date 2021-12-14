@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
-import {  Platform, StatusBar } from "react-native";
-
+import { Platform, StatusBar } from "react-native";
 
 export const Container = styled.View`
   background-color: #1c1d21;
@@ -25,9 +24,9 @@ export const FolderTitleContainer = styled.View`
 `;
 
 export const FolderTitle = styled.Text`
-color: #fff;
-font-size: 32px;
-font-family: OpenSans_700Bold;
+  color: #fff;
+  font-size: 32px;
+  font-family: OpenSans_700Bold;
 `;
 
 export const EditChange = styled.Pressable`
@@ -62,7 +61,7 @@ export const FolderNameLabel = styled.Text`
 export const FolderInput = styled.TextInput`
   height: 50px;
   background-color: ${(props) => (props.editMode ? `#3b3b3d` : `transparent`)};
-  padding: ${(props) => (props.editMode ? `10px` : `0px`)};
+  padding: ${(props) => (props.editMode ? `10px` : `10px`)};
   border-bottom-width: ${(props) => (props.editMode ? `1px` : `0px`)};
   border-bottom-color: white;
   border-top-left-radius: 10px;
@@ -86,7 +85,7 @@ export const DescriptionLabel = styled.Text`
 `;
 export const DescriptionInput = styled.TextInput`
   background-color: ${(props) => (props.editMode ? `#3b3b3d` : `transparent`)};
-  padding: ${(props) => (props.editMode ? `10px` : `0px`)};
+  padding: ${(props) => (props.editMode ? `10px` : `10px`)};
   border-bottom-width: ${(props) => (props.editMode ? `1px` : `0px`)};
   border-bottom-color: white;
   border-top-left-radius: 10px;
@@ -94,6 +93,8 @@ export const DescriptionInput = styled.TextInput`
   color: #fff;
   z-index: 10;
   min-height: 50px;
+  max-width: 100%;
+  padding-right: 20px;
 `;
 
 export const ColorGridSection = styled.View`
@@ -228,4 +229,20 @@ export const CancelText = styled.Text`
   text-align: center;
   font-weight: 600;
   font-family: OpenSans_700Bold;
+`;
+
+export const InputLimitWrapper = styled.View`
+  align-items: flex-end;
+  margin-top: 5px;
+`;
+
+export const InputLimitIndicator = styled.Text`
+  color: white;
+`;
+
+export const VersionText = styled.Text`
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
 `;

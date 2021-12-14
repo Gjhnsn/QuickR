@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { windowHeight, windowWidth } from "../../utils/windowDimensions";
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 
 export const ModalOverlay = styled.Pressable`
   display: flex;
@@ -45,8 +45,12 @@ export const BtnFooter = styled.View`
   flex-direction: row;
   padding-left: 15px;
   padding-right: 15px;
-  margin-top: 40px;
+  margin-top: 20px;
   justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  padding-bottom: ${Platform.OS === "ios" ? '30%' : '20px'};
+  width: 100%;
 `;
 
 export const CreateFolderBtn = styled.Pressable`
@@ -84,4 +88,13 @@ export const DeleteText = styled.Text`
   color: white;
   text-align: center;
   font-weight: 600;
+`;
+
+export const InputLimitWrapper = styled.View`
+  align-items: flex-end;
+  margin-top: 5px;
+`;
+
+export const InputLimitIndicator = styled.Text`
+  color: white;
 `;

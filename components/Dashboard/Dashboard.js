@@ -17,7 +17,7 @@ const Dashboard = ({ navigation }) => {
   const folderData = useSelector((state) => state.folder.allFolder);
   const colorForBlob = useSelector((state) => state.folder.blobColor);
 
-  const scannerView = () => {
+  const scannerView = (navigation) => {
     return <BarcodeScanner toggleModal={false} />;
   };
 

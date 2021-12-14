@@ -35,7 +35,7 @@ function FolderContainer({ navigation }) {
   };
 
   const renderFolder = () => {
-    const folderKeys = Object.keys(folderData);
+    const folderKeys = Object.keys(folderData).slice().reverse();
 
     if (folderKeys.length) {
       return folderKeys.map((folderName) => {

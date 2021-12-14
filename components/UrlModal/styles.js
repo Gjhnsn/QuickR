@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { windowWidth, windowHeight } from "../../utils/windowDimensions";
+import { Platform, Dimensions } from "react-native";
 
 export const ModalOverlay = styled.Pressable`
   display: flex;
@@ -19,11 +20,11 @@ export const CloserOverlay = styled.Pressable`
 
 export const GradientBackground = styled.View`
   position: absolute;
-  top: 0;
+  height: 100%;
   left: 0;
+  top: 0;
   border-radius: 10px;
   width: 100%;
-  height: 100%;
   z-index: 100;
   overflow: hidden;
 `;
@@ -41,10 +42,10 @@ export const CloseContainer = styled.View`
 
 export const ModalContainer = styled.View`
   width: 100%;
-  height: 80%;
+  height: 100%;
   background-color: rgb(54, 54, 54);
   align-self: flex-start;
-  margin-top: 40%;
+  margin-top: ${Platform.OS === "ios" ? `20%` : 0};
   border-radius: 10px;
   display: flex;
 `;
@@ -115,7 +116,7 @@ export const DescriptionInput = styled.TextInput`
   width: 100%;
   height: 100px;
   background-color: #3b3b3d;
-  margin-top: 15px;
+  margin-top: 10px;
   border: 1px solid white;
   border-radius: 5px;
   padding-top: 10px;
@@ -147,20 +148,22 @@ export const SelectFolder = styled.View`
   border-radius: 5px;
 `;
 
-export const PickerContainer = styled.View``;
-
 export const FolderItemText = styled.Text`
   color: #fff;
 `;
 
 export const BtnFooter = styled.View`
   align-items: center;
-  margin-top: 40px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: 15px; 
+  position: absolute;
+  bottom: 0;
+  padding-bottom: ${Platform.OS === "ios" ? '30%' : '20px'};
+  width: 100%;
 `;
 
 export const SaveBtnWrapper = styled.Pressable`
@@ -195,6 +198,70 @@ export const CancelBtnWrapper = styled.Pressable`
   border-radius: 10px;
 `;
 
-export const PickerBackground = {
-  backgroundColor: "black",
-};
+export const PickerContainer = styled.View`
+ 
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px;
+  max-height: 150px;
+`;
+
+export const PickerFolderContainer = styled.ScrollView`
+  width: 100%;
+  max-height: 200px;
+`;
+
+export const PickerFolder = styled.Pressable`
+  height: 50px;
+  width: 100%;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #3b3b3d;
+`;
+
+export const FolderNameColorContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+`;
+
+export const PickerFolderName = styled.Text`
+  font-size: 18px;
+  font-family: OpenSans_600SemiBold;
+  color: #fff;
+`;
+
+export const PickerFolderColor = styled.View`
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background-color: ${(props) => props.folderColor};
+  margin-right: 15px;
+`;
+
+export const PickerFolderStatus = styled.View`
+  height: 100%;
+  width: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: ${(props) => props.folderColor ? props.folderColor : `transparent`};
+`;
+
+export const PickerLabel = styled.Text`
+  font-size: 16px;
+`
+
+export const InputLimitWrapper = styled.View`
+  align-items: flex-end;
+  margin-top: 5px;
+`;
+
+export const InputLimitIndicator = styled.Text`
+  color: white;
+`;

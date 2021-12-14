@@ -76,6 +76,7 @@ export const DescriptionInput = styled.TextInput`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   color: #fff;
+  text-align: left;
 `;
 
 export const ColorGridSection = styled.View`
@@ -210,4 +211,20 @@ export const CancelText = styled.Text`
   text-align: center;
   font-weight: 600;
   font-family: OpenSans_700Bold;
+`;
+
+export const InputLimitWrapper = styled.View`
+  align-items: flex-end;
+  margin-top: 5px;
+`;
+
+export const InputLimitIndicator = styled.Text`
+  color: white;
+`;
+
+export const VersionText = styled.Text`
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 40px;
 `;

@@ -3,7 +3,7 @@ import { windowWidth } from "../../../utils/windowDimensions";
 
 export const FolderContainer = styled.TouchableOpacity`
   width: ${windowWidth};
-  
+
   display: flex;
   flex-direction: column;
   border-bottom-width: 1px;
@@ -28,6 +28,13 @@ export const FolderColorBubble = styled.View`
 export const TitleContainer = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const TitleEditWrapper = styled.View`
+  flex-direction: row;
+  width: 250px;
   align-items: center;
 `;
 
