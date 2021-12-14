@@ -246,7 +246,7 @@ function AddFolderPage({ navigation }) {
                 <CreateText>Create</CreateText>
               </CreateFolderBtn>
             </CreateCancelContainer>
-            <VersionText>V.0.1.1</VersionText>
+            <VersionText>V.0.2.0</VersionText>
             <UrlModal
               setNewLinks={setNewLinks}
               newLinks={newLinks}
