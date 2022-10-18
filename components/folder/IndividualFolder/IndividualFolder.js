@@ -1,6 +1,6 @@
-import React from "react";
-import { Pressable, Platform, View } from "react-native";
-import LinksContainer from "../LinksContainer/LinksContainer";
+import React from 'react';
+import { Pressable, Platform } from 'react-native';
+import LinksContainer from '../LinksContainer/LinksContainer';
 import {
   FolderContainer,
   FolderTitle,
@@ -9,12 +9,12 @@ import {
   FolderInitialElements,
   FolderOpenedElements,
   TitleEditWrapper,
-} from "./styles";
-import { useSelector, useDispatch } from "react-redux";
-import { openAccordion } from "../../../redux/folderSlice";
-import { setFolderToEdit } from "../../../redux/modalSlice";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
+} from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { openAccordion } from '../../../redux/folderSlice';
+import { setFolderToEdit } from '../../../redux/modalSlice';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 function IndividualFolder({ folder, folderName, navigation }) {
   const dispatch = useDispatch();
@@ -23,7 +23,13 @@ function IndividualFolder({ folder, folderName, navigation }) {
   const showLinks = () => {
     if (accordion[folderName].isAccordionOpen) {
       return (
-        <LinearGradient colors={Platform.OS === "ios" ? ['#313234', "#252528"] : ['#313234', "#252528" ]}>
+        <LinearGradient
+          colors={
+            Platform.OS === 'ios'
+              ? ['#313234', '#252528']
+              : ['#313234', '#252528']
+          }
+        >
           <FolderOpenedElements>
             <LinksContainer
               folderColor={folder.folderColor}
@@ -37,7 +43,7 @@ function IndividualFolder({ folder, folderName, navigation }) {
   };
 
   const editButtonAction = () => {
-    navigation.navigate("EditFolderPage", {
+    navigation.navigate('EditFolderPage', {
       editMode: true,
       folder,
     });
@@ -47,7 +53,11 @@ function IndividualFolder({ folder, folderName, navigation }) {
 
   return (
     <LinearGradient
-      colors={Platform.OS === 'ios' ? ["#1C1D21", "#2A2A2A", "#2B2B2B"] : ["#1C1D21", "#2A2A2A", "#2B2B2B"]}
+      colors={
+        Platform.OS === 'ios'
+          ? ['#1C1D21', '#2A2A2A', '#2B2B2B']
+          : ['#1C1D21', '#2A2A2A', '#2B2B2B']
+      }
       start={[1, 0]}
       end={[0, 0]}
     >
@@ -56,18 +66,17 @@ function IndividualFolder({ folder, folderName, navigation }) {
           <TitleContainer>
             <FolderColorBubble folderColor={folder.folderColor} />
             <TitleEditWrapper>
-            <FolderTitle numberOfLines={1}>{folderName}</FolderTitle>
-            {/* only render edit icon if accordion is open */}
-            {accordion[folderName].isAccordionOpen ? (
-              <Pressable onPress={() => editButtonAction()} hitslop={10}>
-                <MaterialCommunityIcons
-                  name="pencil-outline"
-                  size={20}
-                  color="white"
-                />
-              </Pressable>
-              
-            ) : null}
+              <FolderTitle numberOfLines={1}>{folderName}</FolderTitle>
+              {/* only render edit icon if accordion is open */}
+              {accordion[folderName].isAccordionOpen ? (
+                <Pressable onPress={() => editButtonAction()} hitslop={10}>
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    size={20}
+                    color="white"
+                  />
+                </Pressable>
+              ) : null}
             </TitleEditWrapper>
           </TitleContainer>
           {/* down arrow when folder is closed | up arrow when folder is open */}

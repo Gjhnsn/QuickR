@@ -1,6 +1,6 @@
-import styled from "styled-components/native";
-import { windowWidth, windowHeight } from "../../utils/windowDimensions";
-import { Platform, Dimensions } from "react-native";
+import styled from 'styled-components/native';
+import { windowWidth, windowHeight } from '../../utils/windowDimensions';
+import { Platform } from 'react-native';
 
 export const ModalOverlay = styled.Pressable`
   display: flex;
@@ -45,7 +45,7 @@ export const ModalContainer = styled.View`
   height: 100%;
   background-color: rgb(54, 54, 54);
   align-self: flex-start;
-  margin-top: ${Platform.OS === "ios" ? `20%` : 0};
+  margin-top: ${Platform.OS === 'ios' ? `20%` : 0};
   border-radius: 10px;
   display: flex;
 `;
@@ -159,10 +159,10 @@ export const BtnFooter = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding-left: 15px;
-  padding-right: 15px; 
+  padding-right: 15px;
   position: absolute;
   bottom: 0;
-  padding-bottom: ${Platform.OS === "ios" ? '30%' : '20px'};
+  padding-bottom: ${Platform.OS === 'ios' ? '30%' : '20px'};
   width: 100%;
 `;
 
@@ -199,7 +199,6 @@ export const CancelBtnWrapper = styled.Pressable`
 `;
 
 export const PickerContainer = styled.View`
- 
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
@@ -250,12 +249,13 @@ export const PickerFolderStatus = styled.View`
   width: 20px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  background-color: ${(props) => props.folderColor ? props.folderColor : `transparent`};
+  background-color: ${(props) =>
+    props.folderColor ? props.folderColor : `transparent`};
 `;
 
 export const PickerLabel = styled.Text`
   font-size: 16px;
-`
+`;
 
 export const InputLimitWrapper = styled.View`
   align-items: flex-end;
