@@ -1,8 +1,6 @@
-import React from "react";
-import { Container } from "./styles";
-import IndividualLinks from "../IndividualLinks/IndividualLinks";
-import { LinearGradient } from "expo-linear-gradient";
-
+import React from 'react';
+import { Container } from './styles';
+import IndividualLinks from '../IndividualLinks/IndividualLinks';
 
 function LinksContainer({ folderItems, folderColor, folderName }) {
   const renderLinks = () => {

@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, Linking, StatusBar } from "react-native";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import React from 'react';
+import { View, Linking, StatusBar } from 'react-native';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   Screen,
   PlaceHolderWrapper,
@@ -10,9 +10,9 @@ import {
   ButtonText,
   PlaceHolderBlob,
   AllowAccessButton,
-} from "./Styles";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCamera, openCamera } from "../../redux/startCameraSlice";
+} from './Styles';
+import { useDispatch } from 'react-redux';
+import { closeCamera } from '../../redux/startCameraSlice';
 
 const PlaceHolder = ({ requestCameraAppPermission }) => {
   const dispatch = useDispatch();
@@ -27,8 +27,8 @@ const PlaceHolder = ({ requestCameraAppPermission }) => {
 
   const cameraSettingsLink = () => {
     return (
-      <AllowAccessButton onPress={() => Linking.openURL("app-settings:")}>
-        <ButtonText style={{ color: "#5E5CE6" }}>Allow Access</ButtonText>
+      <AllowAccessButton onPress={() => Linking.openURL('app-settings:')}>
+        <ButtonText style={{ color: '#5E5CE6' }}>Allow Access</ButtonText>
       </AllowAccessButton>
     );
   };
@@ -41,22 +41,22 @@ const PlaceHolder = ({ requestCameraAppPermission }) => {
         <Ionicons name="chevron-back" size={40} color="white" />
       </BackButton>
       <View>
-      <PlaceHolderWrapper>
-        <View>
-          <MaterialCommunityIcons
-            name="emoticon-sad-outline"
-            size={60}
-            color="white"
-          />
-        </View>
-        <PlaceHolderText>
-          Uh-Oh, QuickR needs access to your camera
-        </PlaceHolderText>
-        {/* render async permission settings */}
-        {askForCameraPermissionButton()}
-        {/* render camera settings button for ios */}
-        {Platform.OS === "ios" ? cameraSettingsLink() : null}
-      </PlaceHolderWrapper>
+        <PlaceHolderWrapper>
+          <View>
+            <MaterialCommunityIcons
+              name="emoticon-sad-outline"
+              size={60}
+              color="white"
+            />
+          </View>
+          <PlaceHolderText>
+            Uh-Oh, QuickR needs access to your camera
+          </PlaceHolderText>
+          {/* render async permission settings */}
+          {askForCameraPermissionButton()}
+          {/* render camera settings button for ios */}
+          {Platform.OS === 'ios' ? cameraSettingsLink() : null}
+        </PlaceHolderWrapper>
       </View>
     </Screen>
   );

@@ -4,11 +4,8 @@ import {
   Pressable,
   SafeAreaView,
   StatusBar,
-  View,
-  Text,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   FolderTitle,
@@ -41,28 +38,28 @@ import {
   InputContainer,
   InputLimitWrapper,
   VersionText,
-} from "./styles";
+} from './styles';
 import {
   toggleAddUrlModal,
   toggleEditUrlModal,
   setLinkToEdit,
-} from "../../../redux/modalSlice";
-import { useSelector, useDispatch } from "react-redux";
-import ColorPicker from "../../ColorPicker/ColorPicker";
-import UrlModal from "../../UrlModal/UrlModal";
+} from '../../../redux/modalSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import ColorPicker from '../../ColorPicker/ColorPicker';
+import UrlModal from '../../UrlModal/UrlModal';
 import {
   editFolder,
   deleteFolder,
   setBlobColor,
-} from "../../../redux/folderSlice";
-import { deleteFolderToast } from "../../../utils/toastNote";
-import { approvedColors } from "../../../utils/approvedColors";
-import EditUrlModal from "../../EditUrlModal/EditUrlModal";
-import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { setScannedLink } from "../../../redux/modalSlice";
-import { resetQr } from "../../../redux/qrSlice";
-import { InputLimitIndicator } from "../AddFolderPage/styles";
+} from '../../../redux/folderSlice';
+import { deleteFolderToast } from '../../../utils/toastNote';
+import { approvedColors } from '../../../utils/approvedColors';
+import EditUrlModal from '../../EditUrlModal/EditUrlModal';
+import BarcodeScanner from '../../BarcodeScanner/BarcodeScanner';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { setScannedLink } from '../../../redux/modalSlice';
+import { resetQr } from '../../../redux/qrSlice';
+import { InputLimitIndicator } from '../AddFolderPage/styles';
 
 function EditFolderPage({ navigation }) {
   const scannedLink = useSelector((state) => state.modal.scannedLink);
@@ -88,7 +85,7 @@ function EditFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
   const [description, setDescription] = useState(``);
   const [folderColor, setFolderColor] = useState(
-    `${currentFolder ? currentFolder.folderColor : "#FF453A"}`
+    `${currentFolder ? currentFolder.folderColor : '#FF453A'}`
   );
 
   const [editNameInput, setEditNameInput] = useState(false);
@@ -104,26 +101,26 @@ function EditFolderPage({ navigation }) {
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
   const validateFolderDetails = () => {
-    const checkFolderValue = folderName.trim() === "";
+    const checkFolderValue = folderName.trim() === '';
 
     if (checkFolderValue) {
-      configureAlert("Folder Name");
+      configureAlert('Folder Name');
       return false;
     }
     if (folderKeys.includes(folderName) && currentFolder.name !== folderName) {
-      Alert.alert("Folder Name Already Exists");
+      Alert.alert('Folder Name Already Exists');
       return false;
     }
     return true;
   };
 
   const configureAlert = (missingFieldValue) => {
-    Alert.alert("Error", `Please enter values for ${missingFieldValue}`);
+    Alert.alert('Error', `Please enter values for ${missingFieldValue}`);
   };
 
   const clearInput = () => {
-    setFolderName("");
-    setDescription("");
+    setFolderName('');
+    setDescription('');
   };
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR DELETE BUTTON
@@ -132,24 +129,24 @@ function EditFolderPage({ navigation }) {
     const deleteAction = () => {
       Alert.alert(
         `Delete ${currentFolder.name}?`,
-        "All of this folders contents will be lost",
+        'All of this folders contents will be lost',
         [
           {
-            text: "Cancel",
+            text: 'Cancel',
             onPress: () => {
               return;
             },
-            style: "default",
+            style: 'default',
           },
           // If 'OK' then proceed with deleting folder
           {
-            text: "OK",
+            text: 'OK',
             onPress: () => {
               dispatch(deleteFolder({ folderToDelete: currentFolder }));
               navigation.goBack();
               deleteFolderToast(currentFolder.name);
             },
-            style: "default",
+            style: 'default',
           },
         ]
       );
@@ -160,9 +157,9 @@ function EditFolderPage({ navigation }) {
       deleteAction();
       dispatch(resetQr());
       // update blob color
-      dispatch(setBlobColor("#5E5CE6"));
+      dispatch(setBlobColor('#5E5CE6'));
       // update folder color to default
-      setFolderColor("#FF453A");
+      setFolderColor('#FF453A');
     } else {
       deleteAction();
     }
@@ -233,7 +230,7 @@ function EditFolderPage({ navigation }) {
 
   const editFolderView = (navigation) => {
     return (
-      <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
+      <SafeAreaView style={{ backgroundColor: '#1c1d21' }}>
         <StatusBar backgroundColor="#1c1d21" />
         <ScrollView>
           <Container>

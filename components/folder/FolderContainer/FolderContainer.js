@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import IndividualFolder from "../IndividualFolder/IndividualFolder";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import IndividualFolder from '../IndividualFolder/IndividualFolder';
+import { useSelector } from 'react-redux';
 import {
   Container,
   PlaceHolderContainer,
@@ -9,25 +9,22 @@ import {
   TextSubHeader,
   AddFolderButton,
   ButtonText,
-} from "./styles";
-import NoFolderSvgPlaceholderComponent from "../../Svg/noFolderSvgPlaceholderComponent";
-import { toggleAddUrlModal } from "../../../redux/modalSlice";
+} from './styles';
+import NoFolderSvgPlaceholderComponent from '../../Svg/noFolderSvgPlaceholderComponent';
 
 function FolderContainer({ navigation }) {
   const folderData = useSelector((state) => state.folder.allFolder);
   const [isEmpty, setIsEmpty] = useState(false);
 
-  const dispatch = useDispatch();
-
   const renderPlaceHolder = () => {
     return (
-      <PlaceHolderContainer> 
+      <PlaceHolderContainer>
         <NoFolderSvgPlaceholderComponent />
         <PlaceHolderTextWrapper>
           <TextHeader>No Folders Yet!</TextHeader>
           <TextSubHeader>Add a folder to get started</TextSubHeader>
         </PlaceHolderTextWrapper>
-        <AddFolderButton onPress={() => navigation.navigate("AddFolderPage")}>
+        <AddFolderButton onPress={() => navigation.navigate('AddFolderPage')}>
           <ButtonText>Add Folder</ButtonText>
         </AddFolderButton>
       </PlaceHolderContainer>

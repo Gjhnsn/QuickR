@@ -1,11 +1,11 @@
-import { Pressable } from "react-native";
-import React from "react";
-import { NavigationContainer, LogoPlaceholder } from "./styles";
-import { useDispatch } from "react-redux";
-import { toggleNewItemModal } from "../../redux/modalSlice";
-import { setFolderToEdit } from "../../redux/modalSlice";
-import { AntDesign } from "@expo/vector-icons";
-import LogoSvgComponent from "../Svg/logoSvgComponent";
+import { Pressable } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from './styles';
+import { useDispatch } from 'react-redux';
+import { toggleNewItemModal } from '../../redux/modalSlice';
+import { setFolderToEdit } from '../../redux/modalSlice';
+import { AntDesign } from '@expo/vector-icons';
+import LogoSvgComponent from '../Svg/logoSvgComponent';
 
 function TopBar() {
   const dispatch = useDispatch();

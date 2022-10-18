@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Pressable, Text, View, Linking, Platform } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { closeCamera, openCamera } from "../../redux/startCameraSlice";
-import {
-  Screen,
-  CameraScreen,
-  CameraContainer,
-} from "./styles";
-import { qrCodeScanned } from "../../utils/toastNote";
-import { toggleAddUrlModal, setScannedLink } from "../../redux/modalSlice";
-import PlaceHolder from "../Placeholder/PlaceHolder";
+import React, { useState } from 'react';
+import { Pressable } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Ionicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { closeCamera } from '../../redux/startCameraSlice';
+import { Screen, CameraScreen, CameraContainer } from './styles';
+import { qrCodeScanned } from '../../utils/toastNote';
+import { toggleAddUrlModal, setScannedLink } from '../../redux/modalSlice';
+import PlaceHolder from '../Placeholder/PlaceHolder';
 
 const BarcodeScanner = ({ toggleModal, navigation }) => {
   const [scanned, setScanned] = useState(false);
@@ -21,7 +17,7 @@ const BarcodeScanner = ({ toggleModal, navigation }) => {
 
   const requestCameraAppPermission = async () => {
     const { status } = await BarCodeScanner.requestPermissionsAsync();
-    setHasPermission(status === "granted");
+    setHasPermission(status === 'granted');
   };
 
   const handleQRCodeScan = ({ type, data }) => {
@@ -60,7 +56,15 @@ const BarcodeScanner = ({ toggleModal, navigation }) => {
     );
   };
 
-  return <>{hasPermission ? renderScanner() : <PlaceHolder requestCameraAppPermission={requestCameraAppPermission}/>}</>;
+  return (
+    <>
+      {hasPermission ? (
+        renderScanner()
+      ) : (
+        <PlaceHolder requestCameraAppPermission={requestCameraAppPermission} />
+      )}
+    </>
+  );
 };
 
 export default BarcodeScanner;

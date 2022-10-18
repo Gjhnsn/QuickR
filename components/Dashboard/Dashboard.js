@@ -1,16 +1,15 @@
-import React from "react";
-import QrContainer from "../QrContainer/QrContainer";
-import UrlModal from "../UrlModal/UrlModal";
-import FolderContainer from "../folder/FolderContainer/FolderContainer";
-import { Container } from "./styles";
-import TopBar from "../TopBar/TopBar";
-import { ScrollView, SafeAreaView, View, Text, Pressable, StatusBar } from "react-native";
-import ColorBlob from "../ColorBlob/ColorBlob";
-import AddNewItemMenu from "../AddNewItemMenu/AddNewItemMenu";
-import { GlobalContainer } from "./styles";
-import BarcodeScanner from "../BarcodeScanner/BarcodeScanner";
-import { useSelector } from "react-redux";
-
+import React from 'react';
+import QrContainer from '../QrContainer/QrContainer';
+import UrlModal from '../UrlModal/UrlModal';
+import FolderContainer from '../folder/FolderContainer/FolderContainer';
+import { Container } from './styles';
+import TopBar from '../TopBar/TopBar';
+import { ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import ColorBlob from '../ColorBlob/ColorBlob';
+import AddNewItemMenu from '../AddNewItemMenu/AddNewItemMenu';
+import { GlobalContainer } from './styles';
+import BarcodeScanner from '../BarcodeScanner/BarcodeScanner';
+import { useSelector } from 'react-redux';
 
 const Dashboard = ({ navigation }) => {
   const setStartCamera = useSelector((state) => state.camera.setStartCamera);
@@ -24,10 +23,7 @@ const Dashboard = ({ navigation }) => {
   const homeScreenView = (navigation) => {
     return (
       <SafeAreaView>
-        <StatusBar
-          backgroundColor={colorForBlob}
-          barStyle="light-content"
-          />
+        <StatusBar backgroundColor={colorForBlob} barStyle="light-content" />
         <ScrollView showsVerticalScrollIndicator={false}>
           <AddNewItemMenu navigation={navigation} />
           <UrlModal picker={true} />

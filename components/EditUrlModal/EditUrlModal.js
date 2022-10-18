@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Pressable, Image, View, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import React, { useState, useEffect } from 'react';
+import { Modal, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   ModalContainer,
   AddUrlText,
@@ -11,7 +11,7 @@ import {
   UrlInput,
   DescriptionInput,
   QrIconButton,
-} from "../UrlModal/styles";
+} from '../UrlModal/styles';
 import {
   BtnFooter,
   CancelBtn,
@@ -20,23 +20,23 @@ import {
   CreateText,
   InputLimitWrapper,
   InputLimitIndicator,
-} from "./styles";
+} from './styles';
 import {
   CloserOverlay,
   ModalOverlay,
   GradientBackground,
   CloseContainer,
-} from "./styles";
-import { toggleEditUrlModal, setScannedLink } from "../../redux/modalSlice";
-import { editLink, deleteLink, setBlobColor } from "../../redux/folderSlice";
-import { useSelector, useDispatch } from "react-redux";
+} from './styles';
+import { toggleEditUrlModal, setScannedLink } from '../../redux/modalSlice';
+import { editLink, deleteLink, setBlobColor } from '../../redux/folderSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   deleteLinkToast,
   urlInputValidationToaster,
-} from "../../utils/toastNote";
-import { resetQr } from "../../redux/qrSlice";
-import { openCamera } from "../../redux/startCameraSlice";
-import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
+} from '../../utils/toastNote';
+import { resetQr } from '../../redux/qrSlice';
+import { openCamera } from '../../redux/startCameraSlice';
+import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   const isEditUrlModalOpen = useSelector(
@@ -73,7 +73,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       );
       dispatch(toggleEditUrlModal());
       dispatch(setScannedLink(null));
-      setInputUrl("");
+      setInputUrl('');
     }
   };
 
@@ -92,17 +92,17 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
   // ------------------------------------------------------------------- VALIDATION
 
   const inputValidationCheck = () => {
-    if (inputName.trim() === "" && inputUrl.trim() === "") {
+    if (inputName.trim() === '' && inputUrl.trim() === '') {
       urlInputValidationToaster(`Form fields`);
       return false;
     }
 
-    if (inputUrl.trim() === "") {
+    if (inputUrl.trim() === '') {
       urlInputValidationToaster(`Url`);
       return false;
     }
 
-    if (inputName.trim() === "") {
+    if (inputName.trim() === '') {
       urlInputValidationToaster(`Name`);
       return false;
     }
@@ -125,7 +125,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       setNewLinks([...editedLinkArr, updatedValues]);
       dispatch(toggleEditUrlModal());
       dispatch(setScannedLink(null));
-      setInputUrl("");
+      setInputUrl('');
     }
   };
 
@@ -156,7 +156,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
       deleteAction();
       dispatch(resetQr());
       // reset blob color on dash
-      dispatch(setBlobColor("#5E5CE6"));
+      dispatch(setBlobColor('#5E5CE6'));
     } else {
       deleteAction();
     }
@@ -185,7 +185,7 @@ const EditUrlModal = ({ editPage, newLinks, setNewLinks }) => {
               <GradientBackground>
                 <LinearGradient
                   style={{ height: `100%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
+                  colors={['rgba(54,54,54, 0.1)', 'rgba(12,12,12, 1)']}
                 >
                   <CloseContainer>
                     <Pressable

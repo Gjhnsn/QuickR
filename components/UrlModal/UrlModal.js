@@ -1,15 +1,15 @@
-import { Pressable, Modal, ScrollView, Dimensions } from "react-native";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addUrlToFolder } from "../../redux/folderSlice";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
-import { LinearGradient } from "expo-linear-gradient";
+import { Pressable, Modal } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUrlToFolder } from '../../redux/folderSlice';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   toggleAddUrlModal,
   setFolderToEdit,
   setScannedLink,
-} from "../../redux/modalSlice";
+} from '../../redux/modalSlice';
 import {
   ModalContainer,
   AddUrlText,
@@ -38,13 +38,13 @@ import {
   PickerFolderStatus,
   InputLimitWrapper,
   InputLimitIndicator,
-} from "./styles";
+} from './styles';
 import {
   selectValidFolderToast,
   urlInputValidationToaster,
-} from "../../utils/toastNote";
-import { openCamera } from "../../redux/startCameraSlice";
-import { Feather, AntDesign, MaterialIcons } from "@expo/vector-icons";
+} from '../../utils/toastNote';
+import { openCamera } from '../../redux/startCameraSlice';
+import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const dispatch = useDispatch();
@@ -76,9 +76,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
   const finalSubmissionRedux = () => {
     if (inputValidationCheck()) {
       // fields should clear upon save
-      setInputName("");
-      setInputUrl("");
-      setInputDescription("");
+      setInputName('');
+      setInputUrl('');
+      setInputDescription('');
 
       dispatch(
         addUrlToFolder({
@@ -116,26 +116,26 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
       dispatch(toggleAddUrlModal());
       dispatch(setScannedLink(null));
       // fields should clear upon sav
-      setInputName("");
-      setInputUrl("");
-      setInputDescription("");
+      setInputName('');
+      setInputUrl('');
+      setInputDescription('');
     }
   };
 
   //-------------------------------------------------------------------------VALIDATION
 
   const inputValidationCheck = () => {
-    if (inputName.trim() === "" && inputUrl.trim() === "") {
+    if (inputName.trim() === '' && inputUrl.trim() === '') {
       urlInputValidationToaster(`Form fields`);
       return false;
     }
 
-    if (inputUrl.trim() === "") {
+    if (inputUrl.trim() === '') {
       urlInputValidationToaster(`Url`);
       return false;
     }
 
-    if (inputName.trim() === "") {
+    if (inputName.trim() === '') {
       urlInputValidationToaster(`Name`);
       return false;
     }
@@ -185,9 +185,9 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
 
   const closeAndClearInput = () => {
     // fields should clear upon exit
-    setInputName("");
-    setInputUrl("");
-    setInputDescription("");
+    setInputName('');
+    setInputUrl('');
+    setInputDescription('');
 
     dispatch(toggleAddUrlModal());
     dispatch(setScannedLink(null));
@@ -207,7 +207,7 @@ function UrlModal({ picker, setNewLinks, newLinks, navigation }) {
               <GradientBackground>
                 <LinearGradient
                   style={{ height: `100%` }}
-                  colors={["rgba(54,54,54, 0.1)", "rgba(12,12,12, 1)"]}
+                  colors={['rgba(54,54,54, 0.1)', 'rgba(12,12,12, 1)']}
                 >
                   <CloseContainer>
                     <Pressable

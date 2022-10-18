@@ -4,11 +4,9 @@ import {
   Alert,
   Pressable,
   StatusBar,
-  Text,
-  View,
-} from "react-native";
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+} from 'react-native';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Container,
   FolderTitle,
@@ -40,20 +38,20 @@ import {
   InputLimitWrapper,
   InputLimitIndicator,
   VersionText,
-} from "../AddFolderPage/styles";
+} from '../AddFolderPage/styles';
 import {
   toggleAddUrlModal,
   toggleEditUrlModal,
   setLinkToEdit,
-} from "../../../redux/modalSlice";
-import { useSelector, useDispatch } from "react-redux";
-import ColorPicker from "../../ColorPicker/ColorPicker";
-import UrlModal from "../../UrlModal/UrlModal";
-import { addNewFolder } from "../../../redux/folderSlice";
-import { approvedColors } from "../../../utils/approvedColors";
-import BarcodeScanner from "../../BarcodeScanner/BarcodeScanner";
-import EditUrlModal from "../../EditUrlModal/EditUrlModal";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+} from '../../../redux/modalSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import ColorPicker from '../../ColorPicker/ColorPicker';
+import UrlModal from '../../UrlModal/UrlModal';
+import { addNewFolder } from '../../../redux/folderSlice';
+import { approvedColors } from '../../../utils/approvedColors';
+import BarcodeScanner from '../../BarcodeScanner/BarcodeScanner';
+import EditUrlModal from '../../EditUrlModal/EditUrlModal';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function AddFolderPage({ navigation }) {
   const [folderName, setFolderName] = useState(``);
@@ -74,26 +72,26 @@ function AddFolderPage({ navigation }) {
   // ---------------------------------------------------------INPUT VALIDATION ALGORITHM
 
   const validateFolderDetails = () => {
-    const checkFolderValue = folderName.trim() === "";
+    const checkFolderValue = folderName.trim() === '';
 
     if (checkFolderValue) {
-      configureAlert("Folder Name");
+      configureAlert('Folder Name');
       return false;
     }
     if (folderKeys.includes(folderName)) {
-      Alert.alert("Folder Name Already Exists");
+      Alert.alert('Folder Name Already Exists');
       return false;
     }
     return true;
   };
 
   const configureAlert = (missingFieldValue) => {
-    Alert.alert("Error", `Please enter values for ${missingFieldValue}`);
+    Alert.alert('Error', `Please enter values for ${missingFieldValue}`);
   };
 
   const clearInput = () => {
-    setFolderName("");
-    setDescription("");
+    setFolderName('');
+    setDescription('');
   };
 
   // ---------------------------------------------------------ON PRESS FUNCTION FOR ADD BUTTON
@@ -163,7 +161,7 @@ function AddFolderPage({ navigation }) {
 
   const addFolderView = (navigation) => {
     return (
-      <SafeAreaView style={{ backgroundColor: "#1c1d21" }}>
+      <SafeAreaView style={{ backgroundColor: '#1c1d21' }}>
         <StatusBar backgroundColor="#1c1d21" />
         <ScrollView>
           <Container>
