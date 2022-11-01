@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "QuickR",
+    "name": "QuickR - QR Code Wallet",
     "slug": "QuickR",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/qrLogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashScreen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,17 +19,22 @@
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.gjhnsn.QuickR"
+      "bundleIdentifier": "com.reactoads.QuickR"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/qrLogo.png",
+        "backgroundColor": "#000000"
       },
       "package": "com.gjhnsn.QuickR"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/qrLogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "202e2f24-0886-40cd-bffe-de917c33a48e"
+      }
     }
   }
 }

@@ -16,6 +16,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "dan.sanchez823@gmail.com",
+        "ascAppId": "6444117447",
+        "appleTeamId": "VUSW6ZS972"
+      }
+    }
   }
 }
